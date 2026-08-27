@@ -1,0 +1,133 @@
+GUÍA DE EJEMPLO - RPG AVENTURA
+
+============================================
+MISIÓN PRINCIPAL: EL CRISTAL PERDIDO
+============================================
+
+MISIÓN: Encontrar el Cristal del Alba
+UBICACIÓN: Templo Antiguo
+NIVEL RECOMENDADO: 10
+
+PASOS:
+1. Habla con el Sabio Eldrin en el pueblo de Lumina
+2. Ve al norte hasta el Bosque Nebuloso
+3. Busca la entrada del Templo Antiguo (coordenadas: X:245, Y:180)
+4. Derrota a 5 Guardianes de Piedra en la entrada
+5. Resuelve el puzzle de las 4 estatuas (orden: Norte, Este, Sur, Oeste)
+6. En la cámara principal, derrota al Golem Ancestral (Jefe nivel 12)
+7. Recoge el Cristal del Alba del pedestal central
+8. Regresa con el Sabio Eldrin para recibir tu recompensa (500 XP + Espada de Luz)
+
+============================================
+MISIÓN SECUNDARIA: EL HERRERO PERDIDO
+============================================
+
+MISIÓN: Rescatar al Herrero Grom
+UBICACIÓN: Minas Abandonadas
+NIVEL RECOMENDADO: 8
+
+PASOS:
+1. Habla con la mujer del herrero en la herrería del pueblo
+2. Dirígete al este del pueblo hacia las Minas Abandonadas
+3. Necesitarás una antorcha (cómprala en la tienda general por 50 oro)
+4. Entra en las minas y sigue el camino principal
+5. En la bifurcación, toma el camino de la izquierda
+6. Derrota a los 3 Kobolds que custodian la celda
+7. Abre la celda con la llave que sueltan los Kobolds
+8. Escolta a Grom de vuelta al pueblo (cuidado con emboscadas)
+9. Recompensa: 200 XP + 300 oro + descuento del 20% en la herrería
+
+============================================
+MISIÓN SECUNDARIA: HIERBAS MEDICINALES
+============================================
+
+MISIÓN: Recolectar Hierbas para la Sanadora
+UBICACIÓN: Praderas Verdes
+NIVEL RECOMENDADO: 5
+
+PASOS:
+1. Habla con la Sanadora Mirela en la clínica
+2. Necesitas recolectar:
+   - 5 Flores de Luna (crecen cerca del río al oeste)
+   - 3 Raíces de Mandragora (en el bosque al norte, de noche)
+   - 2 Hongos Luminosos (en cuevas húmedas, sección este de las Praderas)
+3. Las Flores de Luna se encuentran cerca del Río Plateado
+4. Las Raíces de Mandragora solo aparecen entre las 22:00 y 04:00 (hora del juego)
+5. Los Hongos Luminosos están en la Cueva Húmeda (coordenadas: X:120, Y:95)
+6. Regresa con Mirela cuando tengas todos los ingredientes
+7. Recompensa: 150 XP + 5 Pociones de Vida Superior + Receta de Poción de Resistencia
+
+============================================
+JEFE OPCIONAL: DRAGÓN DE HIELO
+============================================
+
+MISIÓN: Derrotar al Dragón de Hielo Frostmaw
+UBICACIÓN: Picos Helados
+NIVEL RECOMENDADO: 20
+EQUIPO RECOMENDADO: Armadura resistente al frío, arma de fuego
+
+PASOS:
+1. Compra la Capa de Pelo de Oso en la tienda (protección contra frío)
+2. Viaja al norte hasta los Picos Helados
+3. Sigue el camino de montaña hasta la Cumbre Nevada
+4. El dragón está en la cueva de la cima
+5. ESTRATEGIA DE COMBATE:
+   - Usa ataques de fuego para causar daño extra
+   - Esquiva su aliento de hielo (congelación 5 segundos)
+   - Después de cada aliento, tiene una ventana de 10 segundos vulnerable
+   - Ataca sus alas para reducir su movilidad
+   - A 30% de vida, invocará 3 Wyverns menores (derrota primero)
+6. Recompensa: 1000 XP + Escamas de Dragón x10 + Garra de Frostmaw + Título "Cazador de Dragones"
+
+============================================
+CONSEJOS GENERALES
+============================================
+
+COMBATE:
+- Siempre lleva al menos 5 Pociones de Vida
+- Guarda el juego antes de enfrentar jefes
+- Los ataques críticos ocurren atacando por la espalda
+
+EXPLORACIÓN:
+- Habla con todos los NPCs, algunos dan misiones ocultas
+- Revisa barriles, cofres y armarios para encontrar objetos
+- Las áreas con niebla suelen tener enemigos más fuertes
+
+ECONOMÍA:
+- No vendas las gemas, las necesitarás para craftear
+- Ahorra oro para comprar la montura (5000 oro en nivel 15)
+- Completa misiones secundarias para mejores recompensas
+
+NIVEL:
+- Nivel 1-5: Quédate cerca del pueblo inicial
+- Nivel 6-10: Explora el Bosque Nebuloso
+- Nivel 11-15: Aventúrate en las Minas y Cuevas
+- Nivel 16-20: Dirígete a los Picos Helados
+
+============================================
+MISIÓN OCULTA: EL TESORO DEL PIRATA
+============================================
+
+MISIÓN: Encontrar el Tesoro del Capitán Barbanegra
+UBICACIÓN: Playa Escondida
+NIVEL RECOMENDADO: 15
+REQUISITO: Tener el Mapa del Tesoro (se compra a un mercader ambulante por 1000 oro)
+
+PASOS:
+1. Compra el Mapa del Tesoro al Mercader Misterioso (aparece los martes en el pueblo)
+2. Ve a la Playa Escondida en la costa sur
+3. Desde la roca grande con forma de calavera, camina:
+   - 20 pasos al norte
+   - 15 pasos al este
+   - 10 pasos al sur
+4. Cava en ese punto (necesitas una pala, 100 oro en la ferretería)
+5. Aparecerá un cofre custodiado por 3 Esqueletos Piratas
+6. Derrota a los esqueletos
+7. Abre el cofre con la Llave Oxidada (está en el esqueleto del centro)
+8. Recompensa: 2000 oro + Sable del Capitán + Tricornio Legendario + 500 XP
+
+============================================
+FIN DE LA GUÍA
+============================================
+
+¡Buena suerte en tu aventura!

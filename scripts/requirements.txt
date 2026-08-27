@@ -1,0 +1,16 @@
+deep-translator>=1.11.0
+customtkinter>=5.2.0
+Pillow>=10.0.0
+keyboard>=0.13.5
+mss>=9.0.1
+requests>=2.31.0
+# Traductor OCR offline: instalar aparte con Setup_Gemma_LiteRT.bat
+# litert-lm>=0.16.0
+beautifulsoup4>=4.12.0
+winrt-Windows.Media.Ocr>=3.2.1
+winrt-Windows.Graphics.Imaging>=3.2.1
+winrt-Windows.Storage.Streams>=3.2.1
+winrt-Windows.Foundation>=3.2.1
+winrt-Windows.Foundation.Collections>=3.2.1
+winrt-Windows.Globalization>=3.2.1
+pyinstaller>=6.0.0

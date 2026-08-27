@@ -1,0 +1,11 @@
+# Diccionario OCR (original=corregido)
+# Una entrada por línea. Se aplica antes de traducir con Gemma.
+beyound=beyond
+beoynd=beyond
+accomodation=accommodation
+custorners=customers
+goas=gods
+burries=buries
+helio=well
+# Nombres propios del juego (ejemplo):
+# moon=Moon

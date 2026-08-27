@@ -1,0 +1,126 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Tipo de bump semver
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump version
+        id: bump
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $bump = "${{ inputs.bump }}"
+          $raw = (Get-Content -Path VERSION -Raw).Trim()
+          if ($raw -notmatch '^\d+\.\d+\.\d+$') {
+            throw "VERSION invalido: '$raw'"
+          }
+          $parts = $raw.Split('.')
+          $major = [int]$parts[0]
+          $minor = [int]$parts[1]
+          $patch = [int]$parts[2]
+          switch ($bump) {
+            "major" { $major++; $minor = 0; $patch = 0 }
+            "minor" { $minor++; $patch = 0 }
+            "patch" { $patch++ }
+            default { throw "bump desconocido: $bump" }
+          }
+          $new = "$major.$minor.$patch"
+          $tag = "v$new"
+          $existing = git tag -l $tag
+          if ($existing) {
+            throw "El tag $tag ya existe"
+          }
+          Set-Content -Path VERSION -Value "$new`n" -NoNewline
+          $init = Get-Content -Path app/__init__.py -Raw
+          if ($init -notmatch '__version__\s*=') {
+            throw "No se encontro __version__ en app/__init__.py"
+          }
+          $updated = [regex]::Replace($init, '__version__\s*=\s*["''][^"'']*["'']', "__version__ = `"$new`"")
+          Set-Content -Path app/__init__.py -Value $updated -NoNewline
+          "version=$new" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          Write-Host "Bumped $raw -> $new ($bump)"
+
+      - name: Commit version bump and tag
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $tag = "${{ steps.bump.outputs.tag }}"
+          $version = "${{ steps.bump.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VERSION app/__init__.py
+          git commit -m "chore: release $tag"
+          git tag $tag
+          git push origin HEAD:main
+          git push origin $tag
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Build with PyInstaller
+        shell: pwsh
+        run: pyinstaller --noconfirm scripts/EstiloKaio.spec
+
+      - name: Zip executable
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $version = "${{ steps.bump.outputs.version }}"
+          $exe = "dist/EstiloKaio.exe"
+          if (-not (Test-Path $exe)) {
+            throw "No se genero $exe"
+          }
+          $zip = "EstiloKaio-v$version-windows.zip"
+          Compress-Archive -Path $exe -DestinationPath $zip -Force
+          "zip=$zip" >> $env:GITHUB_OUTPUT
+          Write-Host "Created $zip"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $tag = "${{ steps.bump.outputs.tag }}"
+          $version = "${{ steps.bump.outputs.version }}"
+          $zip = "EstiloKaio-v$version-windows.zip"
+          $notes = @"
+          Windows x64 — ejecutable onefile ``EstiloKaio.exe``.
+
+          Gemma / Ollama no van en este zip: configurarlos aparte si los usas.
+          "@
+          gh release create $tag $zip --title "Estilo Kaio $tag" --notes $notes
