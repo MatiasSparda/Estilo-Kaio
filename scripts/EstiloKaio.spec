@@ -1,12 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
 # Ejecutar desde la raíz del repo:
 #   pyinstaller --noconfirm scripts/EstiloKaio.spec
+#
+# Paths anclados al repo root: PyInstaller resuelve relativos al dir del .spec.
+
+import os
 
 block_cipher = None
+repo_root = os.path.abspath(os.path.join(SPECPATH, ".."))
+entrypoint = os.path.join(repo_root, "app", "__main__.py")
 
 a = Analysis(
-    ['app/__main__.py'],
-    pathex=['.'],
+    [entrypoint],
+    pathex=[repo_root],
     binaries=[],
     datas=[],
     hiddenimports=[
