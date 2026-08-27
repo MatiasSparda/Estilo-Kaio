@@ -221,7 +221,7 @@ __marimo__/
 # Local app state (paths personales)
 config.json
 
-# Third-party / vendored (no incluir)
+# Evitar reintroducir árboles ajenos
 MORT-main/
 MORT/
 
