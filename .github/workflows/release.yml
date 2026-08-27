@@ -37,37 +37,25 @@ jobs:
           $ErrorActionPreference = "Stop"
           git fetch --tags --force origin
 
-          function Parse-Semver([string]$value) {
-            if ($value -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+          function Assert-Semver([string]$value) {
+            if ($value -notmatch '^\d+\.\d+\.\d+$') {
               throw "Semver invalido: '$value'"
             }
-            return ,([int]$Matches[1]), ([int]$Matches[2]), ([int]$Matches[3])
-          }
-
-          function Compare-Semver($a, $b) {
-            for ($i = 0; $i -lt 3; $i++) {
-              if ($a[$i] -gt $b[$i]) { return 1 }
-              if ($a[$i] -lt $b[$i]) { return -1 }
-            }
-            return 0
-          }
-
-          function Format-Semver($parts) {
-            return "$($parts[0]).$($parts[1]).$($parts[2])"
+            return [version]$value
           }
 
           function Tag-Exists([string]$tagName) {
-            $local = git tag -l $tagName
-            if ($local) { return $true }
+            if (git tag -l $tagName) { return $true }
             $remote = git ls-remote --tags origin "refs/tags/$tagName"
-            return [bool]$remote
+            return -not [string]::IsNullOrWhiteSpace($remote)
           }
 
           $bump = "${{ inputs.bump }}"
           $fileVer = (Get-Content -Path VERSION -Raw).Trim()
+          $null = Assert-Semver $fileVer
           $fileTag = "v$fileVer"
 
-          # Release incompleto: VERSION ya bumpeada pero sin tag (o tag borrado).
+          # Release incompleto: VERSION ya bumpeada pero sin tag.
           if (-not (Tag-Exists $fileTag)) {
             $new = $fileVer
             $tag = $fileTag
@@ -75,32 +63,25 @@ jobs:
             Write-Host "VERSION $fileVer sin tag. Completando release $tag (bump ignorado)."
           }
           else {
-            $baseParts = Parse-Semver $fileVer
-            $tags = git tag -l "v*.*.*"
-            foreach ($t in $tags) {
+            $base = Assert-Semver $fileVer
+            foreach ($t in (git tag -l "v*.*.*")) {
               $tVer = $t.Substring(1)
               if ($tVer -notmatch '^\d+\.\d+\.\d+$') { continue }
-              $tParts = Parse-Semver $tVer
-              if ((Compare-Semver $tParts $baseParts) -gt 0) {
-                $baseParts = $tParts
-              }
+              $tv = [version]$tVer
+              if ($tv -gt $base) { $base = $tv }
             }
-            $base = Format-Semver $baseParts
-            $major = $baseParts[0]
-            $minor = $baseParts[1]
-            $patch = $baseParts[2]
+
             switch ($bump) {
-              "major" { $major++; $minor = 0; $patch = 0 }
-              "minor" { $minor++; $patch = 0 }
-              "patch" { $patch++ }
+              "major" { $next = [version]::new($base.Major + 1, 0, 0) }
+              "minor" { $next = [version]::new($base.Major, $base.Minor + 1, 0) }
+              "patch" { $next = [version]::new($base.Major, $base.Minor, $base.Build + 1) }
               default { throw "bump desconocido: $bump" }
             }
-            $new = "$major.$minor.$patch"
-            # Si choca con tag existente, avanzar patch hasta libre.
+            $new = "$($next.Major).$($next.Minor).$($next.Build)"
             while (Tag-Exists "v$new") {
               Write-Host "Tag v$new ocupado; auto patch++"
-              $p = Parse-Semver $new
-              $new = "$($p[0]).$($p[1]).$($p[2] + 1)"
+              $cur = [version]$new
+              $new = "$($cur.Major).$($cur.Minor).$($cur.Build + 1)"
             }
             $tag = "v$new"
             $mode = "bump"
