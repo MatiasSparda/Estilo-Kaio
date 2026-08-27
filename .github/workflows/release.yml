@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       bump:
-        description: Tipo de bump semver
+        description: Tipo de bump semver (ignorado si VERSION aun no tiene tag — completa release pendiente)
         required: true
         type: choice
         options:
@@ -28,12 +28,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
 
       - name: Compute next version
         id: bump
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
+          git fetch --tags --force origin
 
           function Parse-Semver([string]$value) {
             if ($value -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
@@ -50,36 +52,59 @@ jobs:
             return 0
           }
 
+          function Format-Semver($parts) {
+            return "$($parts[0]).$($parts[1]).$($parts[2])"
+          }
+
+          function Tag-Exists([string]$tagName) {
+            $local = git tag -l $tagName
+            if ($local) { return $true }
+            $remote = git ls-remote --tags origin "refs/tags/$tagName"
+            return [bool]$remote
+          }
+
           $bump = "${{ inputs.bump }}"
           $fileVer = (Get-Content -Path VERSION -Raw).Trim()
-          $baseParts = Parse-Semver $fileVer
+          $fileTag = "v$fileVer"
 
-          # Si un release fallido dejo tag sin actualizar VERSION (o al reves),
-          # tomar el maximo entre archivo y tags remotos/locales.
-          $tags = git tag -l "v*.*.*"
-          foreach ($t in $tags) {
-            $tVer = $t.TrimStart('v')
-            if ($tVer -notmatch '^\d+\.\d+\.\d+$') { continue }
-            $tParts = Parse-Semver $tVer
-            if ((Compare-Semver $tParts $baseParts) -gt 0) {
-              $baseParts = $tParts
+          # Release incompleto: VERSION ya bumpeada pero sin tag (o tag borrado).
+          if (-not (Tag-Exists $fileTag)) {
+            $new = $fileVer
+            $tag = $fileTag
+            $mode = "finish-pending"
+            Write-Host "VERSION $fileVer sin tag. Completando release $tag (bump ignorado)."
+          }
+          else {
+            $baseParts = Parse-Semver $fileVer
+            $tags = git tag -l "v*.*.*"
+            foreach ($t in $tags) {
+              $tVer = $t.Substring(1)
+              if ($tVer -notmatch '^\d+\.\d+\.\d+$') { continue }
+              $tParts = Parse-Semver $tVer
+              if ((Compare-Semver $tParts $baseParts) -gt 0) {
+                $baseParts = $tParts
+              }
             }
-          }
-
-          $base = "$($baseParts[0]).$($baseParts[1]).$($baseParts[2])"
-          $major = $baseParts[0]
-          $minor = $baseParts[1]
-          $patch = $baseParts[2]
-          switch ($bump) {
-            "major" { $major++; $minor = 0; $patch = 0 }
-            "minor" { $minor++; $patch = 0 }
-            "patch" { $patch++ }
-            default { throw "bump desconocido: $bump" }
-          }
-          $new = "$major.$minor.$patch"
-          $tag = "v$new"
-          if (git tag -l $tag) {
-            throw "El tag $tag ya existe tras el bump. Revisa tags o elegi otro bump."
+            $base = Format-Semver $baseParts
+            $major = $baseParts[0]
+            $minor = $baseParts[1]
+            $patch = $baseParts[2]
+            switch ($bump) {
+              "major" { $major++; $minor = 0; $patch = 0 }
+              "minor" { $minor++; $patch = 0 }
+              "patch" { $patch++ }
+              default { throw "bump desconocido: $bump" }
+            }
+            $new = "$major.$minor.$patch"
+            # Si choca con tag existente, avanzar patch hasta libre.
+            while (Tag-Exists "v$new") {
+              Write-Host "Tag v$new ocupado; auto patch++"
+              $p = Parse-Semver $new
+              $new = "$($p[0]).$($p[1]).$($p[2] + 1)"
+            }
+            $tag = "v$new"
+            $mode = "bump"
+            Write-Host "Base $base (file=$fileVer) -> $new ($bump)"
           }
 
           Set-Content -Path VERSION -Value "$new`n" -NoNewline
@@ -92,7 +117,7 @@ jobs:
 
           "version=$new" >> $env:GITHUB_OUTPUT
           "tag=$tag" >> $env:GITHUB_OUTPUT
-          Write-Host "Base $base (file=$fileVer) -> $new ($bump). Tag/commit despues del build."
+          "mode=$mode" >> $env:GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -138,9 +163,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add VERSION app/__init__.py
-          git commit -m "chore: release $tag"
+          $staged = git diff --cached --name-only
+          if ($staged) {
+            git commit -m "chore: release $tag"
+            git push origin HEAD:main
+          }
+          else {
+            Write-Host "Sin cambios de version que commitear; se tagea HEAD actual."
+          }
+
+          if (git tag -l $tag) {
+            throw "El tag $tag aparecio durante el job; abortando."
+          }
           git tag $tag
-          git push origin HEAD:main
           git push origin $tag
 
           $notes = @"
