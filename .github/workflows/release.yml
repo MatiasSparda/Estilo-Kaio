@@ -29,20 +29,47 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Bump version
+      - name: Compute next version
         id: bump
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $bump = "${{ inputs.bump }}"
-          $raw = (Get-Content -Path VERSION -Raw).Trim()
-          if ($raw -notmatch '^\d+\.\d+\.\d+$') {
-            throw "VERSION invalido: '$raw'"
+
+          function Parse-Semver([string]$value) {
+            if ($value -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+              throw "Semver invalido: '$value'"
+            }
+            return ,([int]$Matches[1]), ([int]$Matches[2]), ([int]$Matches[3])
           }
-          $parts = $raw.Split('.')
-          $major = [int]$parts[0]
-          $minor = [int]$parts[1]
-          $patch = [int]$parts[2]
+
+          function Compare-Semver($a, $b) {
+            for ($i = 0; $i -lt 3; $i++) {
+              if ($a[$i] -gt $b[$i]) { return 1 }
+              if ($a[$i] -lt $b[$i]) { return -1 }
+            }
+            return 0
+          }
+
+          $bump = "${{ inputs.bump }}"
+          $fileVer = (Get-Content -Path VERSION -Raw).Trim()
+          $baseParts = Parse-Semver $fileVer
+
+          # Si un release fallido dejo tag sin actualizar VERSION (o al reves),
+          # tomar el maximo entre archivo y tags remotos/locales.
+          $tags = git tag -l "v*.*.*"
+          foreach ($t in $tags) {
+            $tVer = $t.TrimStart('v')
+            if ($tVer -notmatch '^\d+\.\d+\.\d+$') { continue }
+            $tParts = Parse-Semver $tVer
+            if ((Compare-Semver $tParts $baseParts) -gt 0) {
+              $baseParts = $tParts
+            }
+          }
+
+          $base = "$($baseParts[0]).$($baseParts[1]).$($baseParts[2])"
+          $major = $baseParts[0]
+          $minor = $baseParts[1]
+          $patch = $baseParts[2]
           switch ($bump) {
             "major" { $major++; $minor = 0; $patch = 0 }
             "minor" { $minor++; $patch = 0 }
@@ -51,10 +78,10 @@ jobs:
           }
           $new = "$major.$minor.$patch"
           $tag = "v$new"
-          $existing = git tag -l $tag
-          if ($existing) {
-            throw "El tag $tag ya existe"
+          if (git tag -l $tag) {
+            throw "El tag $tag ya existe tras el bump. Revisa tags o elegi otro bump."
           }
+
           Set-Content -Path VERSION -Value "$new`n" -NoNewline
           $init = Get-Content -Path app/__init__.py -Raw
           if ($init -notmatch '__version__\s*=') {
@@ -62,23 +89,10 @@ jobs:
           }
           $updated = [regex]::Replace($init, '__version__\s*=\s*["''][^"'']*["'']', "__version__ = `"$new`"")
           Set-Content -Path app/__init__.py -Value $updated -NoNewline
+
           "version=$new" >> $env:GITHUB_OUTPUT
           "tag=$tag" >> $env:GITHUB_OUTPUT
-          Write-Host "Bumped $raw -> $new ($bump)"
-
-      - name: Commit version bump and tag
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          $tag = "${{ steps.bump.outputs.tag }}"
-          $version = "${{ steps.bump.outputs.version }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add VERSION app/__init__.py
-          git commit -m "chore: release $tag"
-          git tag $tag
-          git push origin HEAD:main
-          git push origin $tag
+          Write-Host "Base $base (file=$fileVer) -> $new ($bump). Tag/commit despues del build."
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -106,10 +120,9 @@ jobs:
           }
           $zip = "EstiloKaio-v$version-windows.zip"
           Compress-Archive -Path $exe -DestinationPath $zip -Force
-          "zip=$zip" >> $env:GITHUB_OUTPUT
           Write-Host "Created $zip"
 
-      - name: Publish GitHub Release
+      - name: Commit, tag and publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: pwsh
@@ -118,6 +131,18 @@ jobs:
           $tag = "${{ steps.bump.outputs.tag }}"
           $version = "${{ steps.bump.outputs.version }}"
           $zip = "EstiloKaio-v$version-windows.zip"
+          if (-not (Test-Path $zip)) {
+            throw "Falta $zip"
+          }
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VERSION app/__init__.py
+          git commit -m "chore: release $tag"
+          git tag $tag
+          git push origin HEAD:main
+          git push origin $tag
+
           $notes = @"
           Windows x64 — ejecutable onefile ``EstiloKaio.exe``.
 
