@@ -17,8 +17,10 @@ Dependencias: `pip install -r scripts/requirements.txt`
 ### Opción 1: Ejecutable (Recomendado)
 
 1. En GitHub → **Releases**, bajá el zip `EstiloKaio-vX.Y.Z-windows.zip`
-2. Extraé y ejecutá `EstiloKaio.exe` (no hace falta Python)
+2. Extraé y ejecutá `EstiloKaio.exe` (no hace falta Python ni pip)
 3. Primera configuración: región del traductor, región del diario, guía `.txt`
+
+El zip trae **Argos en-es** (offline). Gemma/Ollama se configuran aparte.
 
 Para publicar una release nueva (maintainers): Actions → **Release** → Run workflow → elegí `patch` / `minor` / `major`.
 
@@ -31,9 +33,9 @@ Para publicar una release nueva (maintainers): Actions → **Release** → Run w
 
 ### Traductor (Alt+T)
 - Captura región → OCR → motor a elegir:
-  - **Gemma (IA local)** — offline
-  - **Google Translate** — online
-  - **Google + Gemma** — borrador Google + revisión local
+  - **Argos** — offline, en el exe
+  - **Argos + Gemma** — borrador Argos + revisión local
+  - **Gemma (IA local)** — offline, setup aparte
 - Setup Gemma (opcional): `scripts\Setup_Gemma_LiteRT.bat`
 
 ### Asistente de guía (Alt+G)

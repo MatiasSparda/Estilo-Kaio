@@ -7,12 +7,30 @@ import os
 import subprocess
 import sys
 
+from . import argos_worker as _argos_worker
+
 _CHUNK_LIMIT = 4500
 _WORKER_TIMEOUT_S = 120.0
+_WORKER_TIMEOUT_FROZEN_S = 180.0
 
 
 def _project_root() -> str:
     return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _worker_cmd() -> list[str]:
+    if getattr(sys, "frozen", False):
+        return [sys.executable, "--argos-worker"]
+    return [sys.executable, "-m", "app.argos_worker"]
+
+
+def _prepare_argos_env(env: dict) -> dict:
+    out = dict(env)
+    dest = _argos_worker._user_packages_dir()
+    out["ARGOS_PACKAGES_DIR"] = str(dest)
+    out["ARGOS_DEVICE_TYPE"] = "cpu"
+    out["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+    return out
 
 
 def _translate_once(text: str, source: str, target: str) -> str:
@@ -21,22 +39,35 @@ def _translate_once(text: str, source: str, target: str) -> str:
         {"text": text, "source": source, "target": target},
         ensure_ascii=False,
     )
-    env = os.environ.copy()
-    root = _project_root()
-    env["PYTHONPATH"] = root + os.pathsep + env.get("PYTHONPATH", "")
+    env = _prepare_argos_env(os.environ.copy())
+    frozen = getattr(sys, "frozen", False)
+    if frozen:
+        cwd = os.path.dirname(sys.executable)
+        timeout = _WORKER_TIMEOUT_FROZEN_S
+    else:
+        root = _project_root()
+        env["PYTHONPATH"] = root + os.pathsep + env.get("PYTHONPATH", "")
+        cwd = root
+        timeout = _WORKER_TIMEOUT_S
 
-    proc = subprocess.run(
-        [sys.executable, "-m", "app.argos_worker"],
-        input=payload,
-        capture_output=True,
-        text=True,
-        timeout=_WORKER_TIMEOUT_S,
-        env=env,
-        cwd=root,
-    )
+    run_kw: dict = {
+        "input": payload,
+        "capture_output": True,
+        "encoding": "utf-8",
+        "errors": "replace",
+        "timeout": timeout,
+        "env": env,
+        "cwd": cwd,
+    }
+    if sys.platform == "win32":
+        run_kw["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+    proc = subprocess.run(_worker_cmd(), **run_kw)
     raw = (proc.stdout or "").strip()
     if not raw:
         err = (proc.stderr or "").strip()
+        if frozen:
+            raise RuntimeError(err or "Argos no arrancó en el ejecutable.")
         raise RuntimeError(
             err or "Argos no respondió. Verificá: pip install argostranslate"
         )

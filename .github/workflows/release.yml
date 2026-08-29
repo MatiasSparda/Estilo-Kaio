@@ -111,6 +111,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
 
+      - name: Prepare Argos en-es packages
+        shell: pwsh
+        run: python scripts/prepare_argos_packages.py
+
       - name: Build with PyInstaller
         shell: pwsh
         run: pyinstaller --noconfirm scripts/EstiloKaio.spec
@@ -160,8 +164,8 @@ jobs:
           git push origin $tag
 
           $notes = @"
-          Windows x64 — ejecutable onefile ``EstiloKaio.exe``.
+          Windows x64 — ejecutable onefile ``EstiloKaio.exe`` (sin Python).
 
-          Gemma / Ollama no van en este zip: configurarlos aparte si los usas.
+          Argos en-es va en el zip (traducción offline). Gemma / Ollama no: configurarlos aparte si los usas.
           "@
           gh release create $tag $zip --title "Estilo Kaio $tag" --notes $notes
