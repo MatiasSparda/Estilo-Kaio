@@ -570,50 +570,63 @@ class TranslatorOverlayOver:
 
 
 TRANSLATION_PROVIDERS = {
+    "argos": "Argos (offline) · ~1–3 s",
+    "argos_gemma": "Argos + Gemma · ~5–15 s",
     "gemma": "Gemma (IA local) · ~15–40 s",
-    "google": "Google Translate · ~1–3 s",
-    "google_gemma": "Google + Gemma · ~5–15 s",
 }
 
-# Estimaciones orientativas por diálogo (GPU/CPU e internet varían).
-TRANSLATION_PROVIDER_ETA = {
-    "gemma": "~15–40 s",
-    "google": "~1–3 s",
-    "google_gemma": "~5–15 s",
+# Alias de configs antiguas.
+TRANSLATION_PROVIDER_ALIASES = {
+    "google": "argos",
+    "google_gemma": "argos_gemma",
+    "online": "argos",
+    "online_gemma": "argos_gemma",
 }
+
+TRANSLATION_PROVIDER_ETA = {
+    "argos": "~1–3 s",
+    "argos_gemma": "~5–15 s",
+    "gemma": "~15–40 s",
+}
+
+
+def normalize_translation_provider(provider: str) -> str:
+    p = (provider or "argos").strip().lower()
+    p = TRANSLATION_PROVIDER_ALIASES.get(p, p)
+    return p if p in TRANSLATION_PROVIDERS else "argos"
 
 
 class Translator:
-    """OCR overlay: Gemma, Google, o híbrido Google+revisión Gemma."""
+    """OCR overlay: Argos offline, Argos+Gemma, o Gemma local."""
 
-    def __init__(self, source="en", target="es", provider="gemma"):
+    def __init__(self, source="en", target="es", provider="argos"):
         self.source = source
         self.target = target
-        self.provider = provider if provider in TRANSLATION_PROVIDERS else "gemma"
+        self.provider = normalize_translation_provider(provider)
 
     def set_languages(self, source, target):
         self.source = source
         self.target = target
 
     def set_provider(self, provider: str):
-        self.provider = provider if provider in TRANSLATION_PROVIDERS else "gemma"
+        self.provider = normalize_translation_provider(provider)
 
     def translate(self, text):
         try:
             if not text or not text.strip():
                 return "[Sin texto para traducir]"
             text = correct_ocr_text(text)
-            if self.provider == "google":
-                from .google_translate import translate_text as gt_text
+            if self.provider == "argos":
+                from .argos_translate import translate_text as argos_text
 
-                return gt_text(text, self.source, self.target)
-            if self.provider == "google_gemma":
+                return argos_text(text, self.source, self.target)
+            if self.provider == "argos_gemma":
                 from .gemma_translate import is_server_running
-                from .google_translate import translate_text_with_review
+                from .argos_translate import translate_text_with_review
 
                 if not is_server_running():
                     raise RuntimeError(
-                        "Google + Gemma requiere Gemma iniciado. "
+                        "Argos + Gemma requiere Gemma iniciado. "
                         "Usá 'Iniciar' en Traductor."
                     )
                 return translate_text_with_review(
@@ -632,21 +645,21 @@ class Translator:
             if not blocks:
                 return []
             blocks = correct_blocks(blocks)
-            if self.provider == "google":
-                from .google_translate import translate_blocks as gt_blocks
+            if self.provider == "argos":
+                from .argos_translate import translate_blocks as argos_blocks
 
-                return gt_blocks(blocks, self.source, self.target, review=False)
-            if self.provider == "google_gemma":
+                return argos_blocks(blocks, self.source, self.target, review=False)
+            if self.provider == "argos_gemma":
                 from .gemma_translate import is_server_running
-                from .google_translate import translate_blocks as gt_blocks
+                from .argos_translate import translate_blocks as argos_blocks
 
                 do_review = True if review is None else bool(review)
                 if do_review and not is_server_running():
                     raise RuntimeError(
-                        "Google + Gemma requiere Gemma iniciado. "
+                        "Argos + Gemma requiere Gemma iniciado. "
                         "Usá 'Iniciar' en Traductor."
                     )
-                return gt_blocks(
+                return argos_blocks(
                     blocks,
                     self.source,
                     self.target,

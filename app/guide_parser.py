@@ -146,6 +146,19 @@ def _letter_ratio_upper(s: str) -> bool:
     return bool(letters) and letters.upper() == letters and len(letters) >= 4
 
 
+_FAQ_SECTION_RE = re.compile(
+    r"^\s*\d+(?:-\d+)+\.\s+[A-Z0-9]",  # 4-2-11. SWAMP TOWN
+)
+_FAQ_TOP_RE = re.compile(
+    r"^\s*\d+\.\s+[A-Z][A-Z0-9\s\-',]+$",  # 1. INTRODUCTION
+)
+_ASCII_MAP_RE = re.compile(r"^[\*XxT\.:\$\^\!\sa-z\d]+$")
+_PROSE_IN_HEADING_RE = re.compile(
+    r"\b(the|you|that|this|will|from|have|been|with|your|than|looks)\b",
+    re.I,
+)
+
+
 def _is_heading(line: str, next_line: str | None) -> bool:
     s = line.strip()
     if not s or len(s) > 120:
@@ -153,8 +166,16 @@ def _is_heading(line: str, next_line: str | None) -> bool:
     if _is_separator(s):
         return False
 
+    # Mapas ASCII (p. ej. *XXXXX TXXXXXXXXX*)
+    if s.startswith("*") and _ASCII_MAP_RE.fullmatch(s):
+        return False
+
     # Markdown
     if re.match(r"^#{1,3}\s+\S", s):
+        return True
+
+    # FAQ numerado (Might and Magic, GameFAQs, etc.)
+    if _FAQ_SECTION_RE.match(s) or _FAQ_TOP_RE.match(s):
         return True
 
     lower = s.lower().rstrip(":")
@@ -164,10 +185,12 @@ def _is_heading(line: str, next_line: str | None) -> bool:
 
     # Prefijos fuertes: "MISIÓN:", "QUEST ", "Boss:", etc.
     for prefix in STRONG_PREFIXES:
-        if lower.startswith(prefix + ":") or lower.startswith(prefix + " "):
+        if lower.startswith(prefix + ":") or lower == prefix:
             return True
-        if lower == prefix:
-            return True
+        if lower.startswith(prefix + " "):
+            # Evitar prosa ("area by the poison cure…", "tips you off…")
+            if len(s) <= 72 and not _PROSE_IN_HEADING_RE.search(s):
+                return True
 
     # Título corto + separador debajo (===)
     if next_line and _is_separator(next_line) and 3 <= len(s) <= 100:
@@ -321,6 +344,21 @@ def filter_sections_by_query(
 
 # --- Recuperación de sección (ES↔EN básico + anti-intro) ---
 
+_ARRIVAL_RE = re.compile(
+    r"(?:"
+    r"visitar|visit[eéoó]|llegu[eéoó]|llegar|entré|entre|entrar|"
+    r"arriv(?:e|ed|ing)?|entered|reached|just\s+got\s+to|"
+    r"fui\s+a|estoy\s+en|estuve\s+en"
+    r")",
+    re.I,
+)
+
+
+def is_arrival_progress_query(query_text: str) -> bool:
+    """Progreso por llegada a un lugar (no por completar un hito)."""
+    return bool(_ARRIVAL_RE.search(query_text or ""))
+
+
 _META_TITLE_RE = re.compile(
     r"(introduction|introducci[oó]n|contents|table of|\bindex\b|versi[oó]n|"
     r"copyright|credits|bosses|faq|spoiler|legales?|appendix|ap[eé]ndice|"
@@ -383,6 +421,16 @@ _TERM_ALIASES: dict[str, tuple[str, ...]] = {
     "pasado": ("past",),
     "presente": ("present",),
     "cueva": ("cave",),
+    "pantano": ("swamp",),
+    "ciudad": ("town", "city"),
+    "bosque": ("forest", "woods"),
+    "templo": ("temple",),
+    "castillo": ("castle",),
+    "caverna": ("cavern", "cave"),
+    "isla": ("island",),
+    "torre": ("tower",),
+    "montaña": ("mountain",),
+    "montana": ("mountain",),
     "melodia": ("tune", "currents"),
     "melodía": ("tune", "currents"),
     "corrientes": ("currents", "tune"),
@@ -405,6 +453,16 @@ _TERM_WEIGHTS: dict[str, int] = {
     "rolling": 3,
     "dungeon": 2,
     "mazmorra": 2,
+    "swamp": 5,
+    "pantano": 5,
+    "town": 4,
+    "ciudad": 4,
+    "temple": 4,
+    "templo": 4,
+    "castle": 4,
+    "castillo": 4,
+    "cavern": 4,
+    "caverna": 4,
     "cave": 1,
     "past": 1,
     "present": 1,
@@ -456,12 +514,19 @@ def is_generic_title_section(section: GuideSection) -> bool:
     return False
 
 
-def query_search_terms(query: str) -> list[str]:
+def query_search_terms(query: str, extra_terms: list[str] | None = None) -> list[str]:
     raw = re.findall(r"[a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{3,}", query or "")
     terms: set[str] = set()
     for token in raw:
         t = token.lower()
         if t in _STOPWORDS:
+            continue
+        terms.add(t)
+        for alias in _TERM_ALIASES.get(t, ()):
+            terms.add(alias.lower())
+    for token in extra_terms or ():
+        t = (token or "").strip().lower()
+        if not t or t in _STOPWORDS or len(t) < 3:
             continue
         terms.add(t)
         for alias in _TERM_ALIASES.get(t, ()):
@@ -493,9 +558,11 @@ def score_section_for_terms(section: GuideSection, terms: list[str]) -> int:
 
 
 def rank_sections_for_query(
-    sections: list[GuideSection], query: str
+    sections: list[GuideSection],
+    query: str,
+    extra_terms: list[str] | None = None,
 ) -> list[tuple[int, GuideSection]]:
-    terms = query_search_terms(query)
+    terms = query_search_terms(query, extra_terms)
     if not terms:
         return []
     ranked: list[tuple[int, GuideSection]] = []
@@ -534,7 +601,11 @@ def is_walkthrough_section(section: GuideSection, appendix_start_id: int) -> boo
     return True
 
 
-def resolve_progress_start_id(sections: list[GuideSection], query: str) -> int | None:
+def resolve_progress_start_id(
+    sections: list[GuideSection],
+    query: str,
+    extra_terms: list[str] | None = None,
+) -> int | None:
     """
     Para 'acabo de superar X': ubica el hito MÁS TARDÍO del walkthrough que
     mencione los términos distintivos de la pregunta (no el más temprano).
@@ -543,7 +614,7 @@ def resolve_progress_start_id(sections: list[GuideSection], query: str) -> int |
     if not sections:
         return None
     appendix = find_appendix_start_id(sections)
-    terms = query_search_terms(query)
+    terms = query_search_terms(query, extra_terms)
     # Eventos concretos (dance/corona/…), no fillers tipo goron/ridge
     distinctive = [
         t
@@ -592,7 +663,7 @@ def resolve_progress_start_id(sections: list[GuideSection], query: str) -> int |
 
     ranked = [
         (sc, s)
-        for sc, s in rank_sections_for_query(sections, query)
+        for sc, s in rank_sections_for_query(sections, query, extra_terms)
         if is_walkthrough_section(s, appendix)
     ]
     if not ranked:
@@ -608,6 +679,7 @@ def resolve_auto_section_id(
     llm_pick: int | None,
     *,
     prefer_later: bool = False,
+    extra_terms: list[str] | None = None,
 ) -> int | None:
     """
     Combina match por términos + pick del LLM.
@@ -615,23 +687,30 @@ def resolve_auto_section_id(
     Si prefer_later (progreso): ancla en el hito más tardío del walkthrough.
     """
     by_id = {s.id: s for s in sections}
-    ranked = rank_sections_for_query(sections, query)
+    ranked = rank_sections_for_query(sections, query, extra_terms)
 
     def usable(sid: int | None) -> bool:
         if sid is None or sid not in by_id:
             return False
         return not is_generic_title_section(by_id[sid])
 
-    if prefer_later:
-        progress_id = resolve_progress_start_id(sections, query)
+    if prefer_later and not is_arrival_progress_query(query):
+        progress_id = resolve_progress_start_id(sections, query, extra_terms)
         if progress_id is not None:
             return progress_id
+
+    if prefer_later and is_arrival_progress_query(query) and ranked:
+        top_score = ranked[0][0]
+        cluster = [s for sc, s in ranked if sc >= max(1, top_score - 2)]
+        best = min(cluster, key=lambda s: s.id)
+        if usable(best.id):
+            return best.id
 
     if ranked and ranked[0][0] >= 4:
         best_id = ranked[0][1].id
         if usable(llm_pick):
             llm_score = score_section_for_terms(
-                by_id[llm_pick], query_search_terms(query)
+                by_id[llm_pick], query_search_terms(query, extra_terms)
             )
             if llm_score >= ranked[0][0]:
                 return llm_pick
@@ -703,20 +782,21 @@ def build_progress_candidate_contexts(
     *,
     max_chars: int = 12000,
     max_candidates: int = 3,
+    extra_terms: list[str] | None = None,
 ) -> list[tuple[int, str]]:
     """
     Varias ventanas candidatas (hito principal + otras secciones fuertes),
     para reintentar locate si la primera falla.
     """
     appendix = find_appendix_start_id(sections)
-    primary = resolve_progress_start_id(sections, query)
+    primary = resolve_progress_start_id(sections, query, extra_terms)
     starts: list[int] = []
     if primary is not None:
         starts.append(primary)
 
     ranked = [
         (sc, s)
-        for sc, s in rank_sections_for_query(sections, query)
+        for sc, s in rank_sections_for_query(sections, query, extra_terms)
         if is_walkthrough_section(s, appendix)
     ]
     # Preferir ids más tardíos entre los bien rankeados

@@ -14,6 +14,7 @@ from .translator import (
     TRANSLATOR_LANGUAGES,
     TRANSLATION_PROVIDERS,
     TRANSLATION_PROVIDER_ETA,
+    normalize_translation_provider,
 )
 from .ollama_assistant import (
     GuideAssistant,
@@ -29,6 +30,7 @@ from .gemma_translate import (
     is_server_running as gemma_is_running,
     resolve_model_id,
     set_preferred_backend,
+    translate_query_keywords,
     write_litert_config,
 )
 from .guide_parser import (
@@ -110,7 +112,7 @@ class EstiloKaioApp(ctk.CTk):
         self.auto_start_gemma = False
         self.gemma_backend = "cpu"
         self.default_ocr_engine = "oneocr"
-        self.translation_provider = "gemma"  # gemma | google
+        self.translation_provider = "argos"  # argos | argos_gemma | gemma
 
         self.capture_manager = ScreenCaptureManager(self)
         self.translator = Translator()
@@ -1371,9 +1373,12 @@ class EstiloKaioApp(ctk.CTk):
             return self.guide_text, None
 
         section_id = None
+        extra_terms: list[str] | None = None
         if mode == "auto":
             progress = is_progress_query(query_text)
-            # En preguntas de progreso el match por términos es más fiable que el LLM
+            extra_terms = (
+                translate_query_keywords(query_text) if gemma_is_running() else []
+            )
             llm_pick = None
             if not progress:
                 titles = [s.title for s in self.guide_sections]
@@ -1383,7 +1388,18 @@ class EstiloKaioApp(ctk.CTk):
                 query_text,
                 llm_pick,
                 prefer_later=progress,
+                extra_terms=extra_terms or None,
             )
+            if section_id is None and gemma_is_running():
+                titles = [s.title for s in self.guide_sections]
+                llm_pick = self.guide_assistant.pick_section_index(titles, query_text)
+                section_id = resolve_auto_section_id(
+                    self.guide_sections,
+                    query_text,
+                    llm_pick,
+                    prefer_later=progress,
+                    extra_terms=extra_terms or None,
+                )
             if section_id is None:
                 return None, (
                     "No pude ubicar la sección automáticamente (guía en otro idioma o poco contexto). "
@@ -1401,6 +1417,7 @@ class EstiloKaioApp(ctk.CTk):
                     query_text,
                     max_chars=12000,
                     max_candidates=3,
+                    extra_terms=extra_terms,
                 )
                 if candidates:
                     return [ctx for _sid, ctx in candidates], None
@@ -1503,17 +1520,19 @@ class EstiloKaioApp(ctk.CTk):
         return "Gemma/LiteRT: no instalado — usá Setup"
 
     def _translation_provider_hint_text(self) -> str:
-        p = getattr(self, "translation_provider", "gemma")
+        p = normalize_translation_provider(
+            getattr(self, "translation_provider", "argos")
+        )
         eta = TRANSLATION_PROVIDER_ETA.get(p, "")
-        if p == "google":
+        if p == "argos":
             return (
-                f"OCR → Google Translate (internet). "
-                f"Sin Gemma. Tiempo típico {eta}."
+                f"OCR → Argos offline (sin internet, sin bloqueos). "
+                f"Tiempo típico {eta}."
             )
-        if p == "google_gemma":
+        if p == "argos_gemma":
             return (
-                f"OCR → Google + revisión Gemma (compara original vs borrador). "
-                f"Internet + Gemma iniciado. Tiempo típico {eta}."
+                f"OCR → Argos + revisión Gemma (borrador rápido + IA). "
+                f"Requiere Gemma iniciado. Tiempo típico {eta}."
             )
         return (
             f"OCR → Gemma local (2 pasadas). "
@@ -1542,9 +1561,10 @@ class EstiloKaioApp(ctk.CTk):
     def _sync_translation_provider_combo(self):
         if not hasattr(self, "translation_provider_combo"):
             return
-        provider = getattr(self, "translation_provider", "gemma")
+        provider = getattr(self, "translation_provider", "argos")
+        provider = normalize_translation_provider(provider)
         if provider not in TRANSLATION_PROVIDERS:
-            provider = "gemma"
+            provider = "argos"
         label = TRANSLATION_PROVIDERS[provider]
         self.translation_provider_combo.set(label)
         if hasattr(self, "translation_provider_hint"):
@@ -1991,10 +2011,12 @@ class EstiloKaioApp(ctk.CTk):
             if config.get("gemma_model") == "gemma4-e2b":
                 self.gemma_backend = config.get("gemma_backend", "cpu")
             self.default_ocr_engine = config.get("default_ocr_engine", "oneocr")
-            provider = (config.get("translation_provider") or "gemma").strip().lower()
-            self.translation_provider = (
-                provider if provider in TRANSLATION_PROVIDERS else "gemma"
+            provider = normalize_translation_provider(
+                config.get("translation_provider") or "argos"
             )
+            if provider == "argos" and bool(config.get("auto_start_gemma", False)):
+                provider = "argos_gemma"
+            self.translation_provider = provider
             set_preferred_backend(self.gemma_backend)
             legacy_overlay = config.get("overlay_mode")
             if legacy_overlay not in ("layer", "over"):
@@ -2178,9 +2200,42 @@ class EstiloKaioApp(ctk.CTk):
         else:
             blocks = list(blocks_or_text or [])
 
+        staged = provider == "argos_gemma"
+
         def worker():
             try:
-                results = self.translator.translate_blocks(blocks)
+                if staged:
+                    draft = self.translator.translate_blocks(blocks, review=False)
+                    self.after(
+                        0,
+                        lambda r=draft, s=src, g=tgt: self._show_translation(
+                            r, s, g, refining=True
+                        ),
+                    )
+                    from .gemma_translate import is_server_running
+                    from .review_translate import review_block_results
+
+                    if not is_server_running():
+                        self.after(
+                            0,
+                            lambda: self.update_status(
+                                "Borrador Argos (Gemma apagado — sin refinado)",
+                                "orange",
+                            ),
+                        )
+                        return
+                    self.after(
+                        0,
+                        lambda: self.update_status(
+                            "Refinando con Gemma…", "yellow"
+                        ),
+                    )
+                    reviewed = review_block_results(
+                        draft, src, tgt, timeout=35.0
+                    )
+                    results = reviewed
+                else:
+                    results = self.translator.translate_blocks(blocks)
                 print(
                     "Traducción bloques:\n"
                     + "\n---\n".join(
@@ -2189,7 +2244,9 @@ class EstiloKaioApp(ctk.CTk):
                 )
                 self.after(
                     0,
-                    lambda r=results, s=src, g=tgt: self._show_translation(r, s, g),
+                    lambda r=results, s=src, g=tgt: self._show_translation(
+                        r, s, g, refining=False
+                    ),
                 )
             except Exception as e:
                 error_msg = f"Error en traducción: {str(e)}"
@@ -2198,7 +2255,7 @@ class EstiloKaioApp(ctk.CTk):
 
         threading.Thread(target=worker, daemon=True).start()
 
-    def _show_translation(self, results, src, tgt):
+    def _show_translation(self, results, src, tgt, *, refining=False):
         if isinstance(results, str):
             sections = [("Traducción", results, "")]
             is_err = results.startswith("[Error:")
@@ -2220,6 +2277,25 @@ class EstiloKaioApp(ctk.CTk):
             )
 
         mode = getattr(self, "overlay_mode", "layer") or "layer"
+
+        if not refining:
+            if mode == "over":
+                prev_over = getattr(self, "_over_overlay", None)
+                if prev_over is not None and not is_err:
+                    prev_over.update_results(results_list)
+                    self.update_status(
+                        f"Over: {len(sections)} bloque(s) (refinado)", "lime"
+                    )
+                    return
+            else:
+                prev_layer = getattr(self, "_layer_overlay", None)
+                if prev_layer is not None and not is_err:
+                    prev_layer.update_sections(sections)
+                    self.update_status(
+                        f"Layer: {len(sections)} bloque(s) (refinado)", "lime"
+                    )
+                    return
+
         if mode == "over" and self.translator_region:
             from .ocr_engine import UPSCALE
 
@@ -2232,7 +2308,7 @@ class EstiloKaioApp(ctk.CTk):
             )
         else:
             prev = getattr(self, "_layer_overlay", None)
-            if prev is not None:
+            if prev is not None and not refining:
                 try:
                     prev.destroy()
                 except Exception:
@@ -2244,11 +2320,15 @@ class EstiloKaioApp(ctk.CTk):
                 target_label=TRANSLATOR_LANGUAGES.get(tgt, tgt),
                 position=self.overlay_position,
                 on_position_changed=self.on_overlay_position_changed,
-                auto_close_ms=0 if is_err else 20000,
+                auto_close_ms=0 if (is_err or refining) else 20000,
                 show_ocr=True,
             )
+            if refining:
+                self._layer_overlay.set_refining(True)
         if is_err:
             self.update_status("Traducción con errores (ver overlay)", "red")
+        elif refining:
+            self.update_status("Borrador Argos · refinando con Gemma…", "yellow")
         else:
             tag = "Over" if mode == "over" else "Layer"
             self.update_status(f"{tag}: {len(sections)} bloque(s)", "lime")

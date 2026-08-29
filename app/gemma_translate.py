@@ -22,6 +22,7 @@ LEGACY_MODELS = ("gemma4-e2b",)
 # LiteRT default = high; traducción usa medium en ambas pasadas.
 REASONING_TRANSLATE = "medium"
 REASONING_REVIEW = "high"
+REASONING_SEARCH = "fast"
 
 MODEL_PRESETS: dict[str, dict[str, str]] = {
     "gemma4-e4b": {
@@ -199,7 +200,11 @@ def build_review_system_prompt(source: str, target: str) -> str:
         "- Uses the wrong homograph sense for the scene (action vs emotion, UI vs narrative, "
         "physical reaction vs introspective)\n"
         "- Replaces in-world/fantasy terms with generic modern equivalents\n"
-        "- Omits or invents facts\n\n"
+        "- Omits or invents facts\n"
+        "- Leaves English words untranslated in the draft (translate them to "
+        f"{tgt} unless they are proper nouns)\n"
+        "- Propagates obvious OCR misreads from the source (e.g. Seck→Seek, Lonly→Lonely); "
+        "infer the intended English from context, then fix the translation\n\n"
         "If the draft is faithful, return it unchanged.\n"
         f"Output ONLY the final {tgt} translation. No notes or English."
     )
@@ -385,6 +390,49 @@ def gemma_generate(
         timeout=timeout,
         reasoning_effort=reasoning_effort,
     )
+
+
+_QUERY_KEYWORDS_PROMPT = """Translate the player's game question into short English search keywords for a walkthrough guide.
+Reply with ONLY comma-separated English keywords (location names, dungeons, bosses, items).
+No sentences. If already English, return the key terms only.
+
+QUESTION: {query}
+"""
+
+
+def translate_query_keywords(
+    query: str,
+    *,
+    timeout: float = 12.0,
+) -> list[str]:
+    """Términos EN para buscar en guías (modo rápido, sin revisión)."""
+    if not (query or "").strip() or not is_server_running():
+        return []
+    raw, err = gemma_generate(
+        _QUERY_KEYWORDS_PROMPT.format(query=query.strip()),
+        temperature=0.0,
+        max_tokens=48,
+        timeout=timeout,
+        reasoning_effort=REASONING_SEARCH,
+    )
+    if err or not (raw or "").strip():
+        return []
+    import re
+
+    parts = re.split(r"[,;\n]+", raw.strip())
+    out: list[str] = []
+    seen: set[str] = set()
+    for p in parts:
+        t = re.sub(r"[^a-zA-Z0-9\s\-']", "", p).strip().lower()
+        if not t or len(t) < 3 or t in seen:
+            continue
+        seen.add(t)
+        out.append(t)
+        for word in t.split():
+            if len(word) >= 3 and word not in seen:
+                seen.add(word)
+                out.append(word)
+    return out
 
 
 def _translate_pass(

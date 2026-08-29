@@ -9,3 +9,6 @@ burries=buries
 helio=well
 # Nombres propios del juego (ejemplo):
 # moon=Moon
+seck=Seek
+lonly=Lonely
+icorus=Icarus

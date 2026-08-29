@@ -30,6 +30,9 @@ _BUILTIN: dict[str, str] = {
     "wiht": "with",
     "fro m": "from",
     "perperson": "per person",
+    "seck": "Seek",
+    "lonly": "Lonely",
+    "icorus": "Icarus",
 }
 
 

@@ -1,0 +1,2764 @@
+Might and Magic III FAQ(PC game)
+FAQ/walkthrough copyright 2004 by Andrew Schultz schultza@earthlink.net
+version 1.0.0
+
+Please do not reproduce this FAQ for profit without my prior consent. 
+However, if you write a polite e-mail to me referring to me(and this FAQ) by 
+name, then I will probably say OK. But if I ignore you that means no--and I 
+am bad about answering e-mail. Sorry.
+
+**** AD SPACE: **** My home page: http://www.geocities.com/SoHo/Exhibit/2762 
+
+Additional kvetching: mail about where to find this game will be ignored. 
+Look for the Ultimate Might and Magic Archives on eBay. If it's "out there" 
+for free, I don't want to know about it, but hey, I've done it for other 
+games, so I won't flame you back if you ask. But I'll ignore you.
+
+Someone made a great site that really encompasses the game here:
+http://www.rpgclassics.com/shrines/pc/mm3/
+
+It also has a cheat guide which makes the build-up process irrelevant.
+
+================================
+
+      OUTLINE
+
+  1. INTRODUCTION
+
+    1-1. ABOUT THE GAME
+
+    1-2. HOW TO RUN THE GAME
+
+    1-3. OTHER RESOURCES
+
+    1-4. THIS GUIDE'S PURPOSE
+
+  2. CONTROLS
+
+    2-1. KEYBOARD COMMANDS
+
+    2-2. USING THE MOUSE
+
+    2-3. CHANGES FROM MM2(FOR THE BETTER)
+
+    2-4. PLAYER METRICS AND RATINGS
+
+    2-5. EXPERIENCE
+
+    2-6. ARMOR CLASS TABLE
+
+    2-7. ALL STAR SPELLS
+
+  3. TIME, TIME, TIME
+
+    3-1. METRICS
+
+    3-2. TIME SAVERS
+
+  4. STARTING OFF IN THE TOWNS
+
+    4-1. GETTING PLAYERS AND EQUIPMENT
+
+    4-2. PICKING YOUR FIGHTS: MY PREFERRED ORDER
+
+      4-2-1. CLEARING A1 + FOUNTAIN HEAD
+
+      4-2-2. CLEARING A2
+
+      4-2-3. CLEARING A3
+
+      4-2-4. FOUNTAIN HEAD DUNGEON
+
+      4-2-5. BAYWATCH AND DUNGEON AND A4
+
+      4-2-6. B1 AREA
+
+      4-2-7. B2 AREA
+
+      4-2-8. WILDABAR AND ITS DUNGEON
+
+      4-2-9. ANCIENT TEMPLE OF MOO
+
+      4-2-10. B3 AND B4
+
+      4-2-11. SWAMP TOWN
+
+      4-2-12. BLISTERING HEIGHTS, PART 1
+
+      4-2-13. BLISTERING HEIGHTS CAVERN
+
+      4-2-14. SWAMP TOWN CAVERN
+
+      4-2-15. CLEARING E2
+
+      4-2-16. ARACHNID CAVES
+
+      4-2-17. SLITHERCULT CAVES
+
+      4-2-18. LOOTING THE CASTLES
+
+      4-2-19. ABANDON ALL CAUTION ALL YE WHO ENTER HERE
+
+      4-2-20. C2/C3/D2/D3
+
+      4-2-21. C4/D4/E4
+
+      4-2-22. CASTLE DUNGEONS: WHITESHIELD
+
+      4-2-23. CASTLE DUNGEONS: BLOODREIGN
+
+      4-2-24. CASTLE DUNGEONS: DRAGONTOOTH
+
+    4-3. THE ARENA
+
+  5. MIDDLE GAME
+
+    5-1. THE NECESSARY BITS
+
+      5-1-1. THE FORTRESS OF FEAR
+
+      5-1-2. THE HALLS OF INSANITY
+
+      5-1-3. THE DARK WARRIORS' KEEP
+
+      5-1-4. THE CATHEDRAL OF CARNAGE
+
+      5-1-5. THE TOMB OF TERROR
+
+      5-1-6. THE MAZE FROM HELL
+
+    5-2. STRETCHING THE # OF ORBS OUT TO 31
+
+      5-2-1. DRAGON CAVERN
+
+      5-2-2. THE PYRAMIDS AND THE STORAGE AREAS
+
+        5-2-2-1. CENTRAL COMMAND
+
+        5-2-2-2. AFT STORAGE
+
+        5-2-2-3. FORWARD STORAGE
+
+        5-2-2-4. MAIN CONTROL
+
+        5-2-2-5. MAIN ENGINE
+
+        5-2-2-6. ALPHA SECTOR
+
+        5-2-2-7. BETA SECTOR
+
+    5-3. THE NOT SO NECESSARY BITS
+
+      5-3-1. GREYWIND
+
+      5-3-2. GREYWIND DUNGEON
+
+      5-3-3. BLACKWIND
+
+      5-3-4. BLACKWIND DUNGEON
+
+    5-4. OK, OK, ON WITH IT ALREADY
+
+      5-4-1. THE CHEAP WAY. I WANT OUT!
+
+      5-4-2. WHAT MORE CAN I DO?
+
+  6. SIDE DUNGEONS
+
+    6-1. CURSED COLD CAVERN
+
+    6-2. MAGIC CAVERN
+
+    6-3. DRAGON CAVERN
+
+  7. OTHER AREA OVERVIEWS
+
+  8. FLOW CHART
+
+  9. FLAGRANT CHEATS AND FLY-THROUGH
+
+  10. WEIRD BUGS
+
+  11. VERSIONS
+
+  12. CREDITS
+
+================================
+
+  1. INTRODUCTION
+
+    1-1. ABOUT THE GAME
+
+  Might and Magic III was written for the PC and SNES and is a sequel to MM2. 
+I never got around to playing it until ~15 years after completing MM2, but 
+when I did, it was worth it. There's not a lot of initial instruction, but 
+you have a lot of side quests with your ultimate goal being to find
+
+a) 11 orbs of ultimate power, given to one king(there are 31 total, so you 
+can give more to a king for more experience)
+b) 6 hologram sequencing cards
+c) the escape pods that lead to the setup of Might and Magic IV
+
+  Along the way there may be keys you need to find as well as other items. 
+You'll need to make use of one of the classes you didn't see in Might and 
+Magic III, unless you get very lucky with a walk-on-water item: Rangers and 
+Druids. Rangers:Druids::Paladins:Clerics.
+
+  MM3 has the same structure as MM2 but combats don't have as many enemies, 
+and you can see them approaching. You can also clear out certain areas for 
+good, and when you return to a dungeon your monster hacking progress will be 
+saved. Many of the same spells return, but the outside is a bit bigger(6x4 of 
+16x16 grids, not 5x4) and you have some whopping 32x32 dungeons. Again, many 
+can be totally irrelevant, and some are best explored only until you find a 
+necessary item, but they all house something very interesting.
+
+    1-2. HOW TO RUN THE GAME
+
+  I had trouble running this in Windows's DOS emulator, so I recommend DOSBox 
+at dosbox.sourceforge.net. That way you can also have a website in one 
+window(see 1.3) and this box in another--or, better yet, this walkthrough in 
+another window, and it is easy to flip back and forth. You may need to add 
+the line mount c c:\ to the dosbox.conf file, but it's smooth sailing after 
+that.
+
+    1-3. OTHER RESOURCES
+
+  Lee Beng Hai(Volume)'s guide is very good. It's on various sites on the web 
+and details everywhere you need to go.
+
+  There's a German guide on GameFAQs. Maybe translating it will work well.
+
+  http://www.rpgclassics.com/shrines/pc/mm3/ has information on the whole 
+game, pretty much, except for some not strictly relevant dungeons. The 
+graphics that are there work wonderfully.
+
+    1-4. THIS GUIDE'S PURPOSE
+
+  First, this guide probably will help you win MM3 on the SNES, but some of 
+the control tricks might not work. The timing bugs might be different, too.
+
+  There are a lot of guides out there that have good insights into Might and 
+Magic III. Volume(Lee Beng Hai)'s guide outlines everything well, and the 
+shrine site at RPGClassics.com is quite well done. There's also a German 
+guide that discusses a way through. The German guide may discuss the nuts and 
+bolts of how to get through, but my minimal knowledge of German seems to 
+indicate maybe it doesn't.
+
+  So what this guide intends to do is to show how to get a quick jump on 
+things and get through the game in the shortest possible time. It should also 
+include details on how to avoid certain monsters or skip tough combats, which 
+becomes particularly important in the Maze from Hell. There's also the 
+middle-game bit that can drag and the matter of finding the right hirelings, 
+when, and of paying them--or finding ways to use their hard work and legally 
+stiff them. Simple stuff like hiring a level 40 thief in Blistering Heights 
+to open the $200000 worth of gold chests along with chests containing Ancient 
+Artifacts, then dismissing him.
+
+  There's also the matter of starting quickly. Getting up to level 8-10 or 
+so, which allows you to have 'cure disease' and avoid temples, is great. How 
+to avoid the temples early on? (Except for donations, which are ultimately 
+time-efficient.) How can you destroy the outposts for quick experience, or 
+build up cash to get skills?
+
+  And then there's the endgame. Which fights are advisable? What about a 
+quick way out, snagging the bare minimum 11 power orbs and saving yourself 
+time, versus getting all 31 ultimate power orbs?
+
+  Along the way there's the constant trick of keeping your save file backed 
+up just in case...because if you die, it's that much extra time that's tacked 
+on in the game.
+
+  This guide also assumes that you don't use the mm3edit cheat which helps 
+your party a lot. For that, you can just pump up all your skills, get rid of 
+the character improvement parts and go searching for items. But it's fun to 
+go through the game proper.
+
+  2. CONTROLS/NUMBERS
+
+    2-1. KEYBOARD COMMANDS
+
+  You can pretty much use the arrow keys to move around, with Y/N to enter a 
+room. Other commands, positioned on the keyboard from left to right, up to 
+down, are:
+
+S = shoot arrows
+C = cast a spell
+R = rest
+B = bash down a potential secret wall in front. If there's nothing there, you 
+go forward
+D = dismiss someone from your team
+Q = quick snapshot of party status
+M = view current auto-map
+I = inventory of time, spells, etc.
+V = view what Corak has to say
+
+F1-F8 = look at player
+
+  Not much to say about many of these commands, although if you hold down S, 
+the game shoots a lot more arrows than you need to, and it gets exasperating. 
+Bash may not work at first but if you lose five times in a row it's time to 
+give it a rest. You can dismiss PC's or NPC's from your team too.
+
+  And if you are fighting against monsters at a distance, before their names 
+appear in the upper right to replace the phone-button GUI, you can, if you 
+type quickly, cast a spell twice. I.e. while it's barreling through your 
+enemies, type C to get two shots, much as you can get two shots in.
+
+  But the most critical command is the [tab] command. With it you can save 
+and load games. [tab]-s saves, [tab]-l loads. You can also call Mr. Wizard, 
+which is handy in tight spots and, apparently, the Maze from Hell. But in 
+this walkthrough you'll learn what to do there. The TAB menu also allows you 
+to adjust the music and the sound effects.
+
+  The main trick you need to know with the keyboard is that you can cast two 
+spells or fire two shots while opponents fire one. While your spell is 
+landing on opponents out of melee range, type C and you will get another shot 
+for sure. Often there's some delay after the spell completes but this is a 
+good way to make sure. When facing Eliminators who can eradicate your party 
+just like THAT, it's pretty important to get this extra chance in.
+
+  Also sometimes you'll see something ahead and run into it and it won't be 
+there. Just turn around a bunch and you'll "see" it.
+
+    2-2. USING THE MOUSE
+
+  I really find the mouse a bit wobbly but there's one thing it can do that 
+the keyboard can't do. Sidestepping can be very useful in several cases. The 
+first, to lessen damage from a trap. Move the mouse around and you'll notice 
+the arrow changes, too. When it is bent, that means you will turn and move. 
+When it is off to either side, that means you shuffle sideways. The 
+difference is this: if you're on a "hot" square that does damage, shuffling 
+sideways prevents damage. When coupled with etherealizing onto a hot square, 
+it means you can escape damage totally. If you click it too near the center 
+it may flip you forwards and backwards, so beware.
+
+  Another way to use the mouse to sidestep is this: if you step forward and 
+an enemy appears and casts a spell at you, they won't do so if, from the same 
+position(yes, I'm advocating save/reload for even one move--it can make all 
+the difference when attacks are lethal) you turn to the side and shuffle in 
+the enemy's direction and then you turn to face them.
+
+    2-3. CHANGES FROM MM2(FOR THE BETTER)
+
+  The big one? You can save from anywhere, which means a lot less 
+backtracking. TAB-S or TAB-L. And even if you get in a fix you can't get out 
+of, you can call Mr. Wizard from the TAB menu.
+
+    2-4. PLAYER METRICS AND RATINGS
+
+  Each primary statistic a player has is given an adjective for its rating. 
+They change every 1-2 points at first but, as they get much better, the 
+adjective changes more and more rarely. Here's a list below:
+
+Range  |Description   |Bonus to...
+-------+--------------+-----
+8v      very low      |-2?
+?9-10?  low           |-1?
+11-12   average       |0
+13-14   good          |1
+15-16   very good     |2
+17-18   high          |3
+19-20   very high     |4
+21-24   awesome       |5
+25-29   super         |6
+30-34   amazing       |7
+35-39   incredible    |8
+40-49   gigantic      |9
+50-74   fantastic     |10
+75-99   astounding    |11
+100-124 astonishing   |12
+125-149 monumental    |13
+150-174 tremendous    |14
+175-199 collosal(sic) |15
+200-224 awesome       |16
+225-249 awe inspiring |17
+250     ultimate      |20
+
+  You can poke around at your player's stats with the arrow keys and see the 
+experience til next level, how many attacks and even the maximum hit points. 
+The "bonus to" is a modifier of the original ability. For instance if you 
+have a weapon that does 3d12, super strength would give you 3d12+6. Without 
+speed bonuses your armor might be 20, but with 22 speend it is 25. You can 
+see here that when your party gets better, you may want to have a strongman 
+for personality or intelligence(for spell points) but for a while sometimes 
+placing 5 with a lesser light can help improve their spell points immensely. 
+The same goes with sharing endurance points. Although you may want your 
+knight as a "gunner" to gain a lot, especially when he needs to go down into 
+pits, eventually it's more efficient to give them to your paladin or even 
+your suffering sorcerer. At least, until you find the wellsprings of where to 
+build the stats incredibly. Everyone will get to 50 eventually with the 
+Quatloo Coins you find.
+
+  There is some sort of formula to decide who gets what, in terms of 
+intelligence and personality and even endurance. First, by the middle game, 
+you should have gems in five digits, and there is one place where you can 
+keep reloading stats for gems traded in. It's tough to see where you'll get 
+the best return from, but note:
+
+--after you reach 50 points, it's much tougher to improve a visible stat. You 
+go from needing 2 to 4 to 5 to 10 to 25.
+--Archers and Paladins get points at half the clip spellcasters do. So once 
+you get them to 50, it gets you more spell points overall to donate to your 
+primary casters. But until then you may want to leave Archers/Paladins 10 
+points behind pure casters. Don't sweat the details, though.
+--The same goes for your Druid, surprisingly enough, if you have one. They 
+gain points at half the clip Clerics/Sorcerers do. Because Druids average 
+their gains for personality and intelligence, you may want to keep 
+personality and intelligence even until they hit 50. Then to optimize, 
+concentrate on just one or the other--for instance, if you have 2 stats at 
+67, it's less useful than 77 and 57. Not a huge point, but in case you're 
+picky.
+--Rangers are actually last to improve since their progress is 1/4 what other 
+spellcasters' is. Still with everyone else at 50 you can bring rangers along 
+later as that is overall the most efficient thing place to spend money. But 
+once they're at 50/50, forget it.
+--If you are close to 250 in one attribute it's worth it to get there as you 
+get an extra (final) bonus once attributes get there. But no use doing any 
+more.
+
+--Speed is actually the only attribute you can't pump up continually. Which 
+is a shame, so try to balance out everything in the 50-range.
+
+    2-5. EXPERIENCE
+
+  What you need for the next level doubles until it cannot go over 1024000. 
+Here's the starting experience for each character class:
+
+Robbers 1000
+Clerics, Knights 1500
+Paladins, Rangers, Sorcerers, Archers 2000
+
+  If you want to add a level, then, at the fountain where you can exchange 
+gold for experience, you need to add 1024000 per, which equates to:
+2048000 for 2 levels
+3072000 for 3 levels
+4096000 for 4 levels
+5120000 for 5 levels
+
+  However it really is easier just to go out in the world and find special 
+items. Ancient Artifacts give an average of 233333 per item per person(500000 
+for the "right" alignment, 100000 for the "wrong," right 1/3 of the time) and 
+Orbs of Power give 1000000. Therefore if you get all the artifacts(37) and 
+orbs(31) you have a pile of levels there for the whole party, almost 40 in 
+fact. And the Maze from Hell nets you 23 levels if you clear it out.
+
+  By the time you get to the upper levels of the arena, you get more 
+experience for monsters than for (1000*the fight.) And since you can cast 
+super-protective spells to get and stay there, you will be able to improve 
+your characters until gold becomes a serious problem. That, I don't know how 
+to remedy. Because there's only so much of it in the game. Bank interest 
+can't keep up with it, and if you are going to cheat to build your gold up, 
+why not do the same for your experience?
+
+  Still experience is no substitute for attributes and it's in your interest 
+to get as many stats at 50+ as you can. Spellcasting stats are critical. And 
+sometimes you need certain battle-preparation spells to survive in certain 
+areas anyway, so experience only gets you so far.
+
+    2-6. ARMOR CLASS TABLE
+
+01234567890123456789012345678901234567890123456789012345678901234567890123456
+789
+       |-3|-2|-1|+0| +1 | +2 |+3| +4 |+5|+6| +8|+ |+12|+14|+16|+20|
+       |Wo|Br|Br|Gl|Iron|Silv|Am|Ebon|Qu|  |Pla|10|Eme|Sap|Dia|Obs|
+       |od|as|on|as|Cora|Lapi|be|y  S|Ar|Go|Tin|Ru|ral|phi|mon|idi|
+       |en|s |ze| s|Crys|Pear| r|teel|Tz|ld|Um |by|d  |re |d  |an |
+-------+--+--+--+--+----+----+--+----+--+--+---+--+---+---+---+---+
+Padded |-1| 0| 1| 2|   3|   4| 5|   6| 7| 8| 10|12| 14| 16| 18| 22|=helm
+Leather| 0| 1| 2| 3|   4|   5| 6|   7| 8| 9| 10|12| 15| 17| 19| 23|
+Scale  | 1| 2| 3| 4|   5|   6| 7|   8| 9|10| 10|12| 16| 18| 20| 24|
+Ring   | 2| 3| 4| 5|   6|   7| 8|   9|10|11| 10|12| 17| 19| 21| 25|
+Chain  | 3| 4| 5| 6|   7|   8| 9|  10|11|12| 10|12| 18| 20| 22| 26|
+Splint | 4| 5| 6| 7|   8|   9|10|  11|12|13| 10|12| 19| 21| 23| 27|
+Plate-M| 5| 6| 7| 8|   9|  10|11|  12|13|14| 10|12| 20| 22| 24| 28|
+Plate-A| 7| 8| 9|10|  11|  12|13|  14|15|16| 18|20| 22| 24| 26| 30|
+-------+--+--+--+--+----+----+--+----+--+--+---+--+---+---+---+---+
+ToHit  |-3|+3|+2| 0|  +1|  +2|+3|  +4|     | +6|+6| +7| +8| +9|+15|
+Dmg    |-3|-4|-2| 0|  +1|  +2|+3|  +4|     |+10|12|+15|+20|+30|+50
+                    Ir=2|Si=4|  |St=6 Go=4h8d
+
+  Note that as you get into the precious stuff(past Gold) there's relatively 
+little difference between armors.
+
+  You actually do lose AC for items such as rings that give no default AC 
+improvement. You can have more than 1 ring but you can't have more than 1 of 
+other types of items except medals. They are divided as follows:
+
+Amulet/Necklace/pendant
+Brooch/cameo/charm/Medal/scarab
+Boots(+1)
+Ring
+Gauntlets(+1)
+Belt
+Crown/Tiara/Helm(+2)
+
+If you get an obsidian (anything other than a weapon) it raises your armor 
+class 20 points and you can even get an orb to hold in one hand for your 
+sorcerer.
+
+  As for weapons, Obsidian is so much more powerful than anything else that 
+even an Obsidian Dagger beats out, say, a Diamond Flamberge(+50 vs +30.)
+
+    2-7. ALL STAR SPELLS
+
+Indispensible cleric spells:
+Noncombat: LIGHT, FIRST AID, CURE WOUNDS, PROTECTION FROM ELEMENTS(fire 
+especially,) POWER CURE, CURE POISON, CURE DISEASE, STONE TO FLESH, RAISE 
+DEAD(which has no penalty as I can see)
+Combat prep: HEROISM
+Combat: CURE WOUNDS, PAIN, TURN UNDEAD, POWER CURE, COLD RAY, MOON RAY, HOLY 
+WORD, MASS DISTORTION(for big HP monsters,) RESURRECTION(for emergencies,) 
+SUN RAY(on a group)
+Range, before combat: TURN UNDEAD, HOLY WORD(FIERY FLAIL is too weak vs. 
+Sorcerer stuff for vs. 1 opponent)
+
+Let's look at how the Clerical offensive spells fare. (name cost:damage)
+Flying fist 2 : 6, ratio = 3 on 1
+Fiery Flail 25 : 100, ratio = 4 on 1
+
+Sparks 1/lev : 1/lev, ratio = 1 on 3
+Pain 4 : 8, ratio = 2 on 3
+Turn Undead is a special case which seems to be the best, but only against 
+certain foes
+Cold ray 2/lev : 2-4/lev, ratio = 1.5 on 3
+
+Acid spray 9 : 15, ratio = 1.666 on 3+
+Moon ray 60 : 30, ratio = .5 on 3+(advantage: HP back)
+Mass Distortion: lose 1/2 spell points, better with bigger-HP monsters that 
+aren't magic resistant
+Holy Word: doesn't always kill undead monsters but can wound badly.
+Sun ray 150 : 200, ratio = 1.333 on 3+
+
+Indispensible druid spells:
+Noncombat: NATURES CURE is a good heal, less efficient than first aid(4.17 
+per SP vs 6) but it takes less. WALK ON WATER is absolutely necessary. 
+NATURES GATE can help at times(where does it lead??)
+Combat: DEADLY SWARM, PRISMATIC LIGHT(for desperate circumstances, but 
+usually pretty good esp if no spell points for Elemental storm), ELEMENTAL 
+STORM
+
+Frost Bite 7 : 35, ratio = 5 on 1
+
+Deadly swarm 12 : 40, ratio = 3.333 on 3
+
+Acid spray 8 : 15, ratio = 1.875 on 3+
+Elemental storm 100 : 150, ratio = 1.5 on 3+
+
+The main weakness of druid spells is, not enough spells that do by-level 
+damage. They mainly parrot the lesser of sorcerers' and clerics' spells. 
+Swarm is good value but against biiiig monsters it's not too useful.
+
+
+Indispensible sorcerer spells:
+Noncombat: LIGHT, CREATE ROPE(no trips to the store,) JUMP, LEVITATE, (Wizard 
+Eye is nice but there's automap and directional sense,) LLOYD'S 
+BEACON(different locations for different casters,) TELEPORTAL, DUPLICATION(to 
+crank up infinite gold, in a way--if you have Obsidian Plate Armor/Amulet or 
+anything above Quartz, there is really no better item. Save to back the item 
+up in case it's destroyed. You can get infinite gems in the Arachnoid cavern-
+-and you should have the merchant-skill person sell,) ETHEREALIZE
+Combat prep: POWER SHIELD
+Combat: ENERGY BLAST(not as efficient as Implosion at higher levels but good 
+early), TOXIC CLOUD(vs low HP monsters with special powers,) DRAGON 
+BREATH(cold vs. fire creatures is great,) SUPER SHELTER(in a pinch,) 
+IMPLOSION and pretty much any level-based attack. Let's compare them.
+
+Incinerate 35 : 250, ratio = 7 1/7 on 1
+Implosion 100 : 1000, ratio = 10 on 1
+
+Toxic cloud 4 : 10, ratio = 2 1/2
+Lightning bolt 2 : 2-6, ratio = 2 on 3
+Fireball 2 : 3-7, ratio = 2 1/2 on 3
+Fantastic Freeze 15 : 40, ratio =2 2/3 on 3
+Mega Volts 40 : 150, ratio = 3 3/4 on 3
+Inferno 75 : 250, ratio = 3 1/3 on 3
+Dancing sword 3/level 6-14/level, ratio = 3 1/3 on 3
+
+Dragon Breath 3/level : 5, ratio = 1 2/3 on 3+
+Star Burst 200 : 500, ratio = 2 1/2 on 3+
+
+  If you know your opponent's precise hit points then you can decide what to 
+cast but otherwise the more expensive spells tend to be better. Of course 
+more versatile ones such as Dragon Breath may be better if an enemy has a 
+specific weakness i.e. acid as otherwise fireball or lightning bolt will work 
+more efficiently.
+
+  3. TIME, TIME, TIME
+
+    3-1. METRICS
+
+  One of the big problems I had when starting out was that I took a year to 
+get even decent. I had some unpleasant experiences with letting time run up 
+on me. So what takes up a lot of time and what doesn't?
+
+--staying in an inn takes one day. So save outside.
+--going to a temple takes a day. Getting blessed takes no time, but each 
+uncurse or heal takes an extra day as well.
+--browsing in a shop takes an hour, regardless of how many people look 
+around.
+--turning around doesn't take any time at all.
+--each round of combat takes 1 minute in or out of doors.
+--moving a square takes 1 minute indoors, 10 minutes outdoors.
+--shooting arrows takes the same time as moving. Therefore, if time is of the 
+essence you may wish to go directly into battle and forget shooting long-
+range. Especially if you're blessed by the priests.
+--casting a spell takes the same time as moving as well.
+--training at a guild takes a day per character. If a character gains 
+multiple levels, he still only takes a day to learn them. This leads to a 
+good way to get strong quick in game-time.
+--rotating takes no game-time.
+--inventory and item trading don't, either
+--1 day of food = 3 rest-ups.
+
+--resting takes 8 hours. It removes all protective spells.
+--the day turns light at 5 AM. Any protective spells you have at the moment 
+are removed. So when you're using protective spells(including light) to go 
+somewhere, remember to check the time to make sure they're not wasted. If 
+it's night and you have time to kill, maybe you'll want to see the guild for 
+any new spells. Take the magic mirror to other towns, even.
+--dark comes at 9 PM, and it is the same all year. The year is decimal, with 
+onesday through tensday and ten weeks in the year.
+--most shops are open during all day hours. Taverns are open 6 PM-5 AM, banks 
+9 AM-5 PM, and temples and inns are always open.
+
+    3-2. TIME SAVERS
+
+--casting teleport can save time by up to 89%. Jump, 50%. Teleport is 
+actually more efficient than jump.
+--Lloyd's Beacon is a huge time saver, and paired with Town Portal, you can 
+bounce back and forth between towns/healing and a tough dungeon.
+--when stranded at night, visit a temple.
+--the big one: multiple levels for a party member at once.
+
+  4. STARTING OFF IN THE TOWNS
+
+  When starting off, the worst ways to lose game-time are getting poisoned or 
+diseased, using the inn to save games, and getting stuck at the wrong times 
+or even resting in the wrong areas. There are also a few things you need to 
+use as resources. You need to know where certain fountains are that help you 
+improve quickly and temporarily. Often you'll need to use them and head to 
+certain places, such as a locked box your character isn't good enough to open 
+normally. My keys are:
+
+--temples, where you get blessed. Having to pay more per character is better. 
+Because if you pay 7 times, you get +7 of holy bonus, blessed, heroism and 
+power shield. And you waste the same amount of time.
+--later, a pool in B1 where everyone gets +20 levels for the rest of the day
+
+    4-1. GETTING PLAYERS AND EQUIPMENT
+
+  I generally trade in the Barbarian for a Ranger(human, female, neutral to 
+balance alignments.) Early on it's best to have as many healing spells as 
+possible, and although an Archer would be optimal, there is one in Fountain 
+Head along with a Druid. I also like having Walk on Water relatively soon. 
+The one disadvantage is that your archer could, later, cast Implosion and 
+save your sorcerer the hit points.
+
+  There's also a risky gambit of dropping a knight and barbarian for an 
+archer and a ranger/druid. If you can improve quickly and are willing to hit 
+the fountains, this is an intriguing idea. You don't lose that much in terms 
+of firepower, and although you do get nicked long-term for a few hit points, 
+it's nice to have another someone casting spells. I don't recommend it for 
+people who've never tried Might and Magic style games, though.
+
+  The first thing to do, even before dropping the Barbarian, is to get rid of 
+his items and trade them to your Knight. You can then go to the shop, which 
+is straight forward after you leave, and buy a short bow, two cutlasses, two 
+scale armor, and cloak and gauntlets. Everyone should have leather boots, so 
+don't worry about those. Remove the barbarian, pick up the archer or ranger 
+and give her the equipment that's loose. You'll also want your four 
+spellcasters to have access to the guild.
+
+  Here I like to create a small chart of who has what sort of items. Also 
+note the party order. It's not critical, but you want your strongest up front 
+to bash down doors. Also you'll want to note the order everyone goes in, in 
+combat. It should be like that for the rest of the game, or until someone 
+gains speed. The first eight, you can buy anywhere. The next few get found 
+along the way. It's worth noting that gloves, cloak, boots, and helms can be 
+used by all party members. Whenever you get a new or better item there may be 
+a lot of swapping to do, and this follows particularly after visiting a store 
+in a new town. Trickle down effects work nicely here.
+
+        |Armor |Weapon|Helm|Shield|Bow |Gloves|Cloak |Boots |Ring|Belt|Other
+--------+------+------+----+------+----+------+------+------+----+----+-----
+Paladin |      |      |    |      |    |      |      |      |    |    |
+Archer  |      |      |    | XXXX |    |      |      |      |    |    |
+Ranger  |      |      |    |      |    |      |      |      |    |    |
+Robber  |      |      |    |      |    |      |      |      |    |    |
+Cleric  |      |      |    |      |XXXX|      |      |      |    |    |
+Sorcerer|      |      |    | XXXX |XXXX|      |      |      |    |    |
+Or, if you must,
+Knight  |      |      |    |      |    |      |      |      |    |    |
+Brbarian|      |      |    |      |    |      |      |      |    |    |
+Ninja   |      |      |    |      |????|      |      |      |    |    |
+Druid   |      |      |    | ???? |????|      |      |      |    |    |
+
+  One very nice thing about MM3 is that any character can use any item--
+except for bows, armor, and weapons. Paladins/Knights can use plate armor, 
+Ranger/Cleric can use splint, Archer/Robber can use chain, and Sorcerers can 
+use padded. But the big bonuses average out and if you give your Sorcerer an 
+obsidian item or two he may be as well protected as the other guys. By the 
+end of the game everyone had 110+ armor classes.
+
+    4-2. PICKING YOUR FIGHTS: MY PREFERRED ORDER
+
+  Now that you're equipped you're ready to go outside. Yes, already. One 
+thing you can do before you go outside is to get everyone blessed. This 
+pretty much means that the enemies in A1 won't be able to damage you, and 
+it's cheap. If you are able to attack that many more enemies, then you can 
+get to the training grounds with several more levels at once, and the day you 
+spend getting blessed can be wiped out by the days you save training for 
+multiple levels. And you can just continually visit the fountain of +20 armor 
+class to waste only a few game-hours--if you're really obsessed with timing 
+and a quick jump in the game's internal sense. Eventually I maddened myself 
+with this perfection but you may feel differently.
+
+  The big push early will be to take out enemy outposts. This gets you 
+experience and items. They don't start out being very good, but once you get 
+mountaineering and pathfinding, you can find cool items all over. And of 
+course you don't have to do everything in this order. But I did.
+
+  After creating your party and before serious exploration you may want to 
+enroll the two hirelings in your party, step out, and have them trade 
+everything they have to your regular players. This allows for one more 
+missile weapon and a pile of nice armor. Your first goal will be to get 
+access to the Wildabar guild, which will give you all the healing spells you 
+need to avoid the temples--except for death, which is very avoidable. You're 
+just worried about healing accidents at the moment.
+
+      4-2-1. CLEARING A1 + FOUNTAIN HEAD
+
+  If you don't get blessed you can still take out the Goblin Warriors. Just 
+look south and east and shoot down whoever's in the picture. You shouldn't 
+need to attack anyone directly yet or use spells. Eventually you'll want to 
+go south. When the grass is on the left, face that way and fire off a few 
+more arrows. A few waves of goblins will come at you, but you should be able 
+to deal. At the caravan, destroy everything and you'll get 2500 experience 
+along with some items that are probably worthless although they have cool 
+names(wooden flamberge, etc.) Now I wound up with 3524 experience total here. 
+That is enough for 2 levels for your robber, cleric and sorcerer. You can 
+certainly go back right now.
+
+  But I found I liked to loop back left and up. Instead of going into town 
+you can go east two and north. Then circle around the top shoreline to the 
+west. When you see trees, go into them and reach the well. If you get that, 
+you will be unhittable to the orcs. You may want to save after each won 
+fight. But once you have you can just move in close and cream the orcs. The 
+orc caravan is on the other side of the mountain, and if you destroy it, you 
+get 5000 experience. On top of the experience for the orcs you should have 
+enough to advance handily. I found I had 11000-12000 experience here, but I 
+pushed it a bit. I had enough time and cash to get to the guild and learn 
+first aid and light, which are nuisances not to have, for my paladin and 
+ranger. Then I healed up and went two spaces south of where I started the 
+game. Secret door to the west, bash it in, win the fight, get gold and an 
+item.
+
+  The last bit is back east and north four squares. Then tend east, break 
+down the door, and gun down all the monsters there. High armor class should 
+mean it's all no problem. If you don't finish all this before the next day 
+starts, no problem. You've still got a great jump. Just go train before the 
+next day starts and get ready for your next task. Note training is free 
+healing too, for hit points anyway.
+
+      4-2-2. CLEARING A2
+
+  A2 is similar to A1 except that it's got a few more enemies in a wider-open 
+space. There are two ways to approach it. You should be blessed before 
+entering the area or, if you like to save game-time, you can get temporary 
++20 armor class at that well in A1. You may want to use the portal to say 
+SEADOG and go to Baywatch, although you can also walk to A2.
+
+  If you approach from A1, go south until you see a building to the right. 
+Enter it and destroy it. Then go west and when you see a shrine south, enter 
+and destroy it. Turn back north and go forward until you take out that 
+square. It may be tough to keep track of directions but if you have the sound 
+on you can hear how many moves you made. The total experience here is double 
+what it was before. 
+
+  If you exit from Baywatch, the skeletons inside shouldn't do too much 
+damage. You can pick up 300 luck(getting you to Ultimate) at the fountain 
+just north of where the mirror drops you off, which seems to help a lot. Just 
+keep pitching a coin 'til it happens once and then do it again. Before 
+exiting to the west I might advise a detour to the shop(east of the inn) to 
+get a crossbow and some nice armor, then go east, south and east to pick off 
+the zombies guarding the guild while you are still "upped." Save before 
+fighting--they cause disease, which is annoying to get rid off. I've managed 
+to stretch things out by going north to the Magic Mirror area to get rid of 
+skeletons who might bother you later, then back south and east to clear out 
+more skeletons. To really get ahead you can gain access to the guild, see 
+brother Alpha, and get Pathfinder(get this first, before Mountaineer, because 
+you only need 1 person to get it if you've got a Ranger in your party. And 
+it's half as expensive. But if you can afford that too, great.)
+
+  You didn't outright need those detours above but they'll help you out 
+later. Go outside and west until you are past something on your right. Turn 
+right and go north into the first hut and see the paragraph above.
+
+  Now you have the option of porting back to Fountain Head. I advise this, 
+because you'll have some cash from A2 now and will want to be sure you have 
+Mountaineering. Plus you'll want one night in Baywatch to buy spells such as 
+Jump, which can save a bit of time and annoyance. Create Rope is also 
+important for Sorcerers and Archers, as is Toxic Cloud. Clerics will of 
+course want the healing spells such as Cure Wounds and First Aid, and if you 
+are playing with a ranger, get him whatever he needs. Your Cleric will want 
+protection from elements and, if you were able to push to level 5 after A1, 
+Turn Undead will shortly be extremely handy.
+
+  A side point here--there are some zombies guarding the doors. Boost your 
+luck to 300 and hit them with whatever spells you can before they approach. 
+And Energy Blast them when they're near. They can disease you, which is 
+annoying to get rid of.
+
+  Before moving to A3, you may also first want to take a day to explore the 
+mountains in A1, which hold 10000+ treasure and thus recoup your investment 
+pretty quickly. A3 is a bit tougher. You don't need to gain levels yet and, 
+being a time-miser, I didn't. But you do need pathfinder(Baywatch) and the 
+spell Toxic Cloud(any guild) to deal with A3's screamers at your current 
+level range.
+
+      4-2-3. CLEARING A3
+
+  Check the shop to see if there's a new short bow. Screamers can go down to 
+missile attacks as they have few hit points, but I've found Toxic Cloud works 
+even better, so wait at night to pick up the spell for Sorcerer and Archer. 
+The key things to locate in A3 are the screamer breeding grounds and the 
+wagon that cures insanity--otherwise the temples have a monopoly on all that. 
+The wagons are cheaper too. What I do is to follow the road from Baywatch and 
+then go along the mountain range tending west. Remember that you can see when 
+it ends in one direction because the mountain in front of you will get a bit 
+smaller. Follow it all the way to the west edge. Then turn south. Use spells 
+whenever you can, or whenever necessary. There will be a wall of three 
+screamers and here's where you may need to fire off two spells quickly. Once 
+that's done you can destroy the breeding grounds in the wagon and continue 
+going south. Follow the coastline south and you may need to go east once. 
+South a bit more and there'll be another wagon to the east at y=1. Enter it 
+and pay 10 gems. Later on if you have Lloyd's Beacon you may want to earmark 
+this spot. Because there's no real cure for insanity. Later you won't need 
+one, because stronger enemies don't do that to you.
+
+  The next part of this area, getting to the vampire bats' den, is not too 
+bad, but if you meet screamers you may have to heal up again. You may want to 
+backtrack to heal up along the way but it's quicker to plow through and have 
+done with it. Of course you can save before each fight so no-one gets 
+damaged, but that is not real-world practical. Go east all the way, north 
+two, east and north. Destroy. Then go west and turn north when you see a 
+wagon. That's where you cure poison.
+
+  Now the top wagon offers +10 might and endurance to your knight for 10000 
+gold, which you might as well get if you have the money(and a knight,) but 
+strangely it doesn't matter much later. If you are playing with default 
+characters your might and endurance will go over 25, and thus when you go to 
+the caverns below Swamp Town you will only get one improvement to your 
+endurance instead of two. There's some treasure in this area totalling 9500 
+gold that should help you afford this, but actually if you go in for the 2 
+million cheat you may just want to pump everyone's accuracy up to 25 in the 
+DR wagon. It's a limited time offer, and later on in the game there are 
+improvements you can pay for with gems, but they're a bit trickier.
+
+  With all this you should have a few levels now. You could try your luck in 
+B1, or you might want to look into the dungeon downstairs to try to clear out 
+other areas. You're going to be restricted by water pretty soon, so I'll look 
+into the Fountain Head dungeon. It has some nice attribute raisers, and you 
+have a chance for some cheap experience. You'll also get to learn some basics 
+of dungeon traveling that will stay with you. Before going in I recommend you 
+have Jump and that you also have Lloyd's Beacon and have it cast for the A3 
+area by the poison cure. That lessens the risk of being poisoned and losing 
+attributes before you get to safety.
+
+      4-2-4. FOUNTAIN HEAD DUNGEON
+
+X.X.XXXXXXX...XX
+.....XXXXX.....X
+X^..XX.XX.....XX
+XXX............X
+XXX.XXXXXXX.X...
+X...X.X.X.XXXX.X
+X.X..........XXX
+X.XXX.....XX.XX.
+...XXX...XX.....
+...XXXX.XXXX.XXX
+...XX.XXX......X
+X.XXX.....XX.X.X
+X.XXXX..X..X.X..
+X.XX.XXXXX.X.XXX
+X.X...XXXX.X...X
+X....XXX^..XXXXX
+
+  The Fountain Head dungeon isn't too bad, but you may want to make several 
+passes through it nonetheless. You will likely need the "jump" spell, or you 
+will need to rest a ton. By now you should have four people with missile 
+weapons and two players of reasonable strength. Clearing it out should not be 
+too bad. First you have vampire bats, so stay back and shoot them all down. 
+There's one poisoned vat in the first room, the northeast corner--save before 
+getting it. In general you can cheat up like this before drinking poison. If 
+you drink poison, you need to watch your stats, but by the time you go in you 
+should have Lloyd's Beacon set to A3.
+
+  The main objectives here are to kill the Rat Overlord and find the altar to 
+boost everyone's swimming. You might as well be blessed for the Rat Overlord, 
+and you'll actually want to do that first, because it's the only one of any 
+of the monsters that has a chance against you.
+
+  Go south from the first room, jump over the pendulum, south and east. There 
+are some barrels of treasure to the south, and you will need to heal up to 
+pass through the next pendulums. Here you can save a chunk of damage if you 
+use the mouse and click the right arrow a few times. When you reach the head, 
+type RATS(we're cheating up here a bit. If you look into other parts of the 
+dungeon and collect 5 skulls and go back up, east and south, you get this 
+message.) The exit back up is to the west, and you go south at the next fork. 
+The rat overlord shouldn't be too tough. Keep your distance and fire energy 
+blasts at it with your sorcerer, and heal whomever you need to. Then retrace 
+your path back, checking all the side forks and resting whenever you need to 
+heal.
+
+  On the way back you should have the money to pay for all nonhumans getting 
+the swimming skill. You may also wish to explore the cavern to the west at 
+the first fork, as well as the cavern to the west of the pendulum. There you 
+can get two skills you don't really need, but it's fun.
+
+  The good and bad chests are labeled in the map above.
+
+  You can proceed to the arena after this or you can also go scope out 
+Wildabar.
+
+      4-2-5. BAYWATCH AND DUNGEON AND A4
+
+  I'm assuming that you have cleared out most of Baywatch, except for two 
+particularly virulent batches behind doors. First, at the top near the 
+dungeon, there's a door south. You can bust it south and start casting "turn 
+undead" a bunch. It's a ranged spell, so you should zap the monsters before 
+they get there. Before the following fights, visit the fountain in the town 
+square for some serious gold. The weapons shop may be recharged by now, too.
+
+  On the east wall, to the south, is a bigger group of undeads. You may need 
+to rest up before taking them on. The ghoul is the big enemy there and it may 
+help if a pellcaster has lightning bold or fireball. Save your paladin's Turn 
+Undead for the ghoul. He probably doesn't have too many spell points, yet.
+
+  Stay out of the pits until you've learned Cure Disease and Cure Poison. 
+Don't bust down the gate you can see through, either. Rather, just head to 
+the dungeon, which has some nice experience and attribute improvement for 
+you. Also, wait for nightfall to learn Levitate if you haven't. Protection 
+from Elements(Acid flavor) also helps in the cavern when you want to knock 
+down some walls behind an acid pit.
+
+  Again, Lloyd's Beacon to A3 is very helpful here. Your players may go 
+insane without a lot of chance to heal them, and it may be nearly too late to 
+heal them if you go by foot. You may need to reconnoiter once, even if it is 
+after you've clubbed everything else.
+
+======== A4 DETOUR ========
+
+  Once you get to A3 to cure insanity, you may want to detour to take out the 
+giant spiders to the south before coming back. Even if you get poisoned along 
+the way, remember you can heal that in A3 as well. The giant spiders' layer 
+is directly south of the wagon where you cure insanity, and in fact if you 
+are crafty you can get to the mantises' lair without doing much. The trick is 
+to walk clockwise along the shoreline until you reach a mountain. Then go two 
+squares north in the mountain and destroy the mantises' lair. This may 
+require some fighting but if you're blessed it shouldn't be too bad. Cast 
+Lloyd's Beacon to return, or have the spell points saved, and then regain 
+your sanity and flush out the poison if need be.
+
+  This detour may be a bit ambitious but it's possible to rake off a good 
+chunk of experience pretty quickly.
+
+======== END DETOUR ========
+
+  Back in the dungeon, there are a lot of secret cells here where you have 
+through walls. You also may find Sacred Silver Skulls, which are good for 
+experience and a bit of gold when you go back to Fountain Head. Brother Beta 
+is also in there, south from the northeast corner. You can always walk 
+anywhere without touching acid except where there is a secret door.
+
+  A phantom is trapped behind various doors at the top. Save beforehand, have 
+a thief unlock the door in the north center, and cast Turn Undead as quickly 
+as possible.
+
+      4-2-6. B1 area
+
+  Here's where you sort of turn the corner. B2 is probably a bit easier. But 
+B1 has some nasty monsters indeed. Rest up(leveling up is optional) and 
+donate at the Baywatch temple. It costs a bit more but it's worth it, because 
+it will help you solve a later quest of donating at all temples. If you don't 
+need to now, earmark Baywatch for later.
+
+  You'll want to come in with spells flashing and do what you can to break 
+through the Wild Fungi to the east. You'll need to enter at the right 
+point(Y=2, from A1) and then, once you passed by a giant head, go one square 
+north to continue in the forest. Then turn east. The fountain to destroy is 
+one square away, but there are a lot of enemies to zap. Hit them with 
+lightning bolts and such. The wild fungi will always hit you, so there's no 
+sense trying to build up your armor class. Just push forward and, once you 
+destroy the fountain, push into the mountain.
+
+  Now you may note that there is an island 2 north and 2 east where you can 
+drink from a very nice fountain. Do so. You may also wish to set Lloyd's 
+Beacon here. This will be your new stopping point after being blessed at a 
+temple. It will take some time to get back to Fountain Head and use the magic 
+mirror to get to another one, or even to use the finesse of using the mirror 
+to Baywatch for the +300 luck and continuing on, but it's a maneuver you will 
+want to get used to in order to improve quickly.
+
+  From here, go east 'til you hit a mountain and then north. The Oh No bugs 
+shouldn't be difficult with your attacks doubled and the temple's effects 
+still going on. You shouldn't need spells. They're easier than the Wild Fungi 
+in my opinion.
+
+  From here you can just walk along the mountains to take care of business 
+and look for treasure, with the Oh No Bugs lair at (12,8,) or maybe you can 
+stretch out to B2. You'll want to come back here to hoard treasure, but for 
+right now the fungi give serious shocks and there's no way to avoid being 
+hit. So avoid them or come prepared with several Toxic Clouds and lots of 
+heal spells.
+
+      4-2-7. B2 area
+
+  The area in B2 is similar to B1--the easier enemies give more experience 
+for destroying their lair. You might want to go along the shoreline to knock 
+out the ogres, or if you're feeling really brave, you can try to shoot all 
+opposing sprites down from a distance. They curse you, though, so beware. One 
+good solution I've found is to shoot at them from across the river, or walk 
+across the river, retreat, and fire. This can take extra time, but it can be 
+surer.
+
+      4-2-8. WILDABAR AND ITS DUNGEON
+
+  On entering Wildabar you'll find a lot of melee opponents. You can get to 
+Wildabar by typing FREEMAN in the magic mirror, and you may want to visit the 
+fountain of +20 levels in the morning before so doing. You should be able to 
+deal with the ninjas, especially if you're blessed, but if not, a wave or two 
+won't hurt. Try to train up and maybe you might want to take a few trips to 
+the Arena. Of course there are new weapons here too, so keep track of that.
+
+  Once it's all cleared up you want to go into the southern area. Here you 
+have some useful skills: Arms Master, for everybody, as well as Body Builder, 
+which adds a few hit points all around.
+
+  After that you should be able to rest, to see your new maximums, and get 
+blessed at the Wildabar temple(3 of 5 now) and take out the rest of Wildabar. 
+Because the enemies don't give spell damage, you shouldn't have much trouble 
+running through them. Visit Brother Gamma outside the Sonic Ninja quasi-boss. 
+Brother Delta is way at the end. Ogres again shouldn't do much damage, 
+because you have the bonus to hit and to protect. You will want to save 
+before taking out the Wicked Witch in the west center, but other than that 
+it's pretty straightforward. Just pull the levers. There are also several 
+places where you can raise attributes.
+
+      4-2-9. ANCIENT TEMPLE OF MOO
+
+  If you have Levitate, this is a pretty straightforward smash-and-grab 
+affair. The main purpose, aside from a ton of money, is to get the Crusader 
+skill that allows you into castles. There's also a boss fight and some 
+wickedly awesome treasure. But you should be able to run through this pretty 
+easily.
+
+      4-2-10. B3 and B4
+
+  Area B3 is tougher than it looks. From Wildabar, blessed, you'll want to 
+walk in the water along the shoreline up from B4. Then when mountains appear, 
+head over them to the west. Be sure to have a lot of Turn Undead ready to go.
+
+  You'll want to linger around in the mountains to get an Etherealize and 
+Teleport early on, and then you may want to rest up before attacking the 
+Bugaboos. Here because there's no magic that's really effective, you can just 
+slap Power Shield on your front fighters and Heroism and maybe Blessed on the 
+others if you don't want to retrace your steps. By now your power shield, 
+etc. should be stronger than anything the temples can give. The drawback is 
+that you're out of spell points once you cast the spells.
+
+  As in B2 and B1, the most lucrative hideout to destroy features the easier 
+monsters.
+
+  If you'd like you can also tool around B4 for a while to pick up experience 
+and look in the mountains for goodies. Castle Bloodreign isn't too useful 
+yet, though.
+
+      4-2-11. SWAMP TOWN
+
+  From Wildabar you can find a boat in B4 that takes you to Swamp Town for 
+2000 gold or, better yet, you can type DOOMED at a magic mirror. Swamp Town 
+is a mess of secret doors and ghouls/ninjas hiding behind them. Again, having 
+an increased level will help in all this especially since Turn Undead depends 
+on the caster's level. First though you'll want to bust open the west wing's 
+shops. The weapons store here is even nicer. Even if it will eventually get 
+replaced, remember the trickle down effect of armor: if your knight gets 
+Silver items, he can trade the Iron stuff to the Paladin, who drops the 
+regular stuff off to someone who didn't have any. Then, in Burning Heights, 
+the knight gets the Steel stuff and everything repeats.
+
+  But for Swamp Town the current objective should be to clear out the boss 
+fights, sign up for the guild, and get out. From the original area you smash 
+a door east and go north. Then cast Turn Undead for all you're worth. Clear 
+out the treasure and go back south--bash to the right. Now there are a lot of 
+tombs here along the north side that are cursed, but if you dig the right 
+ones you get a nice treat.
+
+(15, 15) holy bonus
+(13, 15) 200 gems
+(9, 15) 5000 gold
+
+  If you still have energy(and if you're blessed, do heal up who you can) you 
+may want to go back south, break open a door and take out the ninjas around 
+there. There's another door to break down and then you'll find many treasures 
+lying around.
+
+(9, 2) cure paralysis scroll
+(9, 1) (14, 1) artifact of evil
+(11, 1) (12, 1) (14, 4) ancient jewelry
+(12, 5) heroism scroll
+(11, 3) ghost and treasure
+(14, 5) ghost
+
+  Of these the ancient jewelry is saleable, and the artifacts of evil become 
+very important later on. In fact you can possibly roll the dice and use them 
+sooner rather than later, but for now just keep them in the inventory.
+
+  You can go down the stairs now and open up whatever coffins you see. Don't 
+allow yourself to jump through the lightning, but go back east and gain 
+access to the spell guild. The rest of the dungeon is too treacherous for 
+now. Go back up, rest, use the temple for donations and then take the magic 
+mirror to Blistering Heights(REDHOT.) You really might want to train, or at 
+least drink from the +20 level fountain, before going there. And if you 
+haven't gotten blessed at the Swamp Town temple yet, do so. The first few 
+fights are doozies.
+
+      4-2-12. BLISTERING HEIGHTS, PART 1
+
+  You have a bit of a tricky row to hoe here. You can't get through 
+Blistering Heights all at once, but you really do need to cast protection 
+from elements before mixing it up. There's a statue several squares away, and 
+you'll suffer some damage getting to it. But once you're there, BAM. You can 
+take out any opponents. You'll want to go to the south where you can take on 
+various fire lizards and dragons. If your priest has cold ray, it's a big 
+help, and if your sorcerer has dragon breath(use cold,) that's good, too. 
+Just throw everything you have and open the chest that's not in a niche 
+first. Save before opening the other, which contains an obscene amount of 
+treasure.
+
+  Now go west and defeat the mini-dragon and try to pick up the chests with a 
+shard each of Neutrality, Evil and Good. Your robber is getting ~30000 
+experience for opening each of these chests, and he couldn't do it without 
+the 20+ level boost.
+
+  You can then save and go into the kennel and see how many bad guys you can 
+fight. I couldn't make it through on the first try, so I just waited 'til 
+nightfall, bought some food, went to the guild, learned some spells, and 
+recharged to level 20 and built up resistance before returning. Then I opened 
+up the chests, and I had more than enough loot for a while.
+
+  The next step is, a bit surprisingly, the Blistering Heights cavern. You 
+can't quite win it, but you can get the important statistical boosts.
+
+      4-2-13. BLISTERING HEIGHTS CAVERN
+
+  You'll have to leave the Major Devil until last. There's nothing saying you 
+can't take everything else here out, though, and there are certain ways to 
+make this ordeal much easier. The object here is to touch six altars that 
+give you more resistance to fire, electricity, energy, poison, cold and acid. 
+These, combined with a level-boost, resistance to elements, and touching the 
+statues in Blistering Heights, will kick off your foray into the Swamp Town 
+dungeon quite nicely.
+
+  The basic plan is to find one altar, rest, recharge, and use etherealize, 
+side-walking, clerical cold spells, and other offense to get to the next 
+area. Near the end you can even take a bit of damage.
+
+  And near the very end you can go to the top center where you can sucker 
+some enemies to come at you all at once, pull back, and fire a few more cold 
+rays. You don't want to go too far in as that would attract a Major Demon, 
+which you can't handle yet. But if you take care of these bad guys now, it'll 
+be easier to take care of the demon later.
+
+  But what about the passages? For each one there is a fire spirit around 
+where a block of fire stands in your way. You won't need to etherealize and 
+sidestep to get out of the way at first, since the fire hardly does any 
+damage, but as you move along you'll run out of magic. Then you'll have to 
+rest and cast the spell on your own. And since monsters are pretty much fixed 
+here, it's no shame to step across the fire on your way back and forth. Just 
+be sure to rest afterwards. The fire nearest where you entered can always be 
+jumped over. You can go to the east side and pick up more invincibility, 
+fight in the front of the top room, and then get out.
+
+      4-2-14. SWAMP TOWN CAVERN
+
+  There are several ways to get the whopping might you need to get through 
+this. But first you need to have the appropriate protection: after finding 
+the level-pool in B1, you will need to cast Etherealize and have the standard 
+blessing wherever you haven't done so yet. By now you should have been 
+blessed in all five temples, giving you the accomplishment of "blessed bythe 
+forces." If not, reassess whee you've been and try going on a donation spree. 
+You should have the money to try.
+
+  After jumping through the first of the electric fields, cast protection 
+from the elements and save. Then etherealize south through the gate. Have 
+your paladin and cleric cast Turn Undead. Try not to have the sorcerer cast 
+spells until you're fighting multiple phantoms. Remember you have to save for 
+later fights. You may want to check after every fight here to see if any 
+player's age went up. If so, restore and try again. It's actually not so bad 
+especially if you have a good shield or hit bonus. Having over twice the 
+levels means over twice the attacks, too. Phantoms actually don't do much hit 
+point damage, but if they touch you the wrong way, there's some nasty aging.
+
+  Phantoms come in waves of 1, 1, 2 and 3. Try to hold off on spells 'til the 
+last one, when there's a reaper coming at you as well. And try to leave some 
+spells, in the first loop, for the final battle with 3 phantoms in the second 
+loop.
+
+  Your first fork to take will be the right(west.) There's a huge might bonus 
+there--+20 as long as your might is below 50, and what's best is that you can 
+take it twice by hitting the space bar. Do so.
+
+  Now with your might you can just loop around and bash through the walls you 
+had to etherealize through before. This leads to an area where you can get 
++25 endurance for anyone under 50.
+
+  But don't rest yet--tackle the north part while your party's still charged. 
+There are two coffins containing Ancient Artifacts of Evil behind secret 
+doors. Now that you've gotten the might bonus, it shouldn't be a problem to 
+go back and get things. You can probably just walk through the electricity 
+fields and unlock the doors as well without any damage, assuming you have the 
+bonus from Blistering Heights(west dragon,) along with the protection from 
+elements with advanced level and the permanent protection from the Blistering 
+Heights cavern.
+
+  Once you're done with this, there are two Ancient Artifacts of Evil in the 
+north area. You can just unlock doors and bash walls easily to get to them--
+the artifacts are behind a secret door. This should edge your total up to 
+five.
+
+  Now it's time to visit Castle Dragontooth and cash out.
+
+      4-2-15. CLEARING E2
+
+  Now things should be easy. You've got more might and endurance, and you may 
+not even need to bless yourself or add 20 levels, but quite frankly with the 
+upcoming payoff ahead you'd be a fool not to(it's more important than even 
+training,) and you can still add an extra 30 to your party's current 
+collective might. Face north, go up one, and teleport nine squares. Win all 
+the fights. You can now destroy one lair. Then go west. You can teleport 
+again if you'd like. Your improved might should squash the enemy.
+
+  From here you can just cast walkwater into E1. Follow the coastline east 
+and at X=10 you can go north. There may be some evil archers, but you've got 
+too much firepower now. Enter the castle and give away the Artifacts of Evil 
+that you have for 2500000 experience for evils(knight and robber, for here.)
+
+  In fact, you might even be able to pick up a few extra souvenirs of your 
+visit. There are ancient artifacts of Neutrality in the pits at (15, 15) and 
+(12, 12). Players with <250 hit points would not be able to survive these 
+unless they've been given a level boost--which automatically adjusts hit 
+points. My strategy here is, once the castle is clear, to create ropes for 
+everyone and let everyone except the sorcerer climb down. Then I exit the 
+castle, cast Lloyd's Beacon to a safe spot, and rest.
+
+  You can get a few quatloo coins at (9, 14)-5, (13, 14)-4 and (7, 15)-3. 
+These will come in handy for the Slitherin Caves. There are some very, very 
+powerful random items at (12, 15)--appear to be Obsidian--but if your 
+backpacks are near to full, these are the ones you'll want to wait on.
+
+      4-2-16. ARACHNID CAVES
+
+  And yet I'm still not advocating training the characters who got that big 
+boost. Again, do the whole train-a-lot deal. You may not need blessing but it 
+doesn't hurt. Before stopping in the caves you may want to drop off your 
+Artifacts of Neurtaility at Bloodreign, if you got them from Dragontooth. 
+Your inventory may be getting a bit full, too.
+
+  The arachnid caves, which are a long teleport west from Wildabar, don't 
+have many tough monsters except for when you break into a secret room. You 
+can generally tell secret rooms by incisions in the blobby structure in the 
+center. There's a room straight ahead as you enter and it houses a Toxic 
+Worm. With extra attacks it is much less of a problem, and once it's 
+dispatched you often have crystals you can touch that improve personality or 
+intelligence.
+
+  In fact the outer part of the maze is easily disposed of via 
+
+  There's also an inner room that allows +10 accuracy and luck...and the 
+ability to recharge every set of crystals in the dungeon.
+
+  Below is a rough conceptual map of where the bonuses are. Brother Zeta is 
+by the first set of crystals clockwise from the start, and the Blue Unholy 
+Key is by the second set.
+
+  As for the puzzles? Don't bother. Yeegh.
+
+          I
+     P          P
+I                   I/linguist
+          AL
+         P  L   prayer master/  [paladin/cleric/druid
+         I      prestidigitator [sorcerer/archer/druid
+          A
+
+         P
+            I
+
+  By this time I found I had well over 5000 gems, so I had no problem 
+hoarding everything and retracing my steps. For accuracy, I don't recommend 
+balancing things out. Give it to one person. Because there is that square in 
+A3 where you can drop accuracy on your also-rans, and you have more than 
+enough money to do all this now. You may want to stop off there before 
+continuing on.
+
+      4-2-17. SLITHERCULT CAVES
+
+  Before starting you may want to stop off at A3 and improve everyone's 
+accuracy to 25 if it isn't there already. Again this is another area you 
+don't have to go through, especially if you've save state hacked your files, 
+but it's straightforward enough. Since it's very close to the super-might and 
++20 level fountains, it's a great idea to start out with all that. Just have 
+a cleric cast protection from fire and then take the west passage at the 
+first four-way intersection. You can have anyone drink from the pool at the 
+spiral's end, but it might be best to get your sorcerer to. Then you can go 
+back east and clear out everything there. After going north down a long 
+hallway, go east and clean up, then west and clean up.
+
+  To the north there's a head that wants you to respond EPSILON. That lets 
+you by into the main treasure area. Go west and root out treasure, then go 
+east and take a passage south. There are quatloo receptors here and they can 
+crank your might, endurance and accuracy up. You should have several quatloos 
+now and I prefer endurance for the most part. No one should be under 50 but 
+if anyone is close to 75, give it to them and you'll get a nice HP bonus. 
+Same with might near 75. Accuracy for folks with low scores there would be 
+nice too.
+
+  There's a small maze near the end. Jump east, north, west, 2 north, east, 
+jump east twice, south, jump east. That leads to the final, and easy, boss 
+fight.
+
+  After finishing the Slithercult caves, go to E2 (8,8) with the Fizbin and 
+have several slots open to get some Obsidian items. It's worth it. Make sure 
+you have slots open of course--it's worth it to ditch some pretty good junk 
+for Obsidian stuff(+30 AC bonus, etc.)
+
+      4-2-18. LOOTING THE CASTLES
+
+  You'll want to make a lot of gold wherever you can, then deposit whenever 
+you can, and here's why. Near the end of the game you'll run out of gold to 
+pay for level advancement. You may still be itching to get to level 17 so you 
+can cast Implosion, but you do want to make sure you save money for other 
+things. So you may want to poke into the first of the dungeons and improve 
+your sorcerer if he's not to level 17. You should be putting excess money 
+away right now to build interest in the bank, and if you want to find a bit 
+right now, go back to the Blistering Heights dungeon, get your party +20 
+levels and the works in B1, and fight the major devil. There's 1000000 gold 
+behind him and secret doors to each side.
+
+  I don't want to touch Castle Dragontooth at first, because you really need 
+the "implode" spell to get things working there, and you may have to teleport 
+directly on it(evil rangers and archers make for a tough fight just to enter 
+it.) But I think that Bloodreign is a good place to start. You'll need to 
+level up before going to any castle so that your characters are skillfull 
+enough to open locks. Then have your cleric cast protection from cold. That's 
+what sorcerers will cast once you've opened the chests. The answer to open 
+the chests is "NORTIC." I found the sorcerers went down surprisingly quickly.
+
+  After this you can go to the south part, bash doors open, defeat the trolls 
+easily and get two of each kind of artifact not in this castle(good/evil.) 
+Your characters are probably too good for this intermediate bit before you 
+leave, but you can unlock the doors on the west and the east for minor 
+experience and decent items.
+
+  With those two artifacts it's a good idea to get to Whiteshield. The walk 
+there isn't too tedious but several teleport spells in a row do the trick as 
+well. You can almost get to Whiteshield in the same day if you've got a lot 
+of spell power. Save outside Baywatch just in case it doesn't work out and 
+you're too lazy to go back.
+
+  With implosion, the dark knights that chase you once you answer the 
+riddle("Smello") and get the chest's treasure are not so tough. You might be 
+able to handle one with conventional magic, but two, probably not.
+
+  Dragontooth might be a tempting but bad place to go. Of course you probably 
+have a ton of gems, and you could go back to the Slithercult cavern to 
+improve your stats. You could even teleport to (0,8) in Whiteshield and 
+defeat a Black Knight with implosion for another artifact. But eventually, 
+you'll duel with Wizards that attack you as you escape. You'll want to save 
+nearly every step of the way and back up your save file too just in case. If 
+you run at a wizard and he blasts you, run sideways towards him and turn the 
+next time. The margin of error is thin here, but if you deal with wizards one 
+at a time you have a real chance to escape a winner.
+
+  And then, if you haven't taken care of the pits yet, do so. The pits in 
+Dragontooth are great and all you really need to do is heal up someone who's 
+stepped in there. Make sure that this person's current hit points + total hit 
+points > 500 for the pits in Dragontooth and you will find a ton of stuff.
+
+(7, 15) Quatloos
+(9, 14) Quatloos
+(12, 15) Obsidian items--save and reload to get the very best if you want
+(12, 12) (15, 15) Ancient artifact of Neutrality
+(13, 14) Quatloos
+(8, 13) (11, 14) rinky dink experience. Don't bother.
+
+  Now about those wizards--face perpendicular to them and sneak sideways.
+
+      4-2-19. ABANDON ALL CAUTION ALL YE WHO ENTER HERE
+
+      4-2-20. C2/C3/D2/D3
+
+  There's a lot of slow going here as fire will always damage you, unless you 
+have Protection from Elements, and the fire dragon statue in Blistering 
+Heights won't hurt either. Many monsters here are resistant to all but magic 
+and you need to be pumped to drill through.
+
+  Of these areas D2 is the most annoying if you're out of magic(fire stalkers 
+near untouchable even with Heroism) and C3 is the most daunting but holds the 
+most experience. Don't bother with teleporting or etherealizing. Neither 
+works.
+
+  Here is the summary for the ground parts of these areas:
+
+D2 (10, 1) fire lizard hut, destroy for 100k
+C2 (11, 2) major devil hut, destroy for 500k
+C2 (15, 0) Pyramid--central command. You need to get here by way of C3, D3 
+and D2 from Blistering Heights for the shortest route: 2W 2N 3W 3S 2W 2N.
+C3 (7, 9) great hydra hut, destroy for 2 million(you can let great hydras 
+regenerate for unlimited experience but your gold will drain soon enough)
+D3 (6, 8) major demon hut, 500k
+D3 (6, 15) Blistering Heights. How you exit this town can determine which 
+sector you're in.
+D3 (8, 11) hut with resistance to the elements. It's a distraction on your 
+journey.
+
+  The sea parts of these areas are even more treacherous.
+
+C3: (11, 2) (2, 4) (2, 13) Kudo Crabs appear if you try to take the items. 
+These guys can break your armor and have lots of endurance. Power shield and 
+heroism carry the day. The items are usually worth it.
+D2: the NE area features the Pirate Queen. If you have a Precious Pearl of 
+Youth and Beauty she gives you 100000 gold. Otherwise she takes all your 
+gold. Her location is very random. If you stay close to the coastline you 
+should be OK though.
+(3, 14) leads to the arena.
+D3: (1, 4) (12, 3) (14, 7) are where you can find great items. Octobeasts, 
+which take a lot of damage, defend them if you try to attack. Use power 
+shield and heroism.
+
+      4-2-21. C4/D4/E4
+
+  Pirate treasure is real on "onesdays" here in C4 and D4.
+
+C4 is a pretty simple level where you can get endurance from a well, which 
+doesn't really help.
+(7, 8) (15, 15) treasure
+(5, 8) Castle Greywind
+(7, 10) +60 accuracy
+(6, 5) +60 endurance
+
+D4 is not too bad but unfortunately there are no huts to bust out.
+(10, 1) shell on day 99--you lose 2 days after picking it up
+(2, 4) (3, 11) (10, 11) (6, 10) chest
+(8, 11) -150 hp well
+(6, 8) Blackwind's castle
+
+E4 has a lot to offer, but the only resting places it has to offer are the 
+trees:
+
+(7, 8) magic cavern
+(5, 7) barbarian hut +500k experience to destroy
+(9, 8) death locust hut +250k experience to destroy
+(6, 5) uncurse well, which is very useful.
+(5, 10) well
+(12, 10) wishing well
+(4, 12) Item in the sand. Pick it up and get attacked by a Vulture Roc. A 
+word on vulture rocs: have power shield and Heroism in effect when you dig up 
+one of these items in the sand. The items are usually worth the fights and if 
+they aren't, reload and try again. Yes, you should be saving frequently in 
+these parts.
+(10, 11) another item
+(8, 6) item, but 2 vulture rocs attack.
+(13, 6) item, but 3 vulture rocs attack. This is a very tough fight and you 
+will want to hit them with spells.
+
+      4-2-22. CASTLE DUNGEONS: WHITESHIELD
+
+******************
+*XXXXXX XX    XX^*
+*X   X           *
+*X   XX XX    XX *
+*X       XXXXXXX *
+*X   XX XX   XX  *
+*X   X       XX  *
+*XXXXXX XX   XXX *
+*X       XXXXXXX *
+*X   XX XX   XX  *
+*X   X       XX  *
+*XXXXXX XX   XXX *
+*X       XXXXXXX *
+*X   XX XX   XX  *
+*X   X       XX  *
+*X   XX XX   XXX *
+*XXXXX   XXXXXXXX*
+******************
+
+(9, 3) (9, 1) = +10 all stats, 1 player
+(11, 7) = chalice of resistance, 1 player +20% all
+(15, 1) = +5 levels for one character
+
+  JOABARY = how to get in
+
+  Major demons are your big opponents to be concerned with here. The rooms to 
+the west have evil rangers whom you can take on but the ones to the right 
+have major demons whom you need to hit quickly or they can stun you. Power 
+shield and heroism...and especially for the boss. He is in the bottom right 
+room in the hallway. The big problem here is that you have to use 
+
+      4-2-23. CASTLE DUNGEONS: BLOODREIGN
+
+******************
+*   XXX  XX    X *
+*    XXXXX    XX *
+*X    XXX    XXXX*
+*XX    X    XXXXX*
+* XX       XXX XX*
+*  XX           X*
+*   X  X   XXX XX*
+*X         XXX XX*
+*XX        X     *
+*XXX   X   X     *
+* XXX      XXXXXX*
+*XXX   XX-XX   bX*
+*XX   XXX XX    X*
+*X   XXX   |    X*
+*   XXXXX^XX   aX*
+******************
+
+  OGRE = how to get in
+
+  Prisoners at A and B. You have a door to bash down and if you're doing this 
+early on, you may want to have the +20 level bit or cast etherealize. The 
+Sonic Ninjas are a lot less annoying if you've got bless spells cast all 
+over. This is a nice pit stop early in the game to get Son of Abu, who is a 
+powerful thief with some very nice items.
+
+  The upper bits have fire all around them and Protection from Fire for a 
+level 30 cleric should do the trick. Notice the gaps in the walls. Cast a 
+teleport spell to get in there and you will be OK. The locations:
+
+(15, 14-15)
+(7-8, 15)
+
+      4-2-24. CASTLE DUNGEONS: DRAGONTOOTH
+
+  20000 = how to get in
+
+  This isn't a bad one, just a big spiral. But you'll want to have raised the 
+isle of youth before starting this, since your characters may age after 
+drinking the potions in the center of the maze. So although the upper bit may 
+be the best castle to look through, this dungeon can probably be put off for 
+a while.
+
+******************
+* X X X X X$X X ^*
+*               X*
+*XXXXXXXXXXXXX  $*
+*X           X  X*
+*X XXXXXXXXX X   *
+*X X       X X  X*
+*X X XX XX X XX  *
+*X X X   X X    X*
+*X X X   X X XX  *
+*X X XXXXX X X  X*
+*X X       X X   *
+*X XXXXXXXXX X  X*
+*X           X  $*
+*XXXXXXXXXXXXX  X*
+*                *
+*X X X X X X X$X *
+******************
+
+(15, 13) (15, 3) (13, 0) (10, 15) $--don't open any other ones or ghosts will 
+appear and they are annoying.
+
+In the very inner circle have the evil characters in your party drink up all 
+the brews, unless you want to turn an alignment to evil.
+
+    4-3. THE ARENA
+
+  I've managed to get through 15 arena fights in a day, with blessings on my 
+whole party. But everything has to be done right. It seems simple enough: 
+you're in a 16x16 room and just have to run around and zap all your enemies. 
+I really don't consider going into the arena without this protection worth a 
+second thought--at least, not early in the game.
+
+  After mucking around I've found there's a way to furrow the ground so that 
+you can get in and out fairly quickly. First, turn west and hit a wall, then 
+turn left and hit the corner and say yes. You're dropped back in the center 
+now. The first thing to do is to rotate around and see if there are any 
+enemies to shoot down. Take care of them. Then comes the weeding back and 
+forth.
+
+aaaa............
+...a............
+...a............
+...aaaaaaaaaa...
+............a...
+............a...
+............a...
+............a...
+...aaaaa....a...
+...a........a...
+...a........a...
+...a........a...
+...aaaaaaaaaa...
+................
+................
+................
+
+  The above passage should nail most of the monsters that are after you.  It 
+allows you to see all squares, and monsters generally tend to gravitate 
+towards you when they are close. Before going to a corner for the final time, 
+take a look around to make sure you're not being followed.
+
+  You get 1000*(# of times through the arena) experience for each win. 
+Originally this is far ahead of the total experience, but monsters' 
+experience grows exponentially. Some things to watch out for include sprites 
+and Cursed Fools--shoot them from a distance so they don't curse you. Also 
+you will, in fight 20, want "protect from elements: fire" to take care of 
+things there.
+
+  5. MIDDLE GAME
+
+  You only need to read 5-1 in order to get all 6 hologram sequencing cards. 
+Then you just need to complete the endgame. But the side quests in 5-2 will 
+help you to pump up a few levels.
+
+    5-1. THE NECESSARY BITS
+
+  The necessary bits are, in fact, great ways to improve your party. You find 
+about 2 ultimate orbs in each one, 11 total--for 11000000 experience and 
+almost 11 levels. That's not counting any fights you encounter. There are 
+also statistical bonuses aplenty as well as artifacts of various alignments 
+and even some treasures that flat out increase levels. Enough to bring you to 
+the endgame on their own, really. They don't necessarily have to be done in 
+some order, but some are clearly easier than others. The numbering of the 
+cards, in fact, tips off the order it may be easiest to do things in.
+
+  Although if you are confident in your fighters more than your magic, you 
+may want to go with the Dark Warriors' keep first.
+
+      5-1-1. THE FORTRESS OF FEAR
+
+  Not a bad dungeon to go through. It's even easier if you realize you can 
+use teleport to enter the Mummy King's chamber and then get out. He's at (26-
+27, 11-12) and the card is at (27, 11.) The main thrust here is to pick up a 
+hologram sequencing card but there's a lot of character improvement available 
+as well. The one thing to note about the Mummy King? He's not affected by 
+Holy Word. You'll need swords. If you're still having trouble, work the B1 
+triad I've written up elsewhere. It works well.
+
+  Remember 1) to have power shield, 2)to have Holy Bonus and 3) not to open 
+any chests except the ones at the very south center. Evil rangers, jousters 
+and a king jouster here are your enemies, so no magic. Protective spells work 
+well. In each side room there's a number as a clue, along with a very nice 
+improvement for a party member who touches the skeleton. At the south you 
+have two artifacts.
+
+  If you look around you will find 16 levers and a clue about heads at a 
+corner. Levers move only if they can change a static field to an idol head or 
+vice versa. Each lever has one function: turn one of eight squares to or from 
+an electric field. Levers start out with all electric fields. Here's which 
+lever does what, as they are roughly aligned with the squares they influence:
+
+         | head  | field
+---------+-------+-------
+SW square|  6,12 | 10, 9
+ S square| 21, 7 | 11, 8
+SE square| 15, 2 | 12, 9
+ E square| 24,30 | 21, 8
+NE square| 14,29 | 18,22
+ N square| 10,29 |  7,29
+NW square|  5,21 |  2,30
+ W square|  1,17 |  1,18
+
+  So to solve the puzzle you find you need heads at the corner.  That means 
+(6, 12) and (15, 2) and (14, 29) and (5, 21). If you mess up, hopefully this 
+chart will help point out where to go to switch things around.
+
+      5-1-2. THE HALLS OF INSANITY
+
+  THe Halls of Insanity have enough nasty enemies that you may need to go 
+through twice. Mystic Clouds here drain your magic points if they hit you and 
+do damage, but the nice thing is, you can avoid this with Power Shield. Mini 
+Dragons get you with their fire breath. I find a simple protection from fire, 
+along with the immunity in the Blistering Heights cavern, should be enough to 
+neutralize these. However, the Evil Eyes in the rooms with the real treasure 
+are rather nasty, they turn your party insane, and they can even kill you. So 
+it is best to back out to the surface when you can to get healed at the 
+Zingaro wagon(one west, then south) and rest up and try again. You might as 
+well come in after taking the fountains from B1 but the Evil Eyes have such 
+good dexterity they'll hit you anyway.
+
+  Thankfully the map, although it seems to wander, is actually pretty 
+straightforward. You might panic not seeing an exit around, but there's a 
+secret wall to the north, so just bash that. There are three puzzles to solve 
+at first: lions facing to the west, south and east. The answers are BLINK, 
+EYES and TEARS. These open up longer passages. Each passage has two branches.
+
+  Once you've answered the riddles you can follow the winding passages, 
+breaking down secret doors. There are a few things to watch out for, though. 
+First--if thre is treasure in a niche, it is guarded by a teleportal back to 
+the main area. This is nice when you've been moved one-way. Second--evil eyes 
+are nasty, and the combinations of monsters(drain spell points, then 
+brutalize you and turn you insane) can really knock you out. Be sure to check 
+your characters' statistics so they don't slide to zero(RIP.)
+
+  To the east, you have nothing critical to the game. Eventually after 
+busting walls you'll have a passage of two seeming dead ends. Both secret 
+doors. Bust to the east and there are lions that give clues and two cursed 
+chests with nothing in them, so don't bother there. Bust to the north and 
+fight a ton of mini-dragons. There are some very good items in the treasure 
+chest behind them.
+
+  To the west, you will come to a 6x2 room that branches west and east. The 
+east has the harder figght, with three evil eyes. Here after busting the door 
+down you may wish to snake in sideways, turn forward, and start casting 
+spells to see what you can zap. Then you'll need to cast jump spells to reach 
+the chests: artifacts of evil to the left and right, and a good 5-item chest 
+to the north.
+
+  Taking the west branch of the west passage leads to a fight with just one 
+evil eye. I recommend paying the lion here for everyone to get all skills. 
+You probably have everything you need by now, but it's fun just to pile up 
+these honors. In the upper right corner, there is a chest, but approach it 
+from the west or you'll get teleported back. Then go 1W1S and jump east toget 
+a chest with...HOLOGRAM SEQUENCING CARD 002. Teleport back now.
+
+  The south branch has two sub-branches, west and east. The east branch is a 
+bit shorter but has 4 evil eyes to fight, so maybe you will want to go west. 
+Each final room is similar here--orb in niche(jump to it) and eyes to fight 
+and chests in the two far corners. One will have 666 gold and 666 gems and 
+the other will have 66000 gold. Why not--if only for your robber's 
+experience. Definitely save before each fight and you may have to outright 
+rest up. Note the trips here are almost one-way as you are teleported past 
+the magic fields at the beginning of the passage, but you can step on the 
+teleport squares guarding the orb to go back. And get out.
+
+      5-1-3. THE DARK WARRIORS' KEEP
+
+  This is the most straightforward of all the hologram dungeons. It's not too 
+tough to get to--from Baywatch, go east into the B sectors, then go south 
+just after the "please wait" and it's in B3. If you really want to save time 
+you can just teleport, but your spell points may be better spent on power 
+shields for everyone first, because all your enemies are melee, and you can 
+also give Heroism and Blessed from your cleric/paladin. There are no magic 
+enemies here. So you probably want to go to B1 for the speed, might and level 
+fountains first. You should crush your opponents.
+
+  In fact the most deadly things here are the exploding chests. They kill 
+whoever tries to unlock them. Save before opening anything, or better yet, 
+just open what's described below.
+
+  You should have the red warrior key from the Cyclops' den, and if you 
+really want to make quick work of things, take the door to the south, go all 
+the way to Y=0, and answer the riddle to open the room to the east. It holds 
+two Ultimate Power Orbs. There are also two Ancient Artifacts here. Open the 
+chests along the bottom and no others.
+
+  Although this cave isn't too bad to clear out, it's worthwhile to look at 
+the skeletons. From the opening room in the north center, there are seven 
+passages behind grates. Each has a skeleton which beefs up virtues 
+impressively. Take advantage of this.
+
+      5-1-4. THE CATHEDRAL OF CARNAGE
+
+  For this one you'll want to take along two suckers, uh, brave non-magic 
+users so that they can drink from the very nasty chalices that cause you to 
+turn eradicated. Then dismiss them and don't even bother to build them a 
+monument for their bravery, even with all the gold you have. Your good party 
+members can rationalize this by shunning false idols, your neutral ones don't 
+care, and your evil ones think the idea's a blast. And you probably don't 
+want the hassle of going to a temple. So that's okay then!
+
+  The Cathedral of Carnage is pretty linear, too. Rundown below:
+
+  The square (28, 5) is cursed. It's the one with the talking idol. So don't 
+listen to it. There aren't many fights but it does make the rest of the trip 
+much harder.
+
+Moo clerics and gargoyles in big room. Kill them and the moo priests before 
+drinking the foul cups:
+
+    Erad Ston Death
+    Erad Ston Death
+    (4-7-10, 14-16)
+
++5 levels for Mighty Moo Juice at the very very end in the "JVC III room" 
+went to my Sorcerer.
+
+O M O E S  <--from
+
+
+
+E W v S D  <--to
+
+  Here is the map for the puzzle that's tricky. The answer is "weeds" and you 
+get a heckload of goodies for it. The question is, what's going on? It's a 
+cryptogram of the sort you thought phazed out in MM1/MM2.
+
+S becomes D, E S, M W and O E. The key is MOOSE. So the answer is WEEDS. 
+Cute.
+
+      5-1-5. THE TOMB OF TERROR
+
+  The Tomb of Terror requires you to go through a lot of fights. If you don't 
+complete everything in one area, a force field will bar you from the next. 
+They start off easy and you won't need Turn Undead for the first bit, but 
+eventually you'll want to use Holy Word to zap ghosts and avoid getting aged, 
+as the reversal process is hell to go through.
+
+  In fact you may want to visit the Arachnoid Cavern to bulk up a bit or you 
+may find yourself resting after every fight. There you can get +20 
+personality and +25 intelligence. Eventually this leads to more spell points, 
+and the more Holy Word you can cast(clerics) or Mega Volt or even 
+Implosion(sorcerers) before resting, the better off you'll be for the end 
+fights. Because you don't just want to win them, you want to win without 
+getting aged or getting anyone killed.
+
+  Also, any chests you see? Don't open them until you've cleared EVERYTHING. 
+There's some good treasure here, but the chests curse you, and your weapons 
+are so much less effective against the undead than spells. Fortunately the 
+curses aren't cumulative so you can win easily once you start. You can also 
+teleport into rooms that aren't beyond the force field, which helps things. 
+But you can't teleport beyond force fielded areas. (?)
+
+  There's a long corridor east at first. Thee rooms to the side feature 
+skeletons, zombies and ghouls. I was able to whip the first two without Turn 
+Undead and ghouls were enough of a nuisance that I pulled out the spells. 
+Still things aren't too bad especially when the last three rooms to the 
+north(out of eight) don't have any monsters. Then you go south and pull back 
+left, and after an easy room with skeletons, you face ghosts, phantoms and 
+reapers the rest of the way.
+
+  Some fighting strategy is necessary here. You may want to teleport past a 
+door to get a fighting advantage, and you'll want to try your best to line 
+enemies up in a row. This means you conserve spells. And since you can 
+teleport between rooms it may be best to stand at the east edge of one and 
+teleport west six squares(east edge of the next.) It may even be worth saving 
+and reloading to find where you can teleport to line enemies up for a quick 
+knockout, to see if they move with you or not even when they can't "see" you.
+
+  The last part is the toughest of all and I think that here, you need to 
+break open a door, turn to the side and sidestep. Then turn back forward. 
+Otherwise a lich may cast a spell at you that will kill you before you can 
+cast implosion, which turns out to be very useful near the end as well.
+
+  Once you've cleaned up you can go back and get all the treasures. From east 
+to west rooms, you have
+
+1: artifact of good
+2: artifact of good
+3: Gas Trap, items
+4: Divine Intervention, items
+5: Sun Ray, items
+
+  The orbs are off to the side below, with the sequencing card in one of the 
+side chests as well. So you should get cursed anyway--so why not loot up 
+after then? You may have to come back for some treasure, though, as you may 
+get cursed *twice*. If you know about the wells in E4 and F4, that may help 
+save some game-time.
+
+(12, 2) Orb--Lich pops up NW after
+(12, 6) Orb--Lich pops up SW after
+(18, 6) Koshek's tomb
+(18, 2) Neshek's tomb, card 005
+(8, 2) Mirk Cauldelle, ancient artifact of evil
+(8, 6) Ndru Cauldelle, ancient artifact of evil
+(5, 9) Deeth, ancient artifact of good
+(11, 9) ancient artifact of good
+(16, 10) tomb, gas in chest
+(18, 10) Blude's tomb, items
+(22, 10) Blayde's tomb, Divine Intervention spell
+(24, 10) Phyre's tomb, items
+
+      5-1-6. THE MAZE FROM HELL
+
+  There are a lot of things to beware of here. Minotaurs are hard to hit but 
+kill you on contact. Medusas throw a spell at you that turns everyone to 
+stone. But there are some great treasures if you are patient. You can cheat 
+your characters up many levels but in fact the best way to go about 
+completing this maze is to use the following spells: Power Shield and 
+Heroism. The first protects against the minotaur's death touch and the second 
+allows you to hit him significantly. You really want to be level 30+ before 
+attempting this but if you've been through the first five dungeons above that 
+should happen just from the quests you've solved.
+
+  The only REAL object here is drinking from the fountain in the center of 
+the maze to be an Ultimate Adventurer. But you can also go and nab orbs. You 
+can teleport wherever you want here, which makes it easy to pass by 
+whirlpools, but I added a text map just in case. In fact, you have to jump by 
+whirlpools.
+
+  Note that at 500000 per 6-member party per enemy you have a lot of 
+potential to get better very quickly.
+
+XXXXXXXXXXX.....X...............
+X!.X...X.X..XXXXX.X.XXXXXXXXXXXX
+XX.X.XXX.XX.....X.X......X......
+X...........XXXXX.XXXXX.XX.XXXX.
+XX.XXXXXX.X.X...X.......X...X...
+...X......X.X.XXXXXX.XXXX.XXXXX.
+XX.X.XX.XXX...X..~.X.X......X...
+X..X..XXX...X...XXXX.~.XXXXXX.XX
+XX.X.XX...X.X~XXX..~.X....X6X..X
+X..X....XXX~.~....XX.X.XX...XX..
+..XXXXXXX...XX.XX..X.X..XXX..XX.
+.XX.....X.X.X...X.XXXXX...XX..XX
+..X.XX.XX.X~..F...X!..XXX..XX...
+.XX..X.X..X.X...X.XXX...XX..XXX.
+..X.XX.~.XX.XX.XX~..X.X..XX.X...
+.XX..X.X......~~..X.XXXX....X.XX
+..X.XX.X.XX.XXX.XXX....XXXXXX.X.
+X......XXX...X....XXXX.X......X.
+XXXXXX...XXXXXXXX.X.X....XXXXXX.
+X......X.X........X...X.XX.X....
+X.XXXX.X.XXX.XX.XXXXXXX~X....XXX
+XXX....X..~...X.X....X....X~XX.X
+X...XX~XX.X.X...XXXX...XXXX....X
+XXXXX...XXXXX.XXX..X.XXX..X.XX.X
+X.....X.....X.....XX.X.XX.X..X.X
+X.XXX.XXXXX.XXXXX....X.X..X.XX.X
+X.X.X.X.......X...XXXX.XX.X..X.X
+X.X.X...XXX.X.XXXXX.......~.XX.X
+X...X.X.X.X.X.......XXXX.XX..X.X
+XXXXX.X.X.XXX.X.X.X....X..XX.XXX
+X!X.X.X.X.....X.X.XXXX.XX..X....
+........XXXXXXXXX.......XX^XXXXX
+
+6 = hologram card # 6
+! = orb
+$ = chest
+% = booby trapped chest
+~ = whirlpool(sends you to 6, 30)
+
+(31, 31) 2 medusa + 3 minotaur + minotaur king
+(8, 15) (7, 25) (15, 1) great treasure
+(1, 30) (19, 19) (30, 31) (1, 1) orb
+(3, 5) (1, 0) medusa + minotaur
+(19, 19) 2 medusa
+(5, 24) (15, 5) (31, 15) (30, 3) (10, 12) (3, 14) (1, 9) (0, 26) (10, 3) 
+medusa
+(7, 20) (1, 28) 2 minotaurs
+(18, 8) (31, 1) (1, 30) (17, 0) (7, 5) (15, 27) (15, 29) (15, 31) (24, 8) 
+(29, 27) (31, 21) (27, 25) (24, 29) (19, 13) minotaurs
+(26, 4) (10, 10) (7, 17) (6, 9) (11, 22) (13, 23) (17, 25) (11, 19) (14-15, 
+16) (17, 17) (13, 22) (19, 23) (21, 24) (23, 11) (27, 10) whirlpools
+(28, 5) (24, 6) (21, 17) RIP
+(4, 18) (22, 7) (3, 1) eradicate
+(1, 17) (8, 30) (11, 3) stone
+
+  You can just plow through and teleport where you need, leaving the NE out 
+if necessary(although you can teleport onto that and cast time distortion,) 
+or you can sucker monsters into following you around if they are guarding an 
+orb. For instance the dead end orb at (19,19) may require you to wait 2R-D or 
+even go up 2R and pull back down and let the monsters follow you(sidestep and 
+backpedal to keep them in view) before teleporting over them. Watch out for 
+the 3-long corridor though as the medusas may get a hit in on you.
+
+  At any rate you should still have a few Implosions ready...just in case. 
+They will probably be needed for the Minotaur King anyway.
+
+  5-2. STRETCHING THE # OF ORBS OUT TO 31
+
+  Now, if everything's gone well, you've got 12 orbs, which are more than 
+enough to complete the game. If you followed my advice and gave one king all 
+8 orbs before heading to the Maze from Hell, you can give the remaining 4 
+orbs to the king you gave the other 8 to and skip to section 5-3. In fact, if 
+you want to disregard story-important stuff, you can even head to 5-4, which 
+is surprisingly anticlimactic. There's a cheap way to get through for 
+starters and a long way after that. Just beware--if you get to the Main 
+Control Room, there's no way back.
+
+  These dungeons with orbs aren't strictly necessary to finish the game, but 
+it does seem that they help you along a good deal. You can find these clues 
+in the pyramids or even this guide, but it always felt proper for me to make 
+this detour. While it's technically possible to complete the game by just 
+seeing the A- and B-sectors, along with 3/4 of the Isle of Fire, E2, F2 and 
+F3(E1 is nice but optional,) these help flesh out the game a bit more with 
+minimal risk and loss of time on your part. And in case you missed any 
+puzzles, you can figure what's going on here.
+
+      5-2-1. DRAGON CAVERN
+
+  There are a few orbs in here. Four in fact. See the Dragon Cavern 
+section(6-3) for further details. They are probably the toughest ones in the 
+game to get in a fight-and-slash kind of way.
+
+      5-2-2. THE PYRAMIDS AND THE STORAGE AREAS
+
+  Storage areas are hidden beneath the pyramids and are organized pretty 
+logically. You can find a whopping 15 orbs in what I call the "crib sheet" 
+areas. They're organized as follows:
+
+ Main----Forward--Central--  Aft
+Control  Storage  Command  Storage
+
+  You can also use teleportals to shift around from aft storage to the main 
+control room, where you can go to the Alpha and Beta storage areas. In 
+general you'll want to have Heroism here because there are many enemies such 
+as the ED-409 who are outright tough to hit, and otherwise you'll need to use 
+spells. Power-shields across the whole party can help too as can resistance 
+to electrical fields.
+
+  The next three areas are connected by teleportals. You say PRIMARY to get 
+to the main control room, WARP for Alpha Sector and SUBLEVEL to get to Beta 
+Engine Sector.
+
+             Main Engine
+            ^^         ^^
+            vv         vv
+  Alpha Sector << >>  Beta Sector
+
+        5-2-2-1. CENTRAL COMMAND
+
+XXXXXXXXXXXXXXXX
+       X    X  X
+XXXXXX X X  X  X
+X   XX X XXXXX X
+X              X
+XXXXXX ^ XXXXXXX
+X             XX
+X XXXX X XXXX XX
+X X  X X XXX   X >> Aft storage
+X X    X   X   X << Forward storage
+X X    X   X   X
+XXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXX
+X XX XX XX XX XX
+
+X XX XX XX XX XX
+
+  You enter Central Control from the pyramid in C4.
+
+        5-2-2-2. AFT STORAGE
+
+******************
+*XXXXXXXX XXXXXXX*
+*X+        X     *
+*XXXXXXXX XX     *
+*X+    X         *
+*X     XX XX     *
+*X     XX XXXXXXX*
+*X     X  XX  XXX*
+*XXX XXXX     X+T*
+*XXX XXXX XX  X T*
+*XX   XXX XXXXXXX*
+*XX   XXX XX     *
+*XXX XXX         *
+*XXX XXXX XX     *
+-          X     *
+*XXX XXXX XXXXXXX*
+******************
+
+  There are a lot of answers here to puzzle you may have missed. There are 
+also 3 orbs. Your opponents are Mystic Cloud, Ed-409 and Iron Wizards. For 
+the second you need holy bonus and power shield, which also protects you from 
+the first draining your spell points.
+
+(1, 12) (1, 14) (14, 8) ORBS. One is behind a locked door, one is behind a 
+bunch of enemies, and the other is behind a teleportal you can really only 
+reach from the main section. There are also other clues here. Note also that 
+(14, 8) is where you go if you say ORB MEISTER into a mirror.
+
+(3, 11) town portal--all codes
+(2, 10) mirror portal--all codes
+(4, 10) 645 = the first half of the sequence(no need for Grey/Blackwind then 
+eh?)
+
+(14, 13) 231
+(14, 12) YOUTH
+
+  For Halls of Insanity:
+(14, 2) "eyes"
+(14, 3) "blink"
+(14, 4) "tears"
+
+(15, 7) sends you back to the main area
+(15, 8) sends you back to Fountain Head
+
+        5-2-2-3. FORWARD STORAGE
+
+******************
+*XX XX XX XX XX X*
+-                - > central command
+*XX XX XX XX XX X* < main control
+*XXXXXXXXXXXXXXXX*
+*X         XXXXXX*
+*X XXXXXXXXX    +*
+*X XXX XXXXX    X*
+*X              +*
+*XXXX   XXXX    X*
+*          X    +*
+*X XXX XXX XXXXXX*
+*X X XXXXX XX  +X*
+*X    +X       +X*
+*X    +X   XXXXXX*
+*X    +X         -
+*XXXXXXXXXXXXXXXX*
+
+  Entering via the top will get you to the endgame, but entering the bottom 
+part will lead you to some pretty serious treasure. Phase heads and Iron 
+Wizards are the enemies here so as long as you have a few protective spells 
+it shouldn't be too bad.
+
+(9, 11) answer YOUTH when the idol asks what is lost(the guy with the skulls 
+tips you off about this)
+(15, 8) +20 intelligence
+(15, 6) +20 personality
+(15, 10) +20 might
+(14, 4) +20 luck
+(5, 1) +20 speed
+(5, 2) +20 accuracy
+(5, 3) +20 endurance
+(14, 3) +2 levels
+
+  The package that comes with the game states that you can get this once a 
+year so you may want to explore this pyramid when you can early on. +20 speed 
+is not to be missed out on.
+
+        5-2-2-4. MAIN CONTROL
+
+******************
+*XXXXXXXXXXXXXXXX*
+*XXXXXXXX        *
+*XXXXXXXXXX   X X*
+*XXX    |     X  *
+*XXXXXXXX   XXX X*
+*X XXX    XXXXX X*
+*   XXX   X   | X*
+*!      XXXX XX T*
+*       XXX XXX T*
+*   XXX   X   | X*
+*X XXX    XXXXX X*
+*XXXXXXXX   XXX X*
+*XXX    |     X  *
+*XXXXXXXXXX   X X*
+*XXXXXXXX        *
+*XXXXXXXXXXXXXXXX*
+******************
+
+  There are some strong doors here you can't break down without 150+ might 
+but they just hide an eliminator each. Towards the left side there are a lot 
+of eliminators. If you can clear them all you get to the message at the very 
+back. But all you have to do, on entry, is go left and down and hit one of 
+the transporters, then push 6-4-5-2-3-1 and watch the endgame sequence. The 
+locks near the transporters require ~200 thievery skill to break down. But 
+there are just more fights behind them.
+
+        5-2-2-5. MAIN ENGINE
+
+******************
+*XXXXX TXXXXXXXXX*
+*    X XX1X1X1X1X*
+*   XX XX1X1X1X1X*
+*                *
+*   XX XX1X1X1X1X*
+*    X XX1X1X1X1X*
+*XXXXX XXXXXXXXXX*
+* oX ^  Xo Xo Xo *
+*c X    X cX cX c*
+*XXXXX XXXXXXXXXX*
+*    X XXTXTXTXTX*
+*   XX XX1X1X1X1X*
+*                *
+*   XX XX1X1X1X1X*
+*    X XX1X1X1X1X*
+*XXXXX TXXXXXXXXX*
+******************
+
+  You have answers to a few more puzzles here. (6,0) goes to Alpha with the 
+right password and (6,15) does likewise for Beta. (3, 10) echo and tomorrow. 
+(3, 14) mirror and chair.
+
+  There are a few teleportal crystals here that are potentially confusing.
+
+( 8, 5) to ( 9, 7) so you can get the orb at (11, 8).
+  The (9, 8) crystal goes to (1, 7).
+(10, 5) to (12, 7) so you can get the orb at (15, 8).
+  The (12, 8) crystal goes to (1, 7).
+(12, 5) to (15, 7) so you can get the orb at (14, 8).
+  The (15, 8) crystal goes to (1, 7).
+(14, 5) to (1, 7) so you can get the orb at (8, 8).
+  The (0 , 8) crystal goes to the aft storage enclosure. There's another orb 
+there.
+
+  From the (1,7) area there is another crystal that sends you to Aft Storage, 
+where you have 2 transporters: one back to the main engine, the other back to 
+Fountain Head.
+
+Again, orbs at (1,8) (8,8) (11,8) (14,8)
+
+        5-2-2-6. ALPHA SECTOR
+
+******************
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+******************
+
+  Most crystals--well, all of them--add 1 to your age. You'll be fighting ED-
+409s and spirit shields here so keep the powershield/heroism sharp. Plowing 
+through this reveals a few more answers you might not have gotten to other 
+puzzles in the game, as well as 3 orbs.
+
+(15, 1) (15, 9) (0, 14) orb
+(2, 13) Bloodreign words for basement
+(2, 9) Alpha passcode
+(2, 5) type CREATORS at Central control
+(2, 1) 20301 in Arachnoid Cavern.
+
+        5-2-2-7. BETA SECTOR
+
+  This is a vertical mirror of the Alpha sector, except for different clues 
+and one more orb.
+
+******************
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+*     XX XX X X X*
+*                *
+*     XX XX X X X*
+*XXXXXX   XXXXXXX*
+******************
+
+(10, 1) (14, 7) (1, 15) (1, 7) ORB
+(2, 14) Whiteshield words
+(2, 10) Dragontooth #
+(2, 6) Beta passcode
+(2, 2) ICICLE and SECRET are 2 more answers
+
+    5-3. THE NOT SO NECESSARY BITS
+
+      5-3-1. GREYWIND
+
+******************
+*....XXX.XXX..:..*
+*..:.X.X.X.X.X...*
+*XXX.XXX.XXX.XX.X*
+*T:.....:.......^*
+*XXXXXXX.X.XXXX.X*
+*T...X.X.....:X..*
+*XXX.XXX..:.....:*
+*...:...:....X.XX*
+*.X..XXX.....X.XX*
+*..:.X.X....XX.XX*
+*X.X.XXX...XX...X*
+*:.:......XX.....*
+*X.X.XXX.XX.....X*
+*....X.X.X.....XX*
+*XXX.XXX:XX...XXX*
+*T.:......XX!XXXX*
+******************
+
+  Your opponents here are screamers(use power shield,) fire 
+lizards(protection from fire) and dinosaurs. None of these should kill you 
+and anyway if the screamers do happen to hit you, see the pool at (12, 3).
+
+  There's a very pleasing word play puzzle here. A fountain at (0, 15) tells 
+the story of an archer, Reharc. Then you learn about a ranger Regran and his 
+cleric sister(9, 5??). This ties into the puzzle at (7, 15) where the down 
+stairs are. You have to arrange (last 3 letters reversed) (1st 3 letters) to 
+get CIRCLE.
+
+  There are also items at the holes inside the squares. They aren't anything 
+mind shattering but they're fun. (5, 10) and (5, 14) have 25k/100 gems. You 
+also have three thrones that become activated on day 50.
+
+(0, 10) great possessions
+(0, 12) great riches
+(0, 0) great power--this is the best of the lot. I like to let my Paladin sit 
+there if I'm able to complete this quest on day 50 or so. Later on there may 
+not be enough gold in Great Riches to increase one's levels.
+
+  Other stuff:
+(2,2) $$
+(8,0) $$
+(0,8) 5 items
+
+    5-3-2. GREYWIND DUNGEON
+
+******************
+*................*
+*.X.........X..H.*
+*......X.$.......*
+*................*
+*.GX.............*
+*.....XXXXXXX.X..*
+*..$..X.....X....*
+*.....X.....X..$.*
+*.....X.....X....*
+*.X...X$X.X^X....*
+*.....XXX.XXX..X.*
+*................*
+*..X.............*
+*....$.X.. X.....*
+*.H.........$..H.*
+*................*
+******************
+
+  Amusingly the Gods of Game Restoration don't let you save in here. It 
+baffles me as to why...there are tougher places they could have done it. But 
+that's the breaks.
+
+  There's not a lot to do in this dungeon and in fact I do encourage messing 
+up just a BIT. Basically you have a huge empty space with a small room in the 
+center. All gold is illusory but you can get a ton of experience by solving 
+the puzzle wrong, fighting a bunch of Great Hydras, and then solving the 
+puzzle. Here's what to do.
+
+  The right way--go to 1,1 and turn the hourglass. Go to 14, 1 and turn that 
+hourglass and repeat at 14,14. Ring the gong at 1, 11. That opens up the NW 
+hourglass. Go in a circle--there are few barricades--flip all four 
+hourglasses, and ring the gong again. That's the safe way.
+
+  But if you want to get a little extra experience, you can flub on purpose. 
+After opening the NW, flip all the hourglasses down except the NW. Then ring 
+the gong. In every solitary wall square on the map, a Great Hydra will now 
+appear. That's a total of eight. They give a lot of experience and good 
+treasure too. But you will want to have Holy Bonus and Power Shield and 
+Protection from Fire, at the very least, active. And you'll probably want to 
+be level 50+. While you can come back later you'll have to fight your way 
+through at least four of these guys to live for that moment.
+
+    5-3-3. BLACKWIND
+
+******************
+*$o          o X$*
+*X X XO XX X X Xa*
+*^   o         XX*
+*X X X XX X X    *
+*        o       *
+*XXXXXX X X   XXX*
+*     X X X X X o*
+*oX aXXoX X     X*
+*   XX  X Xa XXXX*
+*  XX  XX XX    $*
+*  X  XX   XXo X *
+* XX XX     XX X *
+* X  X   $   X   *
+*  o XX     XX Xo*
+* X   XX   XX  X *
+*TX X aXX!XXv  XT*
+******************
+
+  Castle Blackwind features a bunch of poison pools with the main monsters 
+being Piranas(sic.) Going into the pools poisons characters so you may wish 
+to get where you're going before you cure everyone. You can probably jump 
+over the pools to get where you want, though. There's a fountain that gives 
+you all spells for 2 million, which is a ripoff seeing as how you can buy 
+them individually for much cheaper(and this doesn't count any scrolls found.)
+
+  The pattern here is OTTFFSEN and the clue is at (5,8). My scratchy notes 
+say "5 past 6, 5 past 4--think often and may be discovered"--the "often" is 
+really a clever pun. Placing 5 near 4 and 6 may make us realize that the 
+pattern is
+
+One
+Two
+Three
+Four
+Five
+etc.
+
+  Therefore the last word is TEN. It's just the letters of numbers.
+
+  There are a few places where you can find treasure which isn't mind numbing 
+but it might be cool. You can also teleport into (15, 15) to get goodies but 
+the problem is that you are next to a pool that sucks you into the arena. And 
+you can also sit on the thrones on the day of the sorcerer's wedding. I 
+forgot if it was 50 or 60.
+
+  A Mystic Cloud guards the doors you need to pass to reach Blackwind's 
+throne and Dinosaurs appear in the SE area.
+
+    5-3-4. BLACKWIND DUNGEON
+
+  Amusingly the Gods of Game Restoration don't let you save in here. It 
+baffles me as to why...there are tougher places they could have done it. But 
+that's the breaks.
+
+  This is a very tricky teleport dungeon. Thankfully some general mapping 
+heuristics take it down a few pegs right away.
+
+******************
+*1.Xb...X    X .^*
+*X....X.b bX a .X*
+*bcbXb..bXb  bX.b*
+* X .J.X    Xba..*
+* ...XbbbbX    X *
+*b.Xb.J.X   bX   *
+*X....X.. bXbbbbX*
+*bbbXbbb.X....Xbb*
+* Xb.J.X...bX....*
+* ...X...bXbbbbX.*
+* .XbbbbX ...X...*
+*X....Xb...X... X*
+* bbX.bb.XbbbbX  *
+*cXbb..X.b  Xbbbb*
+*c...X.bJ.X....Xc*
+*2.X...bX...bX3..*
+******************
+
+a = teleport to (13, 15)
+b = teleport to (15, 1)
+c = teleport to (14, 14)
+. = path through maze, with optional J(ump)
+
+  This dungeon features no monsters as the main obstacles are teleportals. 
+With decent mapping skills(or this map, which was begotten from my own decent 
+mapping skills) it's a lot easier though. Since teleports bounce into others 
+it may be confusing at first. But the basic plot is to get to the SE corner, 
+then the SW, then the NW. You will want to have 1) resurrect, plus access to 
+the fountain, or 2) a hireling you can chuck quickly once he's eradicated, 
+because the NW statue eradicates a character.
+
+  Despite the teleports there's an easy way throught his. First, go W 2S and 
+sidestep E--or just S E N. This kicks you to (15, 1). Here you want to move 
+south. If you turn at (15, 1) you're kicked back to (14, 14) near the start, 
+and if you go north you're bumped back to (15, 1). You can jump north but why 
+bother when there's one of the three statues you need to visit, S 2W. Pay 
+100k gold.
+
+  From there N 3W S 2W N W and I recommend jumping west. S 2W N 2W S W. Pay 
+1000 gems. Now you can backtrack or you can just teleport--6 north then 9 
+north...or retrace to where you jumped, N W 2N 3W 2N 2E N E (jump N) N E 
+(jump N) W (jump N) 3W N W. It uses about the same spell points and a lot 
+less annoying time. The character-to-be-eradicated is still annoying, though. 
+But once you've made the sacrifice, E 2S to a teleport and N E.
+
+  5-4. OK, OK, ON WITH IT ALREADY
+
+    5-4-1. THE CHEAP WAY. I WANT OUT!
+
+  This is not too tough. Make sure you have the pyramid key card but, if not, 
+take the Town Portal to Blistering Heights. Exit to the west. 2W 2N 3W 3S 2W 
+2N to the Pyramid. The west door on the north side leads to a long corridor 
+where you need to unlock doors and bash anything that looks even like a wall. 
+You'll head to the forward storage sector(first PLEASE WAIT) and then to the 
+main control room(second PLEASE WAIT from which you can't return without Mr 
+Wizard's help.) From there, turn south at the first chance. Take either of 
+the portals to the west at Y=7 or 8. Type in the sequence 6-4-5-2-3-1. Watch 
+the end bit and see how high you score.
+
+    5-4-2. WHAT MORE CAN I DO?
+
+  Well, at the VERY back you have a bunch of eliminators to fight through. 
+With ultimate intelligence, a level 100+ sorcerer and a few saves I managed 
+to get to the very back. There's a little message back there. It says to 
+include the secret word KTOW to register your score with the Ancients, which 
+isn't relevant now.
+
+  As for improving your score the easiest way to do that is to find tough 
+monsters and take them out. If you keep playing at the arena it should pump 
+your experience up a lot more. Even if you don't get actual LEVELS you should 
+still get the points for the experience.
+
+  6. SIDE DUNGEONS
+
+    6-1. CURSED COLD CAVERN
+
+  The three monsters here are Wicked Witch, Cursed Hand and Black Knight. You 
+can invalidate the Wicked Witch's curse spells by casting a Power Shield 
+spell on everyone, and if you don't this otherwise easy dungeon becomes 
+arduous. Holy Bonus for fighters doesn't hurt either so you can hit the 
+Cursed Hands, although there are a lot of guillotines scattered around that 
+may cause a loss of hit points.
+
+  Without Power Shield you'll have to use the sidestep action to get close to 
+the witches. There will be a lot of saving and reloading. So just use Power 
+Shield. That makes this dungeon pretty easy. If the guillotines nail you for 
+too many hit points see if you can heal before continuing. Before the final 
+fight you may want to rest up to take on the Black Knight although a few 
+Implosion spells should dispose of him easily enough.
+
+(12, 0) (20, 5) ancient artifact of neutrality
+(21, 8) fizbin of misfortune--head to E2 (8,8) with it if you haven't 
+already.
+(2, 24) Black Terror Key
+(9, 28) (22, 19) pearl of beauty
+(12, 14-15) ancient artifact of evil on each square.
+(12, 2) (22, 21) (7, 29) +20 magic
+(14, 13) (14, 15) (16, 13) (16, 15) +1 level
+
+    6-2. MAGIC CAVERN
+
+  The Magic Cavern has some nice attribute boosts and even some scrolls in 
+case a secondary/tertiary magic user doesn't have them yet, though this may 
+be a big if. You'll want to beware of purple squares which deaden light 
+spells(unmarked here, but maybe have your druid memorize light spells,) and 
+there are some liches scattered around in tombs and behind doors, to counter 
+the treasure you find generally lying around. There's not a lot of experience 
+here, but the extra speed is nice since it's relatively rare to find.
+
+  There are a few guardians and sorcerers tooling around here and you will 
+want to have your cleric cast protection from cold. Then engage quickly.
+
+  The Gold Master Key is also here if you choose not to rip off a hireling 
+for it. It's behind a few doors.
+
+XXXXXX    XXXXXXX^XXXXXXXXXXXXXX
+  XX   XX XXXXXX   XXXXXXXXX   X
+     XXXX   XX         XXX    XX
+  i  XX     XXXX    XX        XX
+X   XX   s   XXXX  XXXXX    i  X
+    XX       XXXX  XXXXXXXX    X
+X  XXXXX    XXXXXX  X  XXXXXX XX
+XX X  XXX  XXXXXXX    i XXXXX XX
+XXXX XXXX XXXXXXX          X   X
+XXXX XXXX XXXXXX  XX    XXXX   X
+XX    XX   XX    XXXX XXXXXXXXXX
+X    XX       XXXXXXX XXXX  XXXX
+  s      i   XXX  XXX XXX  L  XX
+X    XX               XXX     XX
+XX  XXXXs    XX   XXXXXXXX   XXX
+XX XXXX     XXXX XXXX XXXXX  XXX
+XX XXXX XX  XXXXXXX    XXXX XXXX
+X   XXX XXX             XX  XXXX
+XXXXX    XXXXXX XX  s  XX   XXXX
+XX        XXXXX XX             X
+X    XX   XXXX   XX  X      XXXX
+    XXXX XXXX    XXXXX XX    XXX
+   XXXX   XX    XXXXX  XXX   XXX
+X   X     XX    XXXX  XXXXX XXXX
+XX       XX    XXX   XXXXXX XXXX
+XXX    XXXX   XXX     XXXXX XXXX
+XXXX  XXXXXX XXXX   s XXXXX  LXX
+XXX   XXXXXX XXXX     XXXXXX   X
+X      XXXX   X    L      GXX XX
+L  L i XXXX   XX   X   XX  XX XX
+X XX  XXXXXXXXXXX XXX XXXXXXXXXX
+XXXXX XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+(26, 3) GOLD MASTER KEY
+(27, 19) (29, 5) (19, 3) (3, 2) (0, 2) lich tomb
+(12, 4) lich behind door
+(19, 7) drain 50 hit points
+(2, 28) (5, 2) (9, 19) (22, 24) (28, 27) +10 intelligence--emerald pool
+(20, 5) (20, 13) (8, 17) (2, 19) (9, 27) +10 speed--emerald pool
+(13, 29) fireball
+(30, 22) dragon breath
+
+    6-3. DRAGON CAVERN
+
+  This is a very fun dungeon even without the 15 million+ gold you get by 
+tearing through it. There's a dragon lord here and you have a bunch of green 
+dragons(poison or acid I believe) so you may wish to visit the relevant 
+dragon in Blistering Heights, zap to Swamp Town and teleport to F1. Then cast 
+protection from acid. It doesn't hurt to be leveled up at B1 beforehand as 
+well.
+
+  The draconi you'll meet at first aren't exactly fear inspiring. Acid pools 
+have 50 gems each too but that is small potatoes compared to what's 
+elsewhere. You'll find too much to hold even if you bring along two dead 
+hirelings.
+
+  Throw it all at the Dragon Lord including implosion spells. The treasure 
+behind is worth it. If you clear this, that's four orbs.
+
+(22, 4) (25, 4) (3, 2) (12, 1) $250K
+(10, 4) (3, 30) (26, 29) (29, 25) (24, 6) (3, 5) (10, 4) (3, 30) $50K
+(6, 10) (7, 11) $1 million--this is where DOE MEISTER at the portals goes to
+(18, 10) (19, 11) $1 million
+(2, 1) (27, 5) (13, 3) (21, 5) ORBS
+(29, 16) 5 million
+(23, 1) 5 million + items
+
+  7. OTHER AREA OVERVIEWS
+
+  8. FLOW CHART
+
+Temple of Moo -> Crusader skills -> enter castles
+
+Drink might potions--------+
+                           +->break A4(15, 15) glass for
+Might under Swamp Town-----+  pyramid key
+
+Arachnoid Cavern-----------+  Yellow Fortress Key
+                           +->(Fortress of fear)-->card 001
+Sir Galant(BaywatchD 15,1)-+  No orbs
+
+Cyclops Cavern-------------+  Green Eyeball Key
+                           +->(Halls of Insanity)-->card 002
+Darlana(BaywatchD 15,0)----+  2 orbs(NW area, fight, jump)
+
+Cyclops Cavern-------------+  Red Warrior Key
+                           +->(Dark Warrior Keep)-->card 003
+Lone Wolf(WildabarD 0, 13)-+  2 orbs("314")
+
+Arachnoid Cavern-----------+  Blue Unholy Key
+                           +->(Cathedral of Carnage)-->card 004
+Wartowsan(WildabarD 4,7)---+  2 orbs(JVC=password)
+
+Cursed Cold Cavern---------+  Black terror key-->card 005
+                           +->(Tomb/terror)
+Son/Abu(Bloodreign-D 14,0)-+  2 orbs(lich fight)
+
+Magic Cavern---------------+
+                           +->Gold Master key-->card 006
+The Raven(Town 5 inn)------+ (Maze from hell)
+                             4 orbs(minotaur/medusa/minotaur king)
+                         (also teleport to fountain in
+                         center of maze to be Ultimate Adventurer)
+
+solve greywind dungeon + solve blackwind dungeon = learn launch code
+(not necc. to complete game)
+
+11 orbs to one king--+
+                     +-> blue passcard +
+Ultimate Adventurer--+   pyramid key =
+                         enter main engine room
+                         +greywind/blackwind key(645231)
+                         = win game.
+
+  Grid of artifacts and orbs
+
+                     O| G| N| E
+-------------------+--+--+--+--
+Blistering Heights |  | 1| 1| 1
+Bloodreign         |  | 2|  | 2
+Cathedral/Carnage  | 2|  |  |
+Cursed Cold Cavern |  | 2| 2| 2
+Cyclops Cavern     |  | 2| 2|
+Dark Warriors' Keep|  |  | 2|
+Dragon Caves       | 4|  |  |
+Dragontooth        |  |  | 2|
+Fortress of Fear   |  | 2| 1|
+Halls of Insanity  | 2|  |  | 2
+Maze from Hell     | 4|  |  |
+Slithercult Caves  |  |  | 1|
+Swamp Town         |  |  |  | 2
+Swamp Town Cavern  |  |  |  | 2
+Tomb of Terror     | 2| 2|  | 2
+Whiteshield        |  |  |  | 2
+-------------------+--+--+--+--
+Aft Storage        | 3|  |  |
+Alpha Engine       | 4|  |  |
+Beta Engine        | 4|  |  |
+Main Engine        | 4|  |  |
+
+My endgame count was 11-15-11 so I will have to check.
+
+  9. FLAGRANT CHEATS AND FLY-THROUGH
+
+  If actually playing through the game doesn't concern you much, then here's 
+how to go about things. First of all, you can type ORB MEISTER at the portal, 
+get an orb, and go back. Then you can type DOE MEISTER and get lots of gold. 
+This puts your game off to a great start. You'll have no problem buying 
+anything and can probably put the cash, or 1950000 of it, in the bank to get 
+obscene interest on the days you aren't training.
+
+  From there you need to complete the Fountain Head quest. It really isn't 
+too tough even with level ~4 characters. Just heal after you pass through the 
+pendulums and rest up on the way back--and don't forget to learn the Swim 
+spell either as it is critical. Use energy blast on the Rat Overlord. With 
+Fountain Head saved you can go to the fountain and convert the 2000000 gold 
+into experience--although you may wish to calculate and give the cleric 
+1536000 and the sorcerer 2048000.
+
+  I'd advise giving the experience to your Cleric and Sorcerer. They will be 
+able to cast whatever spells they want, by-level spells will be much more 
+powerful, and a good Protect from Elements spell will come in handy. And your 
+weakest links hit-point-wise will be buffered. Giving a robber experience 
+might help with a few locks, but there's always the artificial way of 
+drinking at the +20 level island fountain in B1 and then ripping off the 
+hirelings later, especially Son of Abu for the Pirate Ring.
+
+  By the time you get to level 8 you should be able to clear the Temple of 
+Moo. Do so and then use the Crusader skill to enter Castle Whiteshield and 
+get 1000000 experience for everyone. This should get you to decent levels. 
+
+  If you are able to start off without a thief and get to the Halls of 
+Insanity so everyone gets all abilities, things work out even better--here 
+you may want to start until the thief gets 200000 or so experience and then 
+dump him for an archer. First you need to go to the Baywatch dungeon to 
+rescue the NPC's and then take Sir Galant's green key from him. You can then 
+visit Moo with the archer to get the Crusader skills and crash through the 
+Halls of Insanity and give everyone all attributes. You now have pseudo-
+thieves at the cost of maybe 200000 experience. The Pirate Ring, when you go 
+to the Blood Reign basement, and such should make up for the lack of natural 
+talent.
+
+  Many of the quests aren't really necessary, and if you're at level 50 you 
+can probably just pick up all the cards and keys you need, with a stop-off in 
+Blistering Heights(REDHOT.) The 11 orbs, the minimum necessary, are along the 
+way, too, and you can just get some might potion to break the glass in A4 for 
+a pyramid key and then plow through the endgame without really seeing 
+anything much. Maybe you can establish a new minimum score along the way, 
+especially if you cheat your characters way down near the end :).
+
+  10. WEIRD BUGS
+
+  If you put money in the bank and go train, you won't get interest. In 
+general interest only seems to register if the day changes as you are walking 
+around. Which is a bit of a ripoff.
+
+  You can shoot when the monsters are in melee range and the arrows go behind 
+them--you'd think it would be point blank.
+
+  Sometimes you have to twirl around to different orientations to "see" a 
+town you want to enter.
+
+  You can fire a spell at enemies behind a mountain and it will hit them.
+
+  I've managed to climb a mountain in the Lava Isle area. But I could not get 
+back on.
+
+  Not really a bug but you can map at 2b2e/2b2f to (x,y) of the current 
+sector you're in and move around. If you go into a wall you can bash your way 
+out of it.
+end of FAQ proper
+
+================================
+
+  11. VERSIONS
+
+1.0.0 sent to GameFAQs 11/29/2004. I feel like this should mostly be 
+complete, but I may play through the game and look at details that bug me. 
+Might add more text maps. Dunno how useful they are. 
+0.2.5 sent to GameFAQs 11/12/2004, with a few dungeons done not walked-
+through on Macc Maverick's site yet. Text maps coming soon. Maybe.
+0.2.0 sent to GameFAQs 11/9/2004 through the beginning(up to level 17.)
+0.1.0 sent to GameFAQs 11/8/2004, very basic stuff.
+
+  12. CREDITS
+
+Thanks to GameFAQs for being, well, THERE.
+Thanks to Macc Maverick, the maintainer of the RPGClassics shrine for this 
+game.
+Thanks to Lee Beng Hai for his fine original walkthrough of the game sent to 
+GameFAQs which, along with the above link, helped me through the game. I just 
+wanted to detail things. He certainly didn't have my resources for checking 
+things or the convenience of Windows, and he gives a strong overview with 
+important details, so his work is to be commended. 
+Thanks to the DOSBox folks at DOSBox.sourceforge.net for letting me type in a 
+window and play the game at the same time.
+Thanks to the usual GameFAQs gang. They know who they are, and you should, 
+too, because they get some SERIOUS writing done. Good people too--bloomer, 
+daremo, falsehead, RetroFreak, Snow Dragon/Brui5ed Ego, ZoopSoul, and others 
+I forgot.

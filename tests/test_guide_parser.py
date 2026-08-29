@@ -255,6 +255,40 @@ def test_polish_play_english_leftover_and_calques():
     assert "Melodía de los Ecos" in out_echo
 
 
+def test_progress_swamp_town_spanish_mm3():
+    from app.guide_parser import parse_guide_sections, resolve_auto_section_id
+
+    text = open("guias/mightandmagic3.txt", encoding="utf-8").read()
+    secs = parse_guide_sections(text)
+    assert any("SWAMP TOWN" in s.title.upper() for s in secs), "parser debe ver SWAMP TOWN"
+    q = "acabo de visitar la ciudad del pantano ahora que hago?"
+    sid = resolve_auto_section_id(secs, q, None, prefer_later=True)
+    assert sid is not None
+    title = next(s.title for s in secs if s.id == sid)
+    assert "SWAMP" in title.upper()
+    assert "CAVERN" not in title.upper() or "SWAMP TOWN" in title.upper()
+
+
+def test_faq_heading_not_prose_false_positive():
+    from app.guide_parser import _is_heading
+
+    assert not _is_heading(
+        "area by the poison cure. That lessens the risk of being poisoned.",
+        None,
+    )
+    assert _is_heading("      4-2-11. SWAMP TOWN", None)
+
+
+def test_translate_query_keywords_offline():
+    from app.gemma_translate import translate_query_keywords, is_server_running
+
+    if is_server_running():
+        kw = translate_query_keywords("acabo de visitar la ciudad del pantano")
+        assert any("swamp" in k or "town" in k for k in kw)
+    else:
+        assert translate_query_keywords("ciudad del pantano") == []
+
+
 def test_gemma_translate_prompt_and_offline_guard():
     from app.gemma_translate import (
         build_system_prompt,
@@ -319,6 +353,9 @@ if __name__ == "__main__":
     test_proper_noun_format()
     test_polish_play_tune_not_juega()
     test_polish_play_english_leftover_and_calques()
+    test_progress_swamp_town_spanish_mm3()
+    test_faq_heading_not_prose_false_positive()
+    test_translate_query_keywords_offline()
     test_gemma_translate_prompt_and_offline_guard()
     test_sentence_at_ignores_newline_wrap()
     test_no_ridge_hardcode_module()

@@ -2,7 +2,7 @@ import re
 
 import customtkinter as ctk
 
-from .gemma_translate import gemma_generate, is_server_running
+from .gemma_translate import gemma_generate, is_server_running, REASONING_SEARCH
 from .guide_parser import (
     citation_in_source,
     extract_felipe_line,
@@ -585,12 +585,14 @@ class GuideAssistant:
         temperature: float = 0.2,
         num_predict: int = 160,
         timeout: int = 45,
+        reasoning_effort: str | None = None,
     ):
         raw, err = gemma_generate(
             prompt,
             temperature=temperature,
             max_tokens=num_predict,
             timeout=float(timeout),
+            reasoning_effort=reasoning_effort,
         )
         return raw, err
 
@@ -601,7 +603,13 @@ class GuideAssistant:
         prompt = SECTION_PICK_PROMPT.replace("{titles}", lines).replace(
             "{query_text}", query_text or ""
         )
-        raw, err = self._generate(prompt, temperature=0.0, num_predict=20, timeout=30)
+        raw, err = self._generate(
+            prompt,
+            temperature=0.0,
+            num_predict=20,
+            timeout=30,
+            reasoning_effort=REASONING_SEARCH,
+        )
         if err or not raw:
             return None
         cleaned = raw.strip().lower()

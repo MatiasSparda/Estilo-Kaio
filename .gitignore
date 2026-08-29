@@ -228,3 +228,15 @@ MORT/
 # codebase-memory-mcp (auto-managed by /index_mcp)
 .codebase-memory/
 .codebase-memory.json
+
+# Agent skills (Matt / ayudantes) — generado local, no subir
+.scratch/
+docs/agents/
+AGENTS.md
+CONTEXT.md
+CONTEXT-MAP.md
+docs/adr/
+docs/superpowers/
+architecture-review-*.html
+handoff-*.md
+.matt-local/
