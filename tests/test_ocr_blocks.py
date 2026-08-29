@@ -114,3 +114,18 @@ def test_filter_realms_sidebar_keeps_dialogue():
     kept = filter_game_ui_blocks(labeled)
     assert len(kept) == 1
     assert "Come back" in kept[0].text
+
+
+def test_pixel_upscale_is_nearest_and_inverts_dark():
+    from PIL import Image
+
+    from app.ocr_engine import preprocess_pixel_variants, upscale_pixel
+
+    img = Image.new("RGB", (8, 8), (10, 10, 10))
+    img.putpixel((2, 2), (240, 240, 240))
+    scaled = upscale_pixel(img, factor=4)
+    assert scaled.size == (32, 32)
+    variants = preprocess_pixel_variants(img)
+    assert len(variants) == 3
+    assert all(v.size[0] >= 16 for v in variants)
+

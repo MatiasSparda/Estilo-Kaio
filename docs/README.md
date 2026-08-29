@@ -52,4 +52,4 @@ Para publicar una release nueva (maintainers): Actions → **Release** → Run w
 
 ## OCR
 
-Si el texto no se lee bien: Windows → Idioma → instalar OCR del idioma del juego.
+Si el texto de juego (fuente pixel) se lee mal: motor **RapidOCR (escena/pixel)**; recortá solo el texto, no el marco. Windows OCR pide pack de idioma inglés (Configuración → Hora e idioma → Idioma).

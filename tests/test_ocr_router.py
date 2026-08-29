@@ -33,6 +33,7 @@ def test_set_engine_valid():
 def test_resolve_fallback_to_winrt():
     eng = OCREngine("en", "oneocr")
     eng._oneocr = _FakeBackend("oneocr", False)
+    eng._rapidocr = _FakeBackend("rapidocr", False)
     eng._easyocr = _FakeBackend("easyocr", False)
     eng._winrt = _FakeBackend("winrt", True)
     b = eng.resolve_backend()
@@ -42,7 +43,7 @@ def test_resolve_fallback_to_winrt():
 
 
 def test_engine_ids_complete():
-    assert set(ENGINE_IDS) == {"oneocr", "easyocr", "winrt"}
+    assert set(ENGINE_IDS) == {"oneocr", "easyocr", "winrt", "rapidocr"}
 
 
 if __name__ == "__main__":

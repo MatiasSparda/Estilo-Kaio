@@ -28,8 +28,8 @@ def _prepare_argos_env(env: dict) -> dict:
     out = dict(env)
     dest = _argos_worker._user_packages_dir()
     out["ARGOS_PACKAGES_DIR"] = str(dest)
-    out["ARGOS_DEVICE_TYPE"] = "cpu"
-    out["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+    out.update(_argos_worker.ARGOS_QUALITY_ENV)
+    out["PYTHONIOENCODING"] = "utf-8"
     return out
 
 
@@ -54,7 +54,6 @@ def _translate_once(text: str, source: str, target: str) -> str:
         "input": payload,
         "capture_output": True,
         "encoding": "utf-8",
-        "errors": "replace",
         "timeout": timeout,
         "env": env,
         "cwd": cwd,

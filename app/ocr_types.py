@@ -5,6 +5,8 @@ from dataclasses import dataclass
 
 MAX_BLOCKS = 8
 UPSCALE = 3
+PIXEL_UPSCALE = 4
+PIXEL_MAX_SIDE = 1920
 LETTER_RE = re.compile(r"[A-Za-zÀ-ÿア-ン一-龥가-힣]")
 
 OCR_LANGUAGE_CANDIDATES = {

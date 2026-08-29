@@ -46,9 +46,10 @@ hiddenimports = [
     "app.main",
     "app.argos_translate",
     "app.argos_worker",
+    "app.ocr_backends.rapidocr_backend",
 ]
 
-for pkg_name in ("argostranslate", "ctranslate2", "sentencepiece"):
+for pkg_name in ("argostranslate", "ctranslate2", "sentencepiece", "rapidocr", "onnxruntime"):
     pkg_datas, pkg_binaries, pkg_hidden = collect_all(pkg_name)
     datas += pkg_datas
     binaries += pkg_binaries

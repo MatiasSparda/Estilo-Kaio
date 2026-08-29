@@ -57,7 +57,31 @@ def test_prepare_argos_env_sets_package_dir_and_cpu():
         out = at._prepare_argos_env(env)
     assert out["ARGOS_PACKAGES_DIR"] == str(dest)
     assert out["ARGOS_DEVICE_TYPE"] == "cpu"
+    assert out["ARGOS_COMPUTE_TYPE"] == "float32"
+    assert out["ARGOS_BEAM_SIZE"] == "8"
+    assert out["ARGOS_CHUNK_TYPE"] == "STANZA"
+    assert out["PYTHONIOENCODING"] == "utf-8"
     assert env.get("ARGOS_PACKAGES_DIR") is None
+
+
+def test_repair_english_ocr_pixel_typos():
+    raw = "Swomp Town. The shadow of doon ond a groveyard in Phontom Peoks."
+    fixed = aw._repair_english_ocr(raw)
+    assert "Swamp" in fixed
+    assert "doom" in fixed
+    assert " and " in fixed
+    assert "graveyard" in fixed
+    assert "Phantom" in fixed
+    assert "Peaks" in fixed
+
+
+def test_split_sentences_keeps_paragraphs():
+    text = "Hello world. Second line.\n\nNew para!"
+    parts = aw._split_sentences(text)
+    assert "Hello world." in parts
+    assert "Second line." in parts
+    assert "" in parts
+    assert "New para!" in parts
 
 
 def test_copy_bundled_packages_when_en_es_missing(tmp_path):
@@ -98,6 +122,8 @@ if __name__ == "__main__":
     test_worker_cmd_source()
     test_worker_cmd_frozen()
     test_prepare_argos_env_sets_package_dir_and_cpu()
+    test_repair_english_ocr_pixel_typos()
+    test_split_sentences_keeps_paragraphs()
     with tempfile.TemporaryDirectory() as d:
         test_copy_bundled_packages_when_en_es_missing(Path(d))
     with tempfile.TemporaryDirectory() as d:

@@ -1,4 +1,4 @@
-"""Router OCR multi-motor (OneOCR / EasyOCR / WinRT) + clustering de bloques."""
+"""Router OCR multi-motor (OneOCR / RapidOCR / EasyOCR / WinRT) + clustering de bloques."""
 
 from __future__ import annotations
 
@@ -9,12 +9,14 @@ import time
 
 from PIL import Image
 
-from .ocr_backends import EasyOcrBackend, OneOcrBackend, WinRtBackend
+from .ocr_backends import EasyOcrBackend, OneOcrBackend, RapidOcrBackend, WinRtBackend
 from .ocr_types import (
     LETTER_RE,
     MAX_BLOCKS,
     OCR_LANGUAGE_CANDIDATES,
     OcrLineBox,
+    PIXEL_MAX_SIDE,
+    PIXEL_UPSCALE,
     TextBlock,
     UPSCALE,
 )
@@ -28,6 +30,7 @@ __all__ = [
     "label_blocks",
     "filter_game_ui_blocks",
     "preprocess_variants",
+    "PIXEL_UPSCALE",
     "UPSCALE",
     "WINDOWS_OCR_AVAILABLE",
     "ENGINE_IDS",
@@ -44,12 +47,13 @@ except ImportError:
     _WINRT = False
 WINDOWS_OCR_AVAILABLE = _WINRT
 
-ENGINE_IDS = ("oneocr", "easyocr", "winrt")
-FALLBACK_ORDER = ("oneocr", "easyocr", "winrt")
+ENGINE_IDS = ("oneocr", "easyocr", "winrt", "rapidocr")
+FALLBACK_ORDER = ("oneocr", "rapidocr", "easyocr", "winrt")
 ENGINE_LABELS = {
     "oneocr": "OneOCR",
     "easyocr": "EasyOCR",
     "winrt": "Windows OCR",
+    "rapidocr": "RapidOCR (escena/pixel)",
 }
 
 
@@ -334,37 +338,40 @@ def upscale_for_ocr(image: Image.Image, factor: int = UPSCALE) -> Image.Image:
     return image.resize((w * factor, h * factor), Image.Resampling.LANCZOS)
 
 
-def preprocess_variants(image: Image.Image) -> list[Image.Image]:
-    from PIL import ImageEnhance, ImageFilter, ImageOps
+def upscale_pixel(image: Image.Image, factor: int = PIXEL_UPSCALE) -> Image.Image:
+    """Nearest-neighbor: LANCZOS destruye glifos de 1 px (fuentes de juego)."""
+    if factor <= 1:
+        return image
+    w, h = image.size
+    nw, nh = w * factor, h * factor
+    while max(nw, nh) > PIXEL_MAX_SIDE and factor > 2:
+        factor -= 1
+        nw, nh = w * factor, h * factor
+    return image.resize((nw, nh), Image.Resampling.NEAREST)
+
+
+def preprocess_pixel_variants(image: Image.Image) -> list[Image.Image]:
+    from PIL import ImageOps, ImageStat
 
     base = image.convert("RGB")
-    variants: list[Image.Image] = []
-    variants.append(upscale_for_ocr(base, UPSCALE))
-
     gray = ImageOps.grayscale(base)
-    gray = ImageOps.autocontrast(gray, cutoff=2)
-    gray = ImageEnhance.Contrast(gray).enhance(1.6)
-    gray_rgb = gray.convert("RGB")
-    variants.append(upscale_for_ocr(gray_rgb, UPSCALE))
+    if ImageStat.Stat(gray).mean[0] < 128:
+        gray = ImageOps.invert(gray)
+    gray = ImageOps.autocontrast(gray, cutoff=1)
+    bw = gray.point(lambda p: 255 if p > 140 else 0)
+    return [
+        upscale_pixel(base),
+        upscale_pixel(gray.convert("RGB")),
+        upscale_pixel(bw.convert("RGB")),
+    ]
 
-    for thr in (120, 160):
-        bw = gray.point(lambda p, t=thr: 255 if p > t else 0)
-        hist = bw.histogram()
-        if sum(hist[200:]) > sum(hist[:56]):
-            bw = ImageOps.invert(bw)
-        bw = bw.filter(ImageFilter.MedianFilter(size=3))
-        variants.append(upscale_for_ocr(bw.convert("RGB"), UPSCALE))
 
-    return variants
+def preprocess_variants(image: Image.Image) -> list[Image.Image]:
+    return preprocess_pixel_variants(image)
 
 
 def preprocess_variants_for(engine_id: str, image: Image.Image) -> list[Image.Image]:
-    """OneOCR/EasyOCR: 1 pasada (sin binarizar). WinRT: 4 variantes."""
-    if engine_id in ("oneocr", "easyocr"):
-        base = image.convert("RGB")
-        # x2 alcanza y es ~2× más rápido que x3 × 4 variantes
-        return [upscale_for_ocr(base, 2)]
-    return preprocess_variants(image)
+    return preprocess_pixel_variants(image)
 
 
 def _score_ocr_lines(lines: list[OcrLineBox]) -> int:
@@ -389,12 +396,14 @@ class OCREngine:
         self._oneocr = OneOcrBackend(language_code)
         self._easyocr = EasyOcrBackend(language_code)
         self._winrt = WinRtBackend(language_code)
+        self._rapidocr = RapidOcrBackend(language_code)
 
     def _backends(self):
         return {
             "oneocr": self._oneocr,
             "easyocr": self._easyocr,
             "winrt": self._winrt,
+            "rapidocr": self._rapidocr,
         }
 
     def set_engine(self, engine_id: str) -> None:
@@ -406,6 +415,7 @@ class OCREngine:
         self._oneocr.set_language(language_code)
         self._easyocr.set_language(language_code)
         self._winrt.set_language(language_code)
+        self._rapidocr.set_language(language_code)
 
     def prepare_oneocr(self) -> bool:
         if not self._oneocr.prepare_dlls():
@@ -423,6 +433,8 @@ class OCREngine:
                 continue
             if eid == "winrt" and not b.is_available():
                 continue
+            if eid == "rapidocr" and not b.is_available():
+                continue
             self.last_used_backend_id = eid
             return b
         self.last_used_backend_id = None
@@ -435,8 +447,7 @@ class OCREngine:
         return self._winrt.has_exact_language_pack(language_code or self.language_code)
 
     def needs_language_pack(self):
-        bid = self.last_used_backend_id or self.engine_id
-        if bid != "winrt":
+        if self.last_used_backend_id != "winrt":
             return False
         return self._winrt.is_available() and not self._winrt.has_exact_language_pack(
             self.language_code
@@ -447,6 +458,7 @@ class OCREngine:
             f"Motor pedido: {ENGINE_LABELS.get(self.engine_id, self.engine_id)}",
             self._oneocr.status_message(),
             self._easyocr.status_message(),
+            self._rapidocr.status_message(),
             self._winrt.status_message(),
         ]
         if self.last_used_backend_id:
@@ -475,7 +487,7 @@ class OCREngine:
         t0 = time.perf_counter()
         backend = self.resolve_backend()
         if backend is None:
-            err = "Ningún motor OCR disponible (OneOCR / EasyOCR / WinRT)"
+            err = "Ningún motor OCR disponible (OneOCR / RapidOCR / EasyOCR / WinRT)"
             self.last_error = err
             self.last_ocr_seconds = time.perf_counter() - t0
             return [TextBlock(text=f"[OCR no disponible] {err}", x=0, y=0, w=0, h=0, label="Error")]

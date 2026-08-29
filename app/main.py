@@ -507,13 +507,14 @@ class EstiloKaioApp(ctk.CTk):
         ).pack(side="left", padx=(0, 8))
         self._ocr_engine_label_to_id = {
             "OneOCR (recomendado)": "oneocr",
+            "RapidOCR (escena/pixel)": "rapidocr",
             "EasyOCR": "easyocr",
             "Windows OCR": "winrt",
         }
         self.ocr_engine_combo = ctk.CTkComboBox(
             ocr_engine_row,
             values=list(self._ocr_engine_label_to_id.keys()),
-            width=220,
+            width=260,
             command=self.on_ocr_engine_changed,
             fg_color=theme.SURFACE,
             border_color=theme.BORDER,
@@ -1771,6 +1772,8 @@ class EstiloKaioApp(ctk.CTk):
         engine = self.capture_manager.ocr_engine
         msg = engine.status_message()
         if not engine.status_ok():
+            color = "orange"
+        elif engine.engine_id == "winrt" and not engine.has_exact_language_pack():
             color = "orange"
         elif engine.needs_language_pack():
             color = "orange"

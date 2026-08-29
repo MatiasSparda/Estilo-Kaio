@@ -164,15 +164,15 @@ class ScreenCaptureManager:
                         lambda: self.app.update_status("Captura vacía", "red"),
                     )
                     return
+                blocks = self.ocr_engine.extract_blocks(img)
                 if self.ocr_engine.needs_language_pack():
                     self.app.after(
                         0,
                         lambda: self.app.update_status(
-                            "OCR en fallback de idioma — revisá packs en Windows",
+                            "Windows OCR sin pack del idioma — instalá OCR inglés en Windows",
                             "orange",
                         ),
                     )
-                blocks = self.ocr_engine.extract_blocks(img)
                 self.app.after(0, lambda b=blocks: self._finish_translate(b))
             except Exception as e:
                 error_msg = f"Error en captura/OCR: {str(e)}"
