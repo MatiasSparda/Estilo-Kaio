@@ -60,7 +60,9 @@ class Img(Structure):
 
 
 def _dll_dir() -> Path:
-    return Path(__file__).resolve().parents[1] / "DLL"
+    """DLLs OneOCR fuera del repo: evita que Windows cargue ORT Microsoft al usar RapidOCR."""
+    local = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
+    return Path(local) / "EstiloKaio" / "oneocr-dlls"
 
 
 def _get_appx_install(package: str) -> str | None:
@@ -83,16 +85,10 @@ def _get_appx_install(package: str) -> str | None:
 
 
 def _register_dll_path(dll_path: Path) -> None:
+    """Solo add_dll_directory local. NO SetDefaultDllDirectories (rompe ORT de RapidOCR)."""
     if os.name != "nt":
         return
     try:
-        k32 = ctypes.windll.kernel32
-        if hasattr(k32, "SetDefaultDllDirectories"):
-            k32.SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS)
-        if hasattr(k32, "AddDllDirectory"):
-            k32.AddDllDirectory(str(dll_path))
-        elif hasattr(k32, "SetDllDirectoryW"):
-            k32.SetDllDirectoryW(str(dll_path))
         if hasattr(os, "add_dll_directory"):
             os.add_dll_directory(str(dll_path))
     except Exception as e:
@@ -281,7 +277,10 @@ class OneOcrBackend:
     def is_available(self) -> bool:
         if not sys.platform.startswith("win"):
             return False
-        return self._ensure_initialized()
+        dll_path = _dll_dir()
+        if (dll_path / ONEOCR_DLL).is_file():
+            return True
+        return _copy_oneocr_from_system()
 
     def status_message(self) -> str:
         if not sys.platform.startswith("win"):

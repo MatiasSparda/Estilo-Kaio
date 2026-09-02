@@ -238,17 +238,7 @@ class TranslatorOverlayOver:
         self._parent = parent
         self._windows: list[ctk.CTkToplevel] = []
         self._close_after_id = None
-        self._primary_label: ctk.CTkLabel | None = None
-        self._primary_win: ctk.CTkToplevel | None = None
-        self._primary_layout: dict | None = None
-
-        prev = getattr(parent, "_over_overlay", None)
-        if prev is not None:
-            try:
-                prev.destroy()
-            except Exception:
-                pass
-        parent._over_overlay = self
+        self._item_widgets: list[tuple[ctk.CTkToplevel, ctk.CTkLabel, dict]] = []
 
         region = region or {}
         rx = int(region.get("x") or 0)
@@ -266,29 +256,36 @@ class TranslatorOverlayOver:
             if isinstance(r, dict)
             and (r.get("translated") or "").strip()
             and not (r.get("translated") or "").strip().startswith("[Error:")
+            and not (r.get("translated") or "").strip().startswith("Error:")
             and not self._skip_overlay_item(r)
         ]
         if not items:
             return
 
-        primary = self._pick_primary(items)
+        prev = getattr(parent, "_over_overlay", None)
+        if prev is not None:
+            try:
+                prev.destroy()
+            except Exception:
+                pass
+        parent._over_overlay = self
 
-        self._open_overlay(
-            parent,
-            primary,
-            rx,
-            ry,
-            rw,
-            rh,
-            zoom,
-            screen_w,
-            screen_h,
-            merge_region=True,
-        )
+        for item in items:
+            self._open_overlay(
+                parent,
+                item,
+                rx,
+                ry,
+                rw,
+                rh,
+                zoom,
+                screen_w,
+                screen_h,
+                merge_region=False,
+            )
 
         if self._windows:
             self._windows[0].focus_force()
-            # Sin auto-cierre: solo Alt+X / ESC / click derecho
 
     @staticmethod
     def _skip_overlay_item(r: dict) -> bool:
@@ -484,19 +481,22 @@ class TranslatorOverlayOver:
             anchor="nw",
         )
         label.pack(padx=8, pady=6)
-        if merge_region:
-            self._primary_label = label
-            self._primary_win = win
-            self._primary_layout = {
-                "r": r,
-                "rx": rx,
-                "ry": ry,
-                "rw": rw,
-                "rh": rh,
-                "zoom": zoom,
-                "screen_w": screen_w,
-                "screen_h": screen_h,
-            }
+        self._item_widgets.append(
+            (
+                win,
+                label,
+                {
+                    "r": r,
+                    "rx": rx,
+                    "ry": ry,
+                    "rw": rw,
+                    "rh": rh,
+                    "zoom": zoom,
+                    "screen_w": screen_w,
+                    "screen_h": screen_h,
+                },
+            )
+        )
 
         # Ajuste fino al tamaño real renderizado (sin scroll)
         win.update_idletasks()
@@ -520,37 +520,52 @@ class TranslatorOverlayOver:
             and not (r.get("translated") or "").strip().startswith("[Error:")
             and not self._skip_overlay_item(r)
         ]
-        if not items or self._primary_label is None or self._primary_win is None:
+        if not items:
             return
-        primary = self._pick_primary(items)
-        text = (primary.get("translated") or "").strip()
-        layout = self._primary_layout or {}
-        r = layout.get("r") or primary
-        sx, sy, sw, sh, font_px = self._overlay_geometry(
-            r,
-            text,
-            layout.get("rx", 0),
-            layout.get("ry", 0),
-            layout.get("rw", 400),
-            layout.get("rh", 200),
-            True,
-            layout.get("screen_w", self._parent.winfo_screenwidth()),
-            layout.get("screen_h", self._parent.winfo_screenheight()),
-        )
-        wrap_inner = max(72, sw - 28)
-        self._primary_label.configure(
-            text=text,
-            font=ctk.CTkFont(size=font_px),
-            wraplength=wrap_inner,
-        )
-        win = self._primary_win
-        win.update_idletasks()
-        req_h = self._primary_label.winfo_reqheight() + 16
-        req_w = max(sw, self._primary_label.winfo_reqwidth() + 16)
-        req_w = min(req_w, layout.get("screen_w", win.winfo_screenwidth()) - sx)
-        req_h = min(req_h, layout.get("screen_h", win.winfo_screenheight()) - sy)
-        if req_h > 0 and req_w > 0:
-            win.geometry(f"{req_w}x{req_h}+{sx}+{sy}")
+        if len(items) != len(self._item_widgets):
+            region = getattr(self._parent, "translator_region", None) or {}
+            layout0 = self._item_widgets[0][2] if self._item_widgets else {}
+            if not region:
+                region = {
+                    "x": layout0.get("rx", 0),
+                    "y": layout0.get("ry", 0),
+                    "width": layout0.get("rw", 400),
+                    "height": layout0.get("rh", 200),
+                }
+            self.destroy()
+            TranslatorOverlayOver(
+                self._parent,
+                results=results,
+                region=region,
+                zoom=float(layout0.get("zoom") or 3.0),
+            )
+            return
+        for r, (win, label, layout) in zip(items, self._item_widgets):
+            text = (r.get("translated") or "").strip()
+            sx, sy, sw, sh, font_px = self._overlay_geometry(
+                r,
+                text,
+                layout.get("rx", 0),
+                layout.get("ry", 0),
+                layout.get("rw", 400),
+                layout.get("rh", 200),
+                False,
+                layout.get("screen_w", self._parent.winfo_screenwidth()),
+                layout.get("screen_h", self._parent.winfo_screenheight()),
+            )
+            wrap_inner = max(72, sw - 28)
+            label.configure(
+                text=text,
+                font=ctk.CTkFont(size=font_px),
+                wraplength=wrap_inner,
+            )
+            win.update_idletasks()
+            req_h = label.winfo_reqheight() + 16
+            req_w = max(sw, label.winfo_reqwidth() + 16)
+            req_w = min(req_w, layout.get("screen_w", win.winfo_screenwidth()) - sx)
+            req_h = min(req_h, layout.get("screen_h", win.winfo_screenheight()) - sy)
+            if req_h > 0 and req_w > 0:
+                win.geometry(f"{req_w}x{req_h}+{sx}+{sy}")
 
     def destroy(self):
         if self._close_after_id is not None:
@@ -565,41 +580,44 @@ class TranslatorOverlayOver:
             except Exception:
                 pass
         self._windows.clear()
+        self._item_widgets.clear()
         if getattr(self._parent, "_over_overlay", None) is self:
             self._parent._over_overlay = None
 
 
 TRANSLATION_PROVIDERS = {
-    "argos": "Argos (offline) · ~1–3 s",
-    "argos_gemma": "Argos + Gemma · ~5–15 s",
+    "offline": "Offline · ~1–4 s",
+    "offline_gemma": "Offline + Gemma · ~5 s offline; Gemma CPU 1–3 min",
     "gemma": "Gemma (IA local) · ~15–40 s",
 }
 
-# Alias de configs antiguas.
+# Alias de configs antiguas (Argos/Google/online → offline).
 TRANSLATION_PROVIDER_ALIASES = {
-    "google": "argos",
-    "google_gemma": "argos_gemma",
-    "online": "argos",
-    "online_gemma": "argos_gemma",
+    "argos": "offline",
+    "argos_gemma": "offline_gemma",
+    "google": "offline",
+    "google_gemma": "offline_gemma",
+    "online": "offline",
+    "online_gemma": "offline_gemma",
 }
 
 TRANSLATION_PROVIDER_ETA = {
-    "argos": "~1–3 s",
-    "argos_gemma": "~5–15 s",
+    "offline": "~1–4 s",
+    "offline_gemma": "~5 s offline; Gemma CPU 1–3 min",
     "gemma": "~15–40 s",
 }
 
 
 def normalize_translation_provider(provider: str) -> str:
-    p = (provider or "argos").strip().lower()
+    p = (provider or "offline").strip().lower()
     p = TRANSLATION_PROVIDER_ALIASES.get(p, p)
-    return p if p in TRANSLATION_PROVIDERS else "argos"
+    return p if p in TRANSLATION_PROVIDERS else "offline"
 
 
 class Translator:
-    """OCR overlay: Argos offline, Argos+Gemma, o Gemma local."""
+    """OCR overlay: Offline Marian, Offline+Gemma (paralelo), o Gemma local."""
 
-    def __init__(self, source="en", target="es", provider="argos"):
+    def __init__(self, source="en", target="es", provider="offline"):
         self.source = source
         self.target = target
         self.provider = normalize_translation_provider(provider)
@@ -616,17 +634,17 @@ class Translator:
             if not text or not text.strip():
                 return "[Sin texto para traducir]"
             text = correct_ocr_text(text)
-            if self.provider == "argos":
-                from .argos_translate import translate_text as argos_text
+            if self.provider == "offline":
+                from .offline_translate import translate_text as offline_text
 
-                return argos_text(text, self.source, self.target)
-            if self.provider == "argos_gemma":
+                return offline_text(text, self.source, self.target)
+            if self.provider == "offline_gemma":
                 from .gemma_translate import is_server_running
-                from .argos_translate import translate_text_with_review
+                from .offline_translate import translate_text_with_review
 
                 if not is_server_running():
                     raise RuntimeError(
-                        "Argos + Gemma requiere Gemma iniciado. "
+                        "Offline + Gemma requiere Gemma iniciado. "
                         "Usá 'Iniciar' en Traductor."
                     )
                 return translate_text_with_review(
@@ -645,26 +663,15 @@ class Translator:
             if not blocks:
                 return []
             blocks = correct_blocks(blocks)
-            if self.provider == "argos":
-                from .argos_translate import translate_blocks as argos_blocks
+            if self.provider == "offline":
+                from .offline_translate import translate_blocks as offline_blocks
 
-                return argos_blocks(blocks, self.source, self.target, review=False)
-            if self.provider == "argos_gemma":
-                from .gemma_translate import is_server_running
-                from .argos_translate import translate_blocks as argos_blocks
+                return offline_blocks(blocks, self.source, self.target, review=False)
+            if self.provider == "offline_gemma":
+                from .offline_translate import translate_blocks as offline_blocks
 
-                do_review = True if review is None else bool(review)
-                if do_review and not is_server_running():
-                    raise RuntimeError(
-                        "Argos + Gemma requiere Gemma iniciado. "
-                        "Usá 'Iniciar' en Traductor."
-                    )
-                return argos_blocks(
-                    blocks,
-                    self.source,
-                    self.target,
-                    review=do_review,
-                    review_timeout=35.0,
+                return offline_blocks(
+                    blocks, self.source, self.target, review=False
                 )
             from .gemma_translate import translate_blocks as gemma_blocks
 
@@ -678,3 +685,4 @@ class Translator:
                     "translated": f"[Error: {e}]",
                 }
             ]
+

@@ -16,7 +16,7 @@ from .translator import (
     TRANSLATION_PROVIDER_ETA,
     normalize_translation_provider,
 )
-from .ollama_assistant import (
+from .guide_assistant import (
     GuideAssistant,
     AssistantResponseWindow,
     ASSISTANT_LANGUAGES,
@@ -112,7 +112,7 @@ class EstiloKaioApp(ctk.CTk):
         self.auto_start_gemma = False
         self.gemma_backend = "cpu"
         self.default_ocr_engine = "oneocr"
-        self.translation_provider = "argos"  # argos | argos_gemma | gemma
+        self.translation_provider = "offline"  # offline | offline_gemma | gemma
 
         self.capture_manager = ScreenCaptureManager(self)
         self.translator = Translator()
@@ -131,16 +131,27 @@ class EstiloKaioApp(ctk.CTk):
         self.create_widgets()
         self.refresh_session_ui()
 
-        self.capture_manager.set_hotkeys(
-            self.translate_hotkey,
-            self.assistant_hotkey,
-            self.stop_overlay_hotkey,
-        )
+        # Hotkeys en hilo aparte: no interfiere con Tk ni con exe congelado.
+        self.after(100, self._register_hotkeys_deferred)
+        self.bind("<Map>", self._on_window_mapped, add="+")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.bind("<Configure>", self._on_main_configure)
         self._geom_save_after_id = None
         if self.auto_start_gemma:
             self.after(300, self._startup_local_models)
+
+    def _register_hotkeys_deferred(self):
+        self.capture_manager.set_hotkeys(
+            self.translate_hotkey,
+            self.assistant_hotkey,
+            self.stop_overlay_hotkey,
+        )
+
+    def _on_window_mapped(self, event=None):
+        if event is not None and event.widget is not self:
+            return
+        if not self.capture_manager.hotkeys_registered:
+            self.after(50, self._register_hotkeys_deferred)
 
     # ── Sesión activa (propiedades de conveniencia) ──────────────────────────
 
@@ -252,7 +263,7 @@ class EstiloKaioApp(ctk.CTk):
         ).pack(side="left")
         ctk.CTkLabel(
             head,
-            text="Guía · traducción Gemma / Google+Gemma",
+            text="Guía (Alt+G) · traducción Gemma / Offline+Gemma",
             font=ctk.CTkFont(size=11),
             text_color=theme.TEXT_MUTED,
         ).pack(side="left", padx=(10, 0))
@@ -421,6 +432,16 @@ class EstiloKaioApp(ctk.CTk):
             text="Formato: alt+t, ctrl+shift+t, f8…",
             font=ctk.CTkFont(size=11),
             text_color=theme.TEXT_MUTED,
+        ).pack(anchor="w", pady=(0, 4))
+        ctk.CTkLabel(
+            frame,
+            text="En Windows los atajos son globales (RegisterHotKey): "
+            "funcionan en DOSBox/emuladores aunque el juego tenga el foco. "
+            "Si falla el registro, probá F9 o Pause en lugar de Alt+…",
+            font=ctk.CTkFont(size=11),
+            text_color=theme.TEXT_MUTED,
+            wraplength=640,
+            justify="left",
         ).pack(anchor="w", pady=(0, theme.PAD_SM))
 
         row = ctk.CTkFrame(frame, fg_color="transparent")
@@ -520,6 +541,16 @@ class EstiloKaioApp(ctk.CTk):
             border_color=theme.BORDER,
         )
         self.ocr_engine_combo.pack(side="left")
+
+        self.ocr_engine_hint = ctk.CTkLabel(
+            frame,
+            text="Diálogo pixel / CRPG: OneOCR (recomendado). RapidOCR: escenas amplias.",
+            font=ctk.CTkFont(size=11),
+            text_color=theme.TEXT_MUTED,
+            wraplength=640,
+            justify="left",
+        )
+        self.ocr_engine_hint.pack(anchor="w", pady=(0, 4))
 
         self.ocr_status_label = ctk.CTkLabel(
             frame,
@@ -767,7 +798,7 @@ class EstiloKaioApp(ctk.CTk):
 
         ctk.CTkLabel(
             frame,
-            text="El asistente ubica ese momento en la guía y traduce el texto (sin inventar).",
+            text="Ubica tu momento en la guía con Gemma (LiteRT). Iniciá Gemma arriba.",
             font=ctk.CTkFont(size=11),
             text_color=theme.TEXT_MUTED,
         ).pack(anchor="w", padx=theme.PAD, pady=(0, 6))
@@ -1192,7 +1223,7 @@ class EstiloKaioApp(ctk.CTk):
         s["assistant_language"] = code
         self.save_config()
 
-    # ── Regiones / guía / Ollama ─────────────────────────────────────────────
+    # ── Regiones / guía (Gemma) ─────────────────────────────────────────────
 
     def get_region_text(self, region, region_name):
         if region:
@@ -1522,21 +1553,26 @@ class EstiloKaioApp(ctk.CTk):
 
     def _translation_provider_hint_text(self) -> str:
         p = normalize_translation_provider(
-            getattr(self, "translation_provider", "argos")
+            getattr(self, "translation_provider", "offline")
         )
         eta = TRANSLATION_PROVIDER_ETA.get(p, "")
-        if p == "argos":
+        if p == "offline":
             return (
-                f"OCR → Argos offline (sin internet, sin bloqueos). "
+                f"OCR → Offline local (sin internet, sin límites de API). "
                 f"Tiempo típico {eta}."
             )
-        if p == "argos_gemma":
+        if p == "offline_gemma":
+            cpu_note = ""
+            if getattr(self, "gemma_backend", "cpu") == "cpu":
+                cpu_note = (
+                    " En CPU: borrador ~5 s; Gemma puede tardar 1–3 min o timeout."
+                )
             return (
-                f"OCR → Argos + revisión Gemma (borrador rápido + IA). "
-                f"Requiere Gemma iniciado. Tiempo típico {eta}."
+                f"OCR → Offline y Gemma en paralelo (mismo original). "
+                f"Se muestra Offline ya; Gemma reemplaza al terminar.{cpu_note}"
             )
         return (
-            f"OCR → Gemma local (2 pasadas). "
+            f"OCR → Gemma local. "
             f"Requiere Iniciar si está apagado. Tiempo típico {eta}."
         )
 
@@ -1562,10 +1598,10 @@ class EstiloKaioApp(ctk.CTk):
     def _sync_translation_provider_combo(self):
         if not hasattr(self, "translation_provider_combo"):
             return
-        provider = getattr(self, "translation_provider", "argos")
+        provider = getattr(self, "translation_provider", "offline")
         provider = normalize_translation_provider(provider)
         if provider not in TRANSLATION_PROVIDERS:
-            provider = "argos"
+            provider = "offline"
         label = TRANSLATION_PROVIDERS[provider]
         self.translation_provider_combo.set(label)
         if hasattr(self, "translation_provider_hint"):
@@ -1721,19 +1757,6 @@ class EstiloKaioApp(ctk.CTk):
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
-    def open_ollama_setup(self):
-        messagebox.showinfo(
-            "Gemma unificado",
-            "Ollama ya no se usa. Traducción y guía usan Gemma/LiteRT.\n"
-            "Configuralo en la pestaña Traductor.",
-        )
-
-    def stop_ollama_quick(self):
-        self.stop_gemma_quick()
-
-    def start_ollama_quick(self):
-        self.start_gemma_quick()
-
     def manual_consult(self):
         query = self.manual_input.get("1.0", "end-1c").strip()
 
@@ -1753,10 +1776,45 @@ class EstiloKaioApp(ctk.CTk):
             return
 
         self.update_status("Preguntando a la guía…", "yellow")
-        self.consult_ollama(query)
+        self.consult_guide(query)
 
     def update_status(self, message, color="lime"):
         self.status_label.configure(text=f"Estado: {message}", text_color=color)
+
+    @staticmethod
+    def _translation_is_error(text: str) -> bool:
+        from .translation_pipeline import translation_is_error
+
+        return translation_is_error(text)
+
+    @staticmethod
+    def _extract_error_detail(text: str) -> str:
+        from .translation_pipeline import extract_error_detail
+
+        return extract_error_detail(text)
+
+    def _show_alert(self, title: str, message: str, *, kind: str = "error") -> None:
+        """Cartel modal; trae Estilo Kaio al frente para que no quede detrás del juego."""
+        try:
+            self.deiconify()
+            self.lift()
+            self.focus_force()
+            self.attributes("-topmost", True)
+            self.update_idletasks()
+        except Exception:
+            pass
+        try:
+            if kind == "warning":
+                messagebox.showwarning(title, message, parent=self)
+            elif kind == "info":
+                messagebox.showinfo(title, message, parent=self)
+            else:
+                messagebox.showerror(title, message, parent=self)
+        finally:
+            try:
+                self.attributes("-topmost", False)
+            except Exception:
+                pass
 
     def _overlay_pos_text(self):
         if self.overlay_position:
@@ -1907,7 +1965,7 @@ class EstiloKaioApp(ctk.CTk):
         except Exception as e:
             messagebox.showerror("Error", f"No se pudieron aplicar los atajos:\n{e}")
 
-    def close_translation_overlays(self):
+    def close_translation_overlays(self, *, silent: bool = False):
         """Cierra Over (ventanitas) y Layer (ventana grande)."""
         closed = False
         over = getattr(self, "_over_overlay", None)
@@ -1926,6 +1984,8 @@ class EstiloKaioApp(ctk.CTk):
             except Exception:
                 pass
             self._layer_overlay = None
+        if silent:
+            return closed
         if closed:
             self.update_status("Overlay cerrado", "lime")
         else:
@@ -2015,10 +2075,10 @@ class EstiloKaioApp(ctk.CTk):
                 self.gemma_backend = config.get("gemma_backend", "cpu")
             self.default_ocr_engine = config.get("default_ocr_engine", "oneocr")
             provider = normalize_translation_provider(
-                config.get("translation_provider") or "argos"
+                config.get("translation_provider") or "offline"
             )
-            if provider == "argos" and bool(config.get("auto_start_gemma", False)):
-                provider = "argos_gemma"
+            if provider == "offline" and bool(config.get("auto_start_gemma", False)):
+                provider = "offline_gemma"
             self.translation_provider = provider
             set_preferred_backend(self.gemma_backend)
             legacy_overlay = config.get("overlay_mode")
@@ -2058,10 +2118,18 @@ class EstiloKaioApp(ctk.CTk):
             self.sessions = [session]
             self.active_session_id = session["id"]
 
-    def consult_ollama(self, query_text, force_auto=False):
-        self.consult_guide(query_text, force_auto=force_auto)
-
     def consult_guide(self, query_text, force_auto=False):
+        if not gemma_is_running():
+            self._show_alert(
+                "Gemma no disponible",
+                "La guía usa Gemma (LiteRT), la misma IA que la traducción con Gemma.\n\n"
+                "Iniciá Gemma con el botón «Iniciar» en la barra superior.\n\n"
+                "No hace falta Ollama ni ningún otro motor.",
+                kind="warning",
+            )
+            self.update_status("Gemma apagado — guía requiere Iniciar Gemma", "orange")
+            return
+
         self.update_status("Consultando guía (Gemma)…", "yellow")
         lang = (
             self.active_session.get("assistant_language", "es")
@@ -2203,65 +2271,123 @@ class EstiloKaioApp(ctk.CTk):
         else:
             blocks = list(blocks_or_text or [])
 
-        staged = provider == "argos_gemma"
+        from .ocr_dic import detect_overlay_capture
+
+        mixed = any(
+            detect_overlay_capture(getattr(b, "text", None) or (b.get("text") if isinstance(b, dict) else ""))
+            for b in blocks
+        )
+        if mixed:
+            self._show_alert(
+                "Texto mezclado en el OCR",
+                "El OCR leyó español e inglés en la misma captura.\n\n"
+                "Suele pasar si el cartel de traducción anterior seguía "
+                "encima del juego al capturar.\n"
+                "No es por el modo Offline + Gemma en paralelo: el OCR "
+                "corre una sola vez, antes de traducir.\n\n"
+                "La app cierra el cartel automáticamente al traducir; "
+                "si persiste, usá Alt+X antes de capturar.",
+                kind="warning",
+            )
+
+        staged = provider == "offline_gemma"
 
         def worker():
-            try:
-                if staged:
-                    draft = self.translator.translate_blocks(blocks, review=False)
-                    self.after(
-                        0,
-                        lambda r=draft, s=src, g=tgt: self._show_translation(
-                            r, s, g, refining=True
-                        ),
-                    )
-                    from .gemma_translate import is_server_running
-                    from .review_translate import review_block_results
+            from .translation_pipeline import TranslationCallbacks, run_translation
 
-                    if not is_server_running():
-                        self.after(
-                            0,
-                            lambda: self.update_status(
-                                "Borrador Argos (Gemma apagado — sin refinado)",
-                                "orange",
-                            ),
-                        )
-                        return
-                    self.after(
-                        0,
-                        lambda: self.update_status(
-                            "Refinando con Gemma…", "yellow"
-                        ),
-                    )
-                    reviewed = review_block_results(
-                        draft, src, tgt, timeout=35.0
-                    )
-                    results = reviewed
-                else:
-                    results = self.translator.translate_blocks(blocks)
-                print(
-                    "Traducción bloques:\n"
-                    + "\n---\n".join(
-                        f"[{r.get('label')}] {r.get('translated')}" for r in results
-                    )
-                )
+            def _clear_refining():
+                layer = getattr(self, "_layer_overlay", None)
+                if layer is not None:
+                    layer.set_refining(False)
+
+            def _cb_final(r):
                 self.after(
                     0,
-                    lambda r=results, s=src, g=tgt: self._show_translation(
-                        r, s, g, refining=False
+                    lambda res=r: self._show_translation(
+                        res, src, tgt, refining=False
                     ),
                 )
+
+            def _cb_draft(r):
+                self.after(
+                    0,
+                    lambda res=r: self._show_translation(
+                        res, src, tgt, refining=True
+                    ),
+                )
+
+            def _cb_gemma_err(err):
+                def _ui():
+                    _clear_refining()
+                    short = err if len(err) <= 120 else err[:117] + "…"
+                    if err == "Gemma apagado — solo borrador Offline":
+                        self._show_alert(
+                            "Gemma no disponible",
+                            "El servidor Gemma no está en ejecución.\n\n"
+                            "Se muestra solo el borrador Offline.\n\n"
+                            "Para usar Gemma: menú → Setup Gemma → Iniciar servidor.",
+                            kind="warning",
+                        )
+                        self.update_status(
+                            "Gemma apagado — solo borrador Offline", "orange"
+                        )
+                    else:
+                        self._show_alert(
+                            "Error en Gemma",
+                            "No se pudo traducir con Gemma:\n\n"
+                            f"{err}\n\n"
+                            "Se mantiene el borrador Offline.",
+                        )
+                        self.update_status(
+                            f"Gemma falló: {short} (borrador Offline visible)",
+                            "orange",
+                        )
+
+                self.after(0, _ui)
+
+            def _cb_fatal(err):
+                self.after(
+                    0,
+                    lambda e=err: self._notify_translation_error(
+                        "Error de traducción", e
+                    ),
+                )
+
+            cbs = TranslationCallbacks(
+                on_draft=_cb_draft if staged else None,
+                on_final=_cb_final,
+                on_gemma_error=_cb_gemma_err if staged else None,
+                on_fatal=_cb_fatal,
+            )
+            try:
+                run_translation(
+                    blocks, provider=provider, src=src, tgt=tgt, callbacks=cbs
+                )
             except Exception as e:
-                error_msg = f"Error en traducción: {str(e)}"
-                print(error_msg)
-                self.after(0, lambda m=error_msg: self.update_status(m, "red"))
+                self.after(
+                    0,
+                    lambda m=str(e): self._notify_translation_error(
+                        "Error de traducción", m
+                    ),
+                )
 
         threading.Thread(target=worker, daemon=True).start()
+
+    @staticmethod
+    def _extract_translation_errors(results) -> list[str]:
+        from .translation_pipeline import extract_translation_errors
+
+        return extract_translation_errors(results)
+
+    def _notify_translation_error(self, title: str, message: str) -> None:
+        short = message if len(message) <= 120 else message[:117] + "…"
+        self._show_alert(title, message)
+        self.update_status(f"Error: {short}", "red")
 
     def _show_translation(self, results, src, tgt, *, refining=False):
         if isinstance(results, str):
             sections = [("Traducción", results, "")]
-            is_err = results.startswith("[Error:")
+            is_err = self._translation_is_error(results)
             results_list = [
                 {"label": "Traducción", "translated": results, "source_text": "", "x": 0, "y": 0, "w": 0, "h": 0}
             ]
@@ -2276,7 +2402,8 @@ class EstiloKaioApp(ctk.CTk):
                 for r in results_list
             ]
             is_err = any(
-                (r.get("translated") or "").startswith("[Error:") for r in results_list
+                self._translation_is_error(r.get("translated") or "")
+                for r in results_list
             )
 
         mode = getattr(self, "overlay_mode", "layer") or "layer"
@@ -2287,7 +2414,7 @@ class EstiloKaioApp(ctk.CTk):
                 if prev_over is not None and not is_err:
                     prev_over.update_results(results_list)
                     self.update_status(
-                        f"Over: {len(sections)} bloque(s) (refinado)", "lime"
+                        f"Over: {len(sections)} bloque(s) (Gemma)", "lime"
                     )
                     return
             else:
@@ -2295,7 +2422,7 @@ class EstiloKaioApp(ctk.CTk):
                 if prev_layer is not None and not is_err:
                     prev_layer.update_sections(sections)
                     self.update_status(
-                        f"Layer: {len(sections)} bloque(s) (refinado)", "lime"
+                        f"Layer: {len(sections)} bloque(s) (Gemma)", "lime"
                     )
                     return
 
@@ -2311,11 +2438,12 @@ class EstiloKaioApp(ctk.CTk):
             )
         else:
             prev = getattr(self, "_layer_overlay", None)
-            if prev is not None and not refining:
+            if prev is not None:
                 try:
                     prev.destroy()
                 except Exception:
                     pass
+                self._layer_overlay = None
             self._layer_overlay = TranslatorOverlay(
                 self,
                 sections=sections,
@@ -2329,9 +2457,20 @@ class EstiloKaioApp(ctk.CTk):
             if refining:
                 self._layer_overlay.set_refining(True)
         if is_err:
-            self.update_status("Traducción con errores (ver overlay)", "red")
+            errs = self._extract_translation_errors(
+                results if isinstance(results, str) else results_list
+            )
+            detail = errs[0] if errs else "Error desconocido"
+            short = detail if len(detail) <= 120 else detail[:117] + "…"
+            self._show_alert(
+                "Error de traducción",
+                f"No se pudo traducir:\n\n{detail}",
+            )
+            self.update_status(f"Error: {short}", "red")
         elif refining:
-            self.update_status("Borrador Argos · refinando con Gemma…", "yellow")
+            self.update_status(
+                "Borrador Offline · Gemma traduciendo el original…", "yellow"
+            )
         else:
             tag = "Over" if mode == "over" else "Layer"
             self.update_status(f"{tag}: {len(sections)} bloque(s)", "lime")

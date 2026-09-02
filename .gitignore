@@ -11,6 +11,8 @@ __pycache__/
 build/
 develop-eggs/
 dist/
+# Zip de release generado localmente (el oficial sale de GitHub Actions)
+EstiloKaio-v*-windows.zip
 downloads/
 eggs/
 .eggs/

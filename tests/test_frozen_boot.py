@@ -19,9 +19,9 @@ def test_entrypoint_has_no_relative_imports():
     assert bad == [], f"imports relativos en app/__main__.py: {bad}"
 
 
-def test_entrypoint_gates_argos_worker_before_gui():
+def test_entrypoint_gates_offline_worker_before_gui():
     src = _MAIN.read_text(encoding="utf-8")
-    worker_at = src.find("--argos-worker")
+    worker_at = src.find("--offline-worker")
     gui_at = src.find("from app.main import")
     assert worker_at != -1
     assert gui_at != -1
@@ -30,5 +30,5 @@ def test_entrypoint_gates_argos_worker_before_gui():
 
 if __name__ == "__main__":
     test_entrypoint_has_no_relative_imports()
-    test_entrypoint_gates_argos_worker_before_gui()
+    test_entrypoint_gates_offline_worker_before_gui()
     print("ALL TESTS PASSED")

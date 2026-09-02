@@ -32,19 +32,27 @@ class RapidOcrBackend:
     def _ensure_engine(self) -> bool:
         if self._engine is not None:
             return True
-        try:
+        last: Exception | None = None
+        for _ in range(2):
             try:
-                from rapidocr import RapidOCR
-            except ImportError:
-                from rapidocr_onnxruntime import RapidOCR
+                # Forzar ORT de pip ANTES de RapidOCR: si OneOCR copio
+                # app/DLL/onnxruntime.dll (Microsoft), Windows puede cargar
+                # ese y romper onnxruntime_pybind11_state.
+                import onnxruntime  # noqa: F401
 
-            self._engine = RapidOCR()
-            self.last_error = None
-            return True
-        except Exception as e:
-            self.last_error = f"RapidOCR init: {e}"
-            self._engine = None
-            return False
+                try:
+                    from rapidocr import RapidOCR
+                except ImportError:
+                    from rapidocr_onnxruntime import RapidOCR
+
+                self._engine = RapidOCR()
+                self.last_error = None
+                return True
+            except Exception as e:
+                last = e
+                self._engine = None
+        self.last_error = f"RapidOCR init: {last}"
+        return False
 
     def set_language(self, code: str) -> None:
         self.language_code = code

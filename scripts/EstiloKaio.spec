@@ -1,6 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
-# Desde la raíz del repo:
-#   python scripts/prepare_argos_packages.py
+# Desde la raiz del repo:
+#   python scripts/prepare_offline_model.py
 #   pyinstaller --noconfirm scripts/EstiloKaio.spec
 
 import os
@@ -10,14 +10,14 @@ from PyInstaller.utils.hooks import collect_all
 block_cipher = None
 repo_root = os.path.abspath(os.path.join(SPECPATH, ".."))
 entrypoint = os.path.join(repo_root, "app", "__main__.py")
-argos_packages = os.path.join(repo_root, "build", "argos-packages")
+offline_model = os.path.join(repo_root, "build", "offline-en-es")
 
-if not os.path.isdir(argos_packages) or not os.listdir(argos_packages):
+if not os.path.isdir(offline_model) or not os.listdir(offline_model):
     raise SystemExit(
-        "Falta build/argos-packages. Corré: python scripts/prepare_argos_packages.py"
+        "Falta build/offline-en-es. Corre: python scripts/prepare_offline_model.py"
     )
 
-datas = [(argos_packages, "argos-packages")]
+datas = [(offline_model, "offline-en-es")]
 binaries = []
 hiddenimports = [
     "customtkinter",
@@ -38,18 +38,28 @@ hiddenimports = [
     "app.ui_theme",
     "app.proper_nouns",
     "app.gemma_translate",
+    "app.global_hotkeys",
+    "app.translation_pipeline",
     "app.translator",
     "app.ocr_engine",
     "app.screen_capture",
+    "app.guide_assistant",
     "app.ollama_assistant",
     "app.region_selector",
     "app.main",
-    "app.argos_translate",
-    "app.argos_worker",
+    "app.offline_translate",
+    "app.offline_worker",
     "app.ocr_backends.rapidocr_backend",
+    "transformers",
+    "sentencepiece",
 ]
 
-for pkg_name in ("argostranslate", "ctranslate2", "sentencepiece", "rapidocr", "onnxruntime"):
+for pkg_name in (
+    "transformers",
+    "sentencepiece",
+    "rapidocr",
+    "onnxruntime",
+):
     pkg_datas, pkg_binaries, pkg_hidden = collect_all(pkg_name)
     datas += pkg_datas
     binaries += pkg_binaries

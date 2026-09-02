@@ -1,4 +1,4 @@
-"""Windows OCR (WinRT) — fallback Window OCR."""
+"""Windows OCR (WinRT) — fallback. Carga perezosa: importar winrt rompe ORT de RapidOCR."""
 
 from __future__ import annotations
 
@@ -10,35 +10,48 @@ from PIL import Image
 
 from ..ocr_types import OcrLineBox, OCR_LANGUAGE_CANDIDATES
 
-WINDOWS_OCR_AVAILABLE = False
+_winrt_loaded = False
+_winrt_ok = False
 OcrEngine = None
 Language = None
 BitmapDecoder = None
 InMemoryRandomAccessStream = None
 DataWriter = None
 
-try:
-    from winrt.windows.media.ocr import OcrEngine as _OcrEngine
-    from winrt.windows.graphics.imaging import BitmapDecoder as _BitmapDecoder
-    from winrt.windows.storage.streams import (
-        InMemoryRandomAccessStream as _InMemoryRandomAccessStream,
-        DataWriter as _DataWriter,
-    )
 
-    OcrEngine = _OcrEngine
-    BitmapDecoder = _BitmapDecoder
-    InMemoryRandomAccessStream = _InMemoryRandomAccessStream
-    DataWriter = _DataWriter
-    WINDOWS_OCR_AVAILABLE = True
-except ImportError as e:
-    print(f"WARNING: Windows OCR no disponible: {e}")
+def ensure_winrt() -> bool:
+    """Importa winrt solo cuando hace falta (nunca al importar el modulo)."""
+    global _winrt_loaded, _winrt_ok
+    global OcrEngine, Language, BitmapDecoder, InMemoryRandomAccessStream, DataWriter
+    if _winrt_loaded:
+        return _winrt_ok
+    _winrt_loaded = True
+    try:
+        from winrt.windows.media.ocr import OcrEngine as _OcrEngine
+        from winrt.windows.graphics.imaging import BitmapDecoder as _BitmapDecoder
+        from winrt.windows.storage.streams import (
+            InMemoryRandomAccessStream as _InMemoryRandomAccessStream,
+            DataWriter as _DataWriter,
+        )
+        from winrt.windows.globalization import Language as _Language
 
-try:
-    from winrt.windows.globalization import Language as _Language
+        OcrEngine = _OcrEngine
+        BitmapDecoder = _BitmapDecoder
+        InMemoryRandomAccessStream = _InMemoryRandomAccessStream
+        DataWriter = _DataWriter
+        Language = _Language
+        _winrt_ok = True
+    except ImportError as e:
+        print(f"WARNING: Windows OCR no disponible: {e}")
+        _winrt_ok = False
+    return _winrt_ok
 
-    Language = _Language
-except ImportError:
-    Language = None
+
+def __getattr__(name: str):
+    # Compat: `from ... import WINDOWS_OCR_AVAILABLE` sin cargar winrt.
+    if name == "WINDOWS_OCR_AVAILABLE":
+        return False
+    raise AttributeError(name)
 
 
 def _bbox_from_words(words: Any) -> tuple[float, float, float, float] | None:
@@ -90,11 +103,11 @@ class WinRtBackend:
         self.ocr_engine = None
         self.active_ocr_tag = None
         self.last_error = None
-        if WINDOWS_OCR_AVAILABLE:
+        if ensure_winrt():
             self._init_engine(language_code)
 
     def available_language_tags(self) -> list[str]:
-        if not WINDOWS_OCR_AVAILABLE:
+        if not ensure_winrt():
             return []
         try:
             return [lang.language_tag for lang in OcrEngine.available_recognizer_languages]
@@ -114,7 +127,7 @@ class WinRtBackend:
         self.ocr_engine = None
         self.active_ocr_tag = None
         self.last_error = None
-        if not WINDOWS_OCR_AVAILABLE:
+        if not ensure_winrt():
             self.last_error = "winrt no instalado"
             return
 
@@ -162,7 +175,7 @@ class WinRtBackend:
     def set_language(self, code: str) -> None:
         if code == self.language_code and self.ocr_engine:
             return
-        if WINDOWS_OCR_AVAILABLE:
+        if ensure_winrt():
             self._init_engine(code)
 
     def is_available(self) -> bool:
@@ -179,7 +192,7 @@ class WinRtBackend:
         return any(a.split("-")[0] in wanted for a in available)
 
     def status_message(self) -> str:
-        if not WINDOWS_OCR_AVAILABLE:
+        if not ensure_winrt():
             return "WinRT: paquetes winrt no instalados"
         if not self.ocr_engine:
             return self.last_error or "WinRT: no disponible"

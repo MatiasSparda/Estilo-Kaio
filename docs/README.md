@@ -1,6 +1,6 @@
 # Estilo Kaio — traductor OCR + asistente de guía
 
-**Estilo Kaio** es una app de escritorio Windows: traducción instantánea por regiones OCR y asistente de guías con Ollama.
+**Estilo Kaio** es una app de escritorio Windows: traducción instantánea por regiones OCR y asistente de guías con **Gemma (LiteRT)** local.
 
 ## Arranque
 
@@ -20,7 +20,7 @@ Dependencias: `pip install -r scripts/requirements.txt`
 2. Extraé y ejecutá `EstiloKaio.exe` (no hace falta Python ni pip)
 3. Primera configuración: región del traductor, región del diario, guía `.txt`
 
-El zip trae **Argos en-es** (offline). Gemma/Ollama se configuran aparte.
+El zip trae **traducción Offline Marian EN→ES** (local, sin límites). **Gemma** (guía + traducción IA) se configura aparte con Setup en la app.
 
 Para publicar una release nueva (maintainers): Actions → **Release** → Run workflow → elegí `patch` / `minor` / `major`.
 
@@ -33,14 +33,14 @@ Para publicar una release nueva (maintainers): Actions → **Release** → Run w
 
 ### Traductor (Alt+T)
 - Captura región → OCR → motor a elegir:
-  - **Argos** — offline, en el exe
-  - **Argos + Gemma** — borrador Argos + revisión local
+  - **Offline** — Marian local, sin límites
+  - **Offline + Gemma** — borrador offline + revisión local
   - **Gemma (IA local)** — offline, setup aparte
 - Setup Gemma (opcional): `scripts\Setup_Gemma_LiteRT.bat`
 
 ### Asistente de guía (Alt+G)
 - OCR del diario + guía `.txt` / import URL
-- Ollama local (pestaña Guía)
+- **Gemma (LiteRT)** local — misma IA que traducción con Gemma (sin Ollama)
 
 ## Estructura
 
@@ -52,4 +52,12 @@ Para publicar una release nueva (maintainers): Actions → **Release** → Run w
 
 ## OCR
 
-Si el texto de juego (fuente pixel) se lee mal: motor **RapidOCR (escena/pixel)**; recortá solo el texto, no el marco. Windows OCR pide pack de idioma inglés (Configuración → Hora e idioma → Idioma).
+Si el texto de juego (fuente pixel) se lee mal: motor **OneOCR** para diálogos pixel; **RapidOCR** para escenas amplias. Recortá solo el texto, no el marco. Windows OCR pide pack de idioma inglés (Configuración → Hora e idioma → Idioma).
+
+## Troubleshooting traducción
+
+- **Texto cortado / basura al final**: Motor OCR → OneOCR. Región solo caja de diálogo.
+- **Gemma timeout (CPU)**: Normal 1–3 min. Usá modo Offline solo. Borrador offline queda visible.
+- **UI gris vacía**: Reinstalar exe reciente. Hotkeys globales requieren exe post-fix.
+- **DOSBox no responde Alt+5**: Atajos → F9 o Pause. Ver "Hotkeys globales" en status.
+- **Mezcla español+inglés**: Cerrar overlay (Alt+X) antes de capturar.

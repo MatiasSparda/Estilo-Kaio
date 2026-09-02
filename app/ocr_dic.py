@@ -36,6 +36,40 @@ _BUILTIN: dict[str, str] = {
 }
 
 
+def detect_overlay_capture(text: str) -> bool:
+    """True si el OCR mezcla español e inglés (típico: captura encima del overlay)."""
+    if not (text or "").strip():
+        return False
+    lines = [ln.strip() for ln in text.split("\n") if ln.strip()]
+    if len(lines) < 2:
+        return False
+
+    spanish_fn = re.compile(
+        r"\b(?:que|de|la|el|los|las|en|un|una|por|con|es|son|ha|te|se|del|al|"
+        r"qué|está|están|además|también|pero|como|más|aquí|sin|sobre|entre|"
+        r"desde|hasta|muy|bien|solo|sólo)\b",
+        re.I,
+    )
+    english_fn = re.compile(
+        r"\b(?:the|of|you|your|would|what|has|have|been|here|those|this|that|"
+        r"with|from|and|are|was|were|for|not|but|they|their|there|will|should|"
+        r"could|can|may|might|must|also|just|only|even|when|where|which|who|"
+        r"how|why|all|any|some|than|too|very|into|about|after|before|call)\b",
+        re.I,
+    )
+    diacritics = re.compile(r"[áéíóúñÁÉÍÓÚÑ]")
+
+    def _looks_spanish(ln: str) -> bool:
+        return bool(diacritics.search(ln)) or len(spanish_fn.findall(ln)) >= 3
+
+    def _looks_english(ln: str) -> bool:
+        return len(english_fn.findall(ln)) >= 3 and not diacritics.search(ln)
+
+    has_es = any(_looks_spanish(ln) for ln in lines)
+    has_en = any(_looks_english(ln) for ln in lines)
+    return has_es and has_en
+
+
 def _load_user_dic() -> dict[str, str]:
     """Formato diccionario: original=corregido (una por línea)."""
     roots = [
@@ -67,15 +101,32 @@ def _merged_dic() -> dict[str, str]:
 
 
 _WORD_RE = re.compile(r"[A-Za-zÀ-ÿ']+")
+# Moneda del juego: 7D 0S 0B — OCR suele leer S como 5 y D como O.
+_CURRENCY_TRIPLE = re.compile(
+    r"\b(\d+)([DO])\s+(\d+)([S5])\s+(\d+)([B8])\b",
+    re.I,
+)
+
+
+def _fix_currency_typography(text: str) -> str:
+    def repl(m: re.Match[str]) -> str:
+        a, u1, b, u2, c, u3 = m.groups()
+        d = "D"
+        s = "S"
+        bb = "B"
+        return f"{a}{d} {b}{s} {c}{bb}"
+
+    return _CURRENCY_TRIPLE.sub(repl, text or "")
 
 
 def correct_ocr_text(text: str, *, passes: int = 2) -> str:
     """Aplica diccionario OCR (corrección ortográfica previa a traducir)."""
     if not (text or "").strip():
         return text or ""
+    out = _fix_currency_typography(text)
     dic = _merged_dic()
     if not dic:
-        return text
+        return out
 
     def repl(m: re.Match) -> str:
         word = m.group(0)
@@ -83,14 +134,12 @@ def correct_ocr_text(text: str, *, passes: int = 2) -> str:
         if key not in dic:
             return word
         fixed = dic[key]
-        # Preservar capitalización gruesa
         if word.isupper():
             return fixed.upper()
         if word[0].isupper():
             return fixed[:1].upper() + fixed[1:]
         return fixed
 
-    out = text
     for _ in range(max(1, passes)):
         out = _WORD_RE.sub(repl, out)
     return out

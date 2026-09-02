@@ -479,6 +479,7 @@ def translate_blocks(
     *,
     model: str | None = None,
     timeout: float = 30.0,
+    review: bool = True,
 ) -> list[dict]:
     normalized: list[tuple[str, str, object]] = []
     for block in blocks or []:
@@ -539,15 +540,18 @@ def translate_blocks(
                 max_tokens=512,
                 block_label=label,
             )
-            translated = review_translation(
-                src_text,
-                draft,
-                source,
-                target,
-                model=model,
-                timeout=timeout,
-                max_tokens=512,
-            )
+            if review:
+                translated = review_translation(
+                    src_text,
+                    draft,
+                    source,
+                    target,
+                    model=model,
+                    timeout=timeout,
+                    max_tokens=512,
+                )
+            else:
+                translated = draft
         except Exception as e:
             translated = f"[Error: {e}]"
         return [_row(block, label, src_text, translated)]
@@ -575,16 +579,20 @@ def translate_blocks(
 
     out: list[dict] = []
     for (src_text, label, block), translated in zip(normalized, parts):
-        reviewed = review_translation(
-            src_text,
-            translated or "",
-            source,
-            target,
-            model=model,
-            timeout=timeout,
-            max_tokens=min(512, 128 + len(src_text) * 2),
-        )
-        out.append(_row(block, label, src_text, reviewed))
+        draft = translated or ""
+        if review and draft and not draft.startswith("[Error:"):
+            final = review_translation(
+                src_text,
+                draft,
+                source,
+                target,
+                model=model,
+                timeout=timeout,
+                max_tokens=min(512, 128 + len(src_text) * 2),
+            )
+        else:
+            final = draft
+        out.append(_row(block, label, src_text, final))
     return out
 
 

@@ -10,7 +10,7 @@ echo.
 echo 1. Pestana Captura: región traductor + diario
 echo 2. Pestana Guía: cargar .txt o importar URL
 echo 3. Pestana Traductor: idiomas + Setup/Iniciar Gemma
-echo 4. Pestana Guía: Configurar Ollama (modelo llama3.2)
+echo 4. Guía y traducción Gemma usan el mismo motor LiteRT (sin Ollama)
 echo.
 echo Atajos (default):
 echo   Alt+T  traducir región (bloques OCR separados)

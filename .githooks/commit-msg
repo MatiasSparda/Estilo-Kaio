@@ -1,0 +1,6 @@
+#!/bin/sh
+# Rechaza trailers de IA en mensajes de commit (repo local).
+if grep -qiE 'co-authored-by:\s*cursor|cursoragent@cursor\.com' "$1"; then
+  echo "commit-msg: quitá la línea Co-authored-by de Cursor del mensaje." >&2
+  exit 1
+fi

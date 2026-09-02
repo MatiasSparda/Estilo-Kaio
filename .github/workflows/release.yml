@@ -111,9 +111,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
 
-      - name: Prepare Argos en-es packages
+      - name: Prepare offline Marian model
         shell: pwsh
-        run: python scripts/prepare_argos_packages.py
+        run: python scripts/prepare_offline_model.py
 
       - name: Build with PyInstaller
         shell: pwsh
@@ -166,6 +166,6 @@ jobs:
           $notes = @"
           Windows x64 — ejecutable onefile ``EstiloKaio.exe`` (sin Python).
 
-          Argos en-es va en el zip (traducción offline). Gemma / Ollama no: configurarlos aparte si los usas.
+          Traduccion Offline Marian EN-ES va en el zip (local, sin limites de API). Gemma (guia + traduccion IA) se configura aparte con Setup en la app.
           "@
           gh release create $tag $zip --title "Estilo Kaio $tag" --notes $notes

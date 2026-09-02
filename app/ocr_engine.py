@@ -9,7 +9,7 @@ import time
 
 from PIL import Image
 
-from .ocr_backends import EasyOcrBackend, OneOcrBackend, RapidOcrBackend, WinRtBackend
+from .ocr_backends.rapidocr_backend import RapidOcrBackend
 from .ocr_types import (
     LETTER_RE,
     MAX_BLOCKS,
@@ -37,15 +37,32 @@ __all__ = [
     "ENGINE_LABELS",
     "_is_noise_block",
     "_is_title_text",
+    "ocr_looks_truncated",
+    "SENTENCE_END",
 ]
 
 # Re-export para compat tests / imports viejos
+# WinRT no se importa aca: cargar winrt.windows.* rompe onnxruntime de RapidOCR.
 WINDOWS_OCR_AVAILABLE = False
-try:
-    from .ocr_backends.winrt_backend import WINDOWS_OCR_AVAILABLE as _WINRT
-except ImportError:
-    _WINRT = False
-WINDOWS_OCR_AVAILABLE = _WINRT
+
+
+def _make_oneocr(language_code: str):
+    from .ocr_backends.oneocr_backend import OneOcrBackend
+
+    return OneOcrBackend(language_code)
+
+
+def _make_easyocr(language_code: str):
+    from .ocr_backends.easyocr_backend import EasyOcrBackend
+
+    return EasyOcrBackend(language_code)
+
+
+def _make_winrt(language_code: str):
+    from .ocr_backends.winrt_backend import WinRtBackend
+
+    return WinRtBackend(language_code)
+
 
 ENGINE_IDS = ("oneocr", "easyocr", "winrt", "rapidocr")
 FALLBACK_ORDER = ("oneocr", "rapidocr", "easyocr", "winrt")
@@ -171,7 +188,11 @@ def merge_dialogue_fragments(blocks: list[TextBlock]) -> list[TextBlock]:
         gap = b.y - (prev.y + prev.h)
         line_h = max(prev.h / max(prev.text.count("\n") + 1, 1), b.h, 8.0)
         same_col = abs(b.x - prev.x) <= line_h * 2.5
-        close = gap <= line_h * 3.0
+        ends_sentence = prev.text.rstrip().endswith((".", "?", "!", "…", '"', "'"))
+        if ends_sentence and gap > line_h * 1.0:
+            merged.append(b)
+            continue
+        close = gap <= line_h * 1.8
         if same_col and close:
             merged[-1] = TextBlock(
                 text=f"{prev.text}\n{b.text}".strip(),
@@ -359,10 +380,17 @@ def preprocess_pixel_variants(image: Image.Image) -> list[Image.Image]:
         gray = ImageOps.invert(gray)
     gray = ImageOps.autocontrast(gray, cutoff=1)
     bw = gray.point(lambda p: 255 if p > 140 else 0)
+    gray_rgb = gray.convert("RGB")
+    bw_rgb = bw.convert("RGB")
+    # Nativo primero: RapidOCR (PP-OCR) a menudo pierde deteccion tras
+    # nearest x3/x4; OneOCR igual se beneficia de variantes suaves.
     return [
-        upscale_pixel(base),
-        upscale_pixel(gray.convert("RGB")),
-        upscale_pixel(bw.convert("RGB")),
+        base,
+        gray_rgb,
+        bw_rgb,
+        upscale_pixel(base, 2),
+        upscale_pixel(gray_rgb, 2),
+        upscale_pixel(bw_rgb, 2),
     ]
 
 
@@ -384,6 +412,38 @@ def _score_ocr_lines(lines: list[OcrLineBox]) -> int:
     return score
 
 
+SENTENCE_END = re.compile(r'[.!?]["\'\u201d\u2019]?\s*$')
+_SENTENCE_END = SENTENCE_END
+
+
+def ocr_looks_truncated(text: str) -> bool:
+    return _ocr_looks_truncated(text)
+
+
+def _ocr_looks_truncated(text: str) -> bool:
+    """Heurística: OCR cortó el diálogo antes del final (sin hardcodear frases)."""
+    t = (text or "").strip()
+    if not t:
+        return True
+    lines = [ln.strip() for ln in t.split("\n") if ln.strip()]
+    if not lines:
+        return True
+    last = lines[-1]
+    if len(lines) >= 2:
+        if len(last) > 10 and not SENTENCE_END.search(last):
+            return True
+        if last[-1:].isalnum() and len(last) > 6:
+            return True
+    return False
+
+
+def _ocr_result_rank(lines: list[OcrLineBox], joined: str) -> int:
+    sc = _score_ocr_lines(lines)
+    if _ocr_looks_truncated(joined):
+        sc -= 500
+    return sc
+
+
 class OCREngine:
     """Router OCR: motor preferido + fallback encadenado."""
 
@@ -393,16 +453,35 @@ class OCREngine:
         self.last_error = None
         self.last_used_backend_id: str | None = None
         self.last_ocr_seconds: float = 0.0
-        self._oneocr = OneOcrBackend(language_code)
-        self._easyocr = EasyOcrBackend(language_code)
-        self._winrt = WinRtBackend(language_code)
+        self.last_ocr_truncated: bool = False
+        self.last_ocr_joined: str = ""
+        # Lazy: OneOCR trae onnxruntime.dll de Microsoft que rompe RapidOCR
+        # si se carga antes. Solo instanciar el motor pedido (+ fallbacks al usar).
+        self._oneocr = None
+        self._easyocr = None
+        self._winrt = None
         self._rapidocr = RapidOcrBackend(language_code)
+
+    def _get_oneocr(self):
+        if self._oneocr is None:
+            self._oneocr = _make_oneocr(self.language_code)
+        return self._oneocr
+
+    def _get_easyocr(self):
+        if self._easyocr is None:
+            self._easyocr = _make_easyocr(self.language_code)
+        return self._easyocr
+
+    def _get_winrt(self):
+        if self._winrt is None:
+            self._winrt = _make_winrt(self.language_code)
+        return self._winrt
 
     def _backends(self):
         return {
-            "oneocr": self._oneocr,
-            "easyocr": self._easyocr,
-            "winrt": self._winrt,
+            "oneocr": self._get_oneocr(),
+            "easyocr": self._get_easyocr(),
+            "winrt": self._get_winrt(),
             "rapidocr": self._rapidocr,
         }
 
@@ -412,15 +491,19 @@ class OCREngine:
 
     def set_language(self, language_code: str) -> None:
         self.language_code = language_code
-        self._oneocr.set_language(language_code)
-        self._easyocr.set_language(language_code)
-        self._winrt.set_language(language_code)
+        if self._oneocr is not None:
+            self._oneocr.set_language(language_code)
+        if self._easyocr is not None:
+            self._easyocr.set_language(language_code)
+        if self._winrt is not None:
+            self._winrt.set_language(language_code)
         self._rapidocr.set_language(language_code)
 
     def prepare_oneocr(self) -> bool:
-        if not self._oneocr.prepare_dlls():
+        one = self._get_oneocr()
+        if not one.prepare_dlls():
             return False
-        return self._oneocr.warmup()
+        return one.warmup()
 
     def resolve_backend(self):
         backends = self._backends()
@@ -441,28 +524,57 @@ class OCREngine:
         return None
 
     def status_ok(self) -> bool:
-        return any(b.is_available() for b in self._backends().values())
+        # No forzar carga de OneOCR solo para status.
+        if self._rapidocr.is_available():
+            return True
+        try:
+            return any(
+                self._backends()[eid].is_available()
+                for eid in ENGINE_IDS
+                if eid != "rapidocr"
+            )
+        except Exception:
+            return False
 
     def has_exact_language_pack(self, language_code=None):
-        return self._winrt.has_exact_language_pack(language_code or self.language_code)
+        return self._get_winrt().has_exact_language_pack(
+            language_code or self.language_code
+        )
 
     def needs_language_pack(self):
         if self.last_used_backend_id != "winrt":
             return False
-        return self._winrt.is_available() and not self._winrt.has_exact_language_pack(
+        winrt = self._get_winrt()
+        return winrt.is_available() and not winrt.has_exact_language_pack(
             self.language_code
         )
 
     def status_message(self) -> str:
         parts = [
             f"Motor pedido: {ENGINE_LABELS.get(self.engine_id, self.engine_id)}",
-            self._oneocr.status_message(),
-            self._easyocr.status_message(),
             self._rapidocr.status_message(),
-            self._winrt.status_message(),
         ]
+        # No cargar WinRT/OneOCR aca: importar winrt o MS-ORT rompe RapidOCR
+        # en el mismo proceso. Solo detallar el motor activo / ya instanciado.
+        if self.engine_id == "oneocr" or self._oneocr is not None:
+            try:
+                parts.append(self._get_oneocr().status_message())
+            except Exception as e:
+                parts.append(f"OneOCR: {e}")
+        elif self.engine_id == "easyocr" or self._easyocr is not None:
+            try:
+                parts.append(self._get_easyocr().status_message())
+            except Exception as e:
+                parts.append(f"EasyOCR: {e}")
+        elif self.engine_id == "winrt" or self._winrt is not None:
+            try:
+                parts.append(self._get_winrt().status_message())
+            except Exception as e:
+                parts.append(f"WinRT: {e}")
         if self.last_used_backend_id:
-            parts.insert(1, f"Último usado: {ENGINE_LABELS.get(self.last_used_backend_id)}")
+            parts.insert(
+                1, f"Último usado: {ENGINE_LABELS.get(self.last_used_backend_id)}"
+            )
         return "\n".join(parts)
 
     def _recognize_best_variant(
@@ -470,8 +582,8 @@ class OCREngine:
     ) -> tuple[list[OcrLineBox], float, float]:
         best_lines: list[OcrLineBox] = []
         best_score = -1
-        best_w = float(image.size[0] * UPSCALE)
-        best_h = float(image.size[1] * UPSCALE)
+        best_w = float(image.size[0])
+        best_h = float(image.size[1])
         eid = getattr(backend, "id", "winrt")
         for variant in preprocess_variants_for(eid, image):
             lines = backend.recognize_lines(variant)
@@ -481,34 +593,105 @@ class OCREngine:
                 best_lines = lines
                 best_w = float(variant.size[0])
                 best_h = float(variant.size[1])
+            joined = " ".join((ln.text or "").strip() for ln in best_lines if ln.text)
+            if best_score >= 40 and joined and not _ocr_looks_truncated(joined):
+                break
         return best_lines, best_w, best_h
+
+    def _blocks_from_lines(
+        self, lines: list[OcrLineBox], best_w: float, best_h: float
+    ) -> list[TextBlock]:
+        blocks = cluster_blocks(lines, image_height=best_h)
+        cleaned = [b for b in blocks if not _is_noise_block(b.text)]
+        merged = merge_dialogue_fragments(cleaned)
+        content = filter_game_ui_blocks(merged)
+        if not content and cleaned:
+            content = cleaned
+        for b in content:
+            b.img_w = best_w
+            b.img_h = best_h
+        return content
 
     async def extract_blocks_async(self, image: Image.Image) -> list[TextBlock]:
         t0 = time.perf_counter()
-        backend = self.resolve_backend()
-        if backend is None:
+        self.last_ocr_truncated = False
+        self.last_ocr_joined = ""
+        # Preferido primero; no instanciar OneOCR si RapidOCR ya resolvió.
+        order = [self.engine_id] + [e for e in FALLBACK_ORDER if e != self.engine_id]
+        last_err: str | None = None
+        tried = False
+
+        best_content: list[TextBlock] | None = None
+        best_score = -1
+        best_eid: str | None = None
+
+        for eid in order:
+            if eid == "rapidocr":
+                backend = self._rapidocr
+            elif eid == "oneocr":
+                backend = self._get_oneocr()
+            elif eid == "easyocr":
+                backend = self._get_easyocr()
+            else:
+                backend = self._get_winrt()
+            if not backend.is_available():
+                continue
+            tried = True
+            try:
+                best_lines, best_w, best_h = self._recognize_best_variant(
+                    image, backend
+                )
+                content = self._blocks_from_lines(best_lines, best_w, best_h)
+                if not content:
+                    continue
+                joined = "\n\n".join(b.text for b in content if b.text.strip())
+                sc = _ocr_result_rank(best_lines, joined)
+                if sc > best_score:
+                    best_score = sc
+                    best_content = content
+                    best_eid = eid
+                if joined and not _ocr_looks_truncated(joined):
+                    break
+            except Exception as e:
+                last_err = str(e)
+                self.last_error = last_err
+                continue
+
+        if best_content and best_eid:
+            joined = "\n\n".join(b.text for b in best_content if b.text.strip())
+            self.last_ocr_joined = joined
+            self.last_ocr_truncated = bool(joined) and _ocr_looks_truncated(joined)
+            self.last_used_backend_id = best_eid
+            self.last_error = None
+            self.last_ocr_seconds = time.perf_counter() - t0
+            return best_content
+
+        self.last_ocr_seconds = time.perf_counter() - t0
+        if not tried:
             err = "Ningún motor OCR disponible (OneOCR / RapidOCR / EasyOCR / WinRT)"
             self.last_error = err
-            self.last_ocr_seconds = time.perf_counter() - t0
-            return [TextBlock(text=f"[OCR no disponible] {err}", x=0, y=0, w=0, h=0, label="Error")]
-
-        try:
-            best_lines, best_w, best_h = self._recognize_best_variant(image, backend)
-            blocks = cluster_blocks(best_lines, image_height=best_h)
-            cleaned = [b for b in blocks if not _is_noise_block(b.text)]
-            merged = merge_dialogue_fragments(cleaned)
-            content = filter_game_ui_blocks(merged)
-            if not content and cleaned:
-                content = cleaned
-            for b in content:
-                b.img_w = best_w
-                b.img_h = best_h
-            self.last_ocr_seconds = time.perf_counter() - t0
-            return content
-        except Exception as e:
-            self.last_error = str(e)
-            self.last_ocr_seconds = time.perf_counter() - t0
-            return [TextBlock(text=f"[Error OCR: {e}]", x=0, y=0, w=0, h=0, label="Error")]
+            return [
+                TextBlock(
+                    text=f"[OCR no disponible] {err}",
+                    x=0,
+                    y=0,
+                    w=0,
+                    h=0,
+                    label="Error",
+                )
+            ]
+        if last_err:
+            return [
+                TextBlock(
+                    text=f"[Error OCR: {last_err}]",
+                    x=0,
+                    y=0,
+                    w=0,
+                    h=0,
+                    label="Error",
+                )
+            ]
+        return []
 
     async def extract_lines_async(self, image: Image.Image) -> list[OcrLineBox]:
         backend = self.resolve_backend()

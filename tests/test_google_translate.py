@@ -10,9 +10,10 @@ from app.translator import (
 
 
 def test_translation_providers_defined():
-    assert "argos" in TRANSLATION_PROVIDERS
-    assert "argos_gemma" in TRANSLATION_PROVIDERS
+    assert "offline" in TRANSLATION_PROVIDERS
+    assert "offline_gemma" in TRANSLATION_PROVIDERS
     assert "gemma" in TRANSLATION_PROVIDERS
+    assert "argos" not in TRANSLATION_PROVIDERS
     assert "online" not in TRANSLATION_PROVIDERS
     for key, label in TRANSLATION_PROVIDERS.items():
         assert key in TRANSLATION_PROVIDER_ETA
@@ -20,27 +21,29 @@ def test_translation_providers_defined():
 
 
 def test_provider_aliases():
-    assert normalize_translation_provider("google") == "argos"
-    assert normalize_translation_provider("google_gemma") == "argos_gemma"
-    assert normalize_translation_provider("online_gemma") == "argos_gemma"
-    assert normalize_translation_provider("invalid") == "argos"
+    assert normalize_translation_provider("google") == "offline"
+    assert normalize_translation_provider("argos") == "offline"
+    assert normalize_translation_provider("argos_gemma") == "offline_gemma"
+    assert normalize_translation_provider("google_gemma") == "offline_gemma"
+    assert normalize_translation_provider("online_gemma") == "offline_gemma"
+    assert normalize_translation_provider("invalid") == "offline"
 
 
 def test_translator_set_provider():
-    t = Translator(provider="argos")
-    assert t.provider == "argos"
-    t.set_provider("argos_gemma")
-    assert t.provider == "argos_gemma"
+    t = Translator(provider="offline")
+    assert t.provider == "offline"
+    t.set_provider("offline_gemma")
+    assert t.provider == "offline_gemma"
     t.set_provider("gemma")
     assert t.provider == "gemma"
     t.set_provider("online")
-    assert t.provider == "argos"
+    assert t.provider == "offline"
     t.set_provider("invalid")
-    assert t.provider == "argos"
+    assert t.provider == "offline"
 
 
-def test_argos_translate_subprocess_mocked():
-    import app.argos_translate as at
+def test_offline_translate_subprocess_mocked():
+    import app.offline_translate as ot
 
     calls = []
 
@@ -48,13 +51,13 @@ def test_argos_translate_subprocess_mocked():
         calls.append((text, source, target))
         return f"ES:{text}"
 
-    orig = at._translate_once
-    at._translate_once = fake_once
+    orig = ot._translate_once
+    ot._translate_once = fake_once
     try:
-        assert at.translate_text("Hello", "en", "es") == "ES:Hello"
+        assert ot.translate_text("Hello", "en", "es") == "ES:Hello"
         assert calls == [("Hello", "en", "es")]
     finally:
-        at._translate_once = orig
+        ot._translate_once = orig
 
 
 def test_hybrid_review_block_results():
@@ -81,23 +84,23 @@ def test_hybrid_review_block_results():
         gemma.review_translation = orig
 
 
-def test_translator_routes_to_argos():
-    import app.argos_translate as at
+def test_translator_routes_to_offline():
+    import app.offline_translate as ot
 
     calls = []
-    orig = at.translate_text
+    orig = ot.translate_text
 
-    def fake_at(text, source, target):
+    def fake_ot(text, source, target):
         calls.append((text, source, target))
         return "Hola offline"
 
-    at.translate_text = fake_at
+    ot.translate_text = fake_ot
     try:
-        t = Translator(source="en", target="es", provider="argos")
+        t = Translator(source="en", target="es", provider="offline")
         assert t.translate("Hello") == "Hola offline"
         assert calls == [("Hello", "en", "es")]
     finally:
-        at.translate_text = orig
+        ot.translate_text = orig
 
 
 def test_hybrid_requires_gemma():
@@ -106,7 +109,7 @@ def test_hybrid_requires_gemma():
     orig = gemma.is_server_running
     gemma.is_server_running = lambda: False
     try:
-        t = Translator(provider="argos_gemma")
+        t = Translator(provider="offline_gemma")
         out = t.translate("Hello")
         assert out.startswith("[Error:")
         assert "Gemma" in out
@@ -118,8 +121,8 @@ if __name__ == "__main__":
     test_translation_providers_defined()
     test_provider_aliases()
     test_translator_set_provider()
-    test_argos_translate_subprocess_mocked()
+    test_offline_translate_subprocess_mocked()
     test_hybrid_review_block_results()
-    test_translator_routes_to_argos()
+    test_translator_routes_to_offline()
     test_hybrid_requires_gemma()
     print("ALL TESTS PASSED")
